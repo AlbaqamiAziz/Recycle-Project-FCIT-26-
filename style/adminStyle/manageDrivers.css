@@ -1,0 +1,76 @@
+.top-container {
+    flex: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.page-buttons button {
+    width: 150px;
+    height: 40px;
+    background: linear-gradient(96.78deg, #c4d9b0 0%, #458c3a 45.83%);
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    color: #ffffff;
+}
+.page-buttons button .fa-plus{
+    margin: 0 5px;
+}
+.mid-container {
+    flex: 1;
+}
+.body-container {
+    height: 400px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.table {
+    margin: 25px 0;
+}
+.table table {
+    table-layout: auto;
+}
+form.search input[type="text"] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid #c9ced6;
+    float: left;
+    width: 80%;
+    background: #ffffff;
+}
+
+form.search button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background: #ffffff;
+    font-size: 16px;
+    border: 1px solid #c9ced6;
+    border-left: none;
+    cursor: pointer;
+}
+
+form.search button:hover {
+    background: #c9ced6;
+}
+
+form.search::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.table button {
+    background: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+}
+.fa-edit {
+    color: #458c3a;
+    margin: 0 5px;
+}
+.fa-trash {
+    color: #ff4c61;
+    margin: 0 5px;
+}

@@ -7,48 +7,54 @@
     <title>Recycle | Overview Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../style/adminStyle/main.css">
+    <link rel="stylesheet" href="../../style/adminStyle/overviewStyle.css">
 </head>
 
 <body>
     <div class="container">
-        <div class="top-bar">
-            <div class="logo-container">
-                <img src="../../image/logo1.png" alt="">
-            </div>
-            <div class="right">
-                <div class="user-info">
-                    <h5 class="name">
-                        Sohaib Albakri
-                    </h5>
-                    <h6 class="role">
-                        Admin
-                    </h6>
+        <!-- top navbar which has two sections one in both sides (left, right) -->
+        <nav>
+            <div class="top-bar">
+                <div class="left">
+                    <img src="../../image/logo1.png" alt="">
                 </div>
-                <div class="buttons">
-                    <button class="icon-btn"><i class="fa fa-bell" aria-hidden="true"></i></button>
-                    <button class="icon-btn" id="logout"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
-                </div>
-            </div>
-        </div>
 
+                <div class="right">
+                    <div class="user-info">
+                        <h5 class="name">
+                            Sohaib Albakri
+                        </h5>
+                        <h6 class="role">
+                            Admin
+                        </h6>
+                    </div>
+                    <div class="buttons">
+                        <button class="icon-btn"><i class="fa fa-bell" aria-hidden="true"></i></button>
+                        <button class="icon-btn" id="logout"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- the main section has two sections (side bar, main content) -->
         <main>
             <div class="side-bar">
                 <ul class="nav-items">
                     <li class="nav-item">
-                        <a href="#">
+                        <a href="overview.html">
+                            <i class="fa fa-bar-chart active" aria-hidden="true"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="manageDrivers.html">
                             <i class="fa fa-users" aria-hidden="true"></i>
                             <p>Manage drivers</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#">
-                            <i class="fa fa-bar-chart" aria-hidden="true"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
                     <li class="nav-item ">
                         <a href="#">
-                            <i class="fa fa-envelope-o active" aria-hidden="true"></i>
+                            <i class="fa fa-envelope-o" aria-hidden="true"></i>
                             <p>Mailbox</p>
                         </a>
                     </li>
@@ -91,7 +97,6 @@
                                 <i class="fa fa-truck" aria-hidden="true"></i>
                             </span>
                             <div class="description-container">
-
                                 <h2 class="title" id="total-drivers">
                                     352
                                 </h2>
@@ -102,44 +107,52 @@
                 </div>
                 <div class="bottom-container">
                     <div class="chart">
-                        <img src="../../image/bar.png" alt="">
+                        <div class="title-container">
+                            <h2>Number of requests per month</h2>
+                        </div>
+                        <div class="body-container">
+                            <img src="../../image/bar.png" alt="bar chart">
+                        </div>
                     </div>
-                    <div class="table">
-                        <table class="top-drivers">
-                            <thead>
 
-                            </thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Total requests</th>
-                            </tr>
-                            <tr>
-                                <td>#336</td>
-                                <td>Sohaib Bakr</td>
-                                <td>525</td>
-                            </tr>
-                            <tr>
-                                <td>#214</td>
-                                <td>Aziz Saad</td>
-                                <td>354</td>
-                            </tr>
-                            <tr>
-                                <td>#222</td>
-                                <td>Ahmed Adel</td>
-                                <td>224</td>
-                            </tr>
-                            <tr>
-                                <td>#123</td>
-                                <td>Ali Albishi</td>
-                                <td>100</td>
-                            </tr>
-                            <tr>
-                                <td>#895</td>
-                                <td>Ahmed Bakr</td>
-                                <td>85</td>
-                            </tr>
-                        </table>
+                    <div class="table">
+                        <div class="title-container">
+                            <h2>Top five drivers</h2>
+                        </div>
+                        <div class="body-container">
+                            <table class="top-drivers">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Total requests</th>
+                                </tr>
+                                <tr>
+                                    <td>#336</td>
+                                    <td>Sohaib Bakr</td>
+                                    <td>525</td>
+                                </tr>
+                                <tr>
+                                    <td>#214</td>
+                                    <td>Aziz Saad</td>
+                                    <td>354</td>
+                                </tr>
+                                <tr>
+                                    <td>#222</td>
+                                    <td>Ahmed Adel</td>
+                                    <td>224</td>
+                                </tr>
+                                <tr>
+                                    <td>#123</td>
+                                    <td>Ali Albishi</td>
+                                    <td>100</td>
+                                </tr>
+                                <tr>
+                                    <td>#895</td>
+                                    <td>Ahmed Bakr</td>
+                                    <td>85</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
