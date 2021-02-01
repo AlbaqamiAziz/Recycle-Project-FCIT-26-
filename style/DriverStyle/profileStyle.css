@@ -1,0 +1,99 @@
+.fa-angle-left{
+    font-size: 35px;
+    margin-top: 5%;
+    margin-left: 5%;
+    background-color: #C4D9B0;
+    color: #293340;
+}
+.data{
+    position: absolute;
+    top: 140px;
+    width: 100%;
+    
+
+}
+.fa-user-o{
+    position: absolute;
+    top: 90px;
+    left: 155px;
+    font-size: 55px;
+    color: #707C97;
+}
+.ftext{
+    
+    font-family: Roboto;
+    font-size: 16px;
+    color: #458C3A;
+    margin-top: 20px;
+    margin-left: 3.5%;
+}
+.text-line{
+    
+    width: 93%;
+    height: 35px;
+    margin-top: 1px;
+    margin-left: 3.5%;
+    background-color: #F2F2F2;
+    outline: none;
+    outline-style: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid #5A9851 1px;
+    padding: 3px 10px;
+
+}
+.save{
+    position: absolute;
+    top: 485px;
+    left: 12.5%;
+    width: 75%;
+    height: 35px;
+    display: flex;
+    font-size: 20px;
+    background: linear-gradient(96.78deg, #C4D9B0 0%, #458C3A 100%);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom:none;
+    border-radius: 5px;
+}
+.saveIt{
+    position: absolute;
+    left: 90px;
+    top: 5px;
+    color: white;
+}
+.fa-floppy-o{
+    position: absolute;
+    left: 60px;
+    top: 5px;
+    color: white;
+}
+.cancel{
+    position: absolute;
+    top: 535px;
+    left: 12.5%;
+    width: 75%;
+    height: 35px;
+    display: flex;
+    font-size: 20px;
+    background-color: #2D3748;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom:none;
+    border-radius: 5px;
+}
+.cancelIt{
+    position: absolute;
+    left: 90px;
+    top: 5px;
+    color: white;
+}
+.fa-times-circle{
+    position: absolute;
+    left: 60px;
+    top: 5px;
+    color: white;
+}

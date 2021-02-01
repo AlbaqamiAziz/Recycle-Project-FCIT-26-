@@ -176,12 +176,16 @@ body {
     left: 68px;
     background: linear-gradient(96.78deg, #C4D9B0 0%, #458C3A 100%);
     border-radius: 100%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom:none;
     
 }
 .fa-phone{
     position: absolute;
-    top: 329px;
-    left: 81px;
+    top: 10px;
+    left: 12px;
     font-size: 38px;
     color: #F2F2F2;
 }
@@ -193,12 +197,16 @@ body {
     left: 185px;
     background: linear-gradient(96.78deg, #C4D9B0 0%, #458C3A 100%);
     border-radius: 100%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom:none;
 
 }
 .fa-map-marker{
     position: absolute;
-    top: 329px;
-    left: 202px;
+    top: 9px;
+    left: 16px;
     font-size: 38px;
     color: #F2F2F2;
 }
