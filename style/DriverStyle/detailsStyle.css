@@ -28,7 +28,7 @@ body {
 .Logo {
     position: absolute;
     top: 10%;
-    left: 77%;
+    left: 83%;
     width: 70px;
     height: 60px;
     background-color: #C4D9B0;
@@ -39,7 +39,7 @@ body {
     font-style: normal;
     font-size: 25px;
     line-height: 38px;
-    left: 133px;
+    left: 143px;
     top: 31px;
     color: #2E5931;
 }
@@ -48,7 +48,7 @@ body {
     top: 130px;
     background-color: white;
     border-radius: 34px;
-    left: 4%;
+    left: 7.5%;
     width: 85%;
     height: 400px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -129,4 +129,94 @@ body {
     font-size: 20px;
     margin-top: 23px;
     left: 70px;
+}
+.fa-map-o{
+    position: absolute;
+    top: 250px;
+    left: 38px;
+    color: #707C97;
+    font-size: 25px;
+
+}
+.city{
+    position: absolute;
+    font-family: Roboto;
+    text-transform: capitalize;
+    color: #707C97;
+    font-size: 20px;
+    top: 250px;
+    left: 70px;
+}
+.fa-home{
+    position: absolute;
+    
+    top: 250px;
+    left: 170px;
+    color: #707C97;
+    font-size: 25px;
+}
+.dis{
+    position: absolute;
+    font-family: Roboto;
+    top: 250px;
+    left: 200px;
+    color: #707C97;
+    font-size: 20px;
+}
+.line1{
+    width: auto;
+   margin-top: 38%;
+}
+.phone{
+
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    top: 320px;
+    left: 68px;
+    background: linear-gradient(96.78deg, #C4D9B0 0%, #458C3A 100%);
+    border-radius: 100%;
+    
+}
+.fa-phone{
+    position: absolute;
+    top: 329px;
+    left: 81px;
+    font-size: 38px;
+    color: #F2F2F2;
+}
+.location{
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    top: 320px;
+    left: 185px;
+    background: linear-gradient(96.78deg, #C4D9B0 0%, #458C3A 100%);
+    border-radius: 100%;
+
+}
+.fa-map-marker{
+    position: absolute;
+    top: 329px;
+    left: 202px;
+    font-size: 38px;
+    color: #F2F2F2;
+}
+.sing{
+    position: absolute;
+    background-color: #293340;
+    width: auto;
+    height: 54px;
+    top: 545px;
+    display: flex;
+    position: relative;
+}
+.copyright{
+    font-family: Adamina;
+    font-size: 16px;
+    color: #F2F2F2;
+    position: absolute;
+    top: 35%;
+    left: 11%;
+    width: 90%;
 }
