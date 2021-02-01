@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recycle | Mailbox Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../style/adminStyle/main.css">
+    <link rel="stylesheet" href="../../style/adminStyle/mailboxStyle.css">
+</head>
+
+<body>
+    <div id="myOverlay" class="overlay">
+        <span class="closebtn" title="Close">×</span>
+        <div class="overlay-content">
+            <input type="text" placeholder="Search..." id="search">
+            <div class="card" id="card">
+                <img alt="Person" class="card-image" id="card-img">
+                <p class="card-name" id="card-name"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- top navbar which has two sections one in both sides (left, right) -->
+        <nav>
+            <div class="top-bar">
+                <div class="left">
+                    <img src="../../image/logo1.png" alt="">
+                </div>
+
+                <div class="right">
+                    <div class="user-info">
+                        <h5 class="name">
+                            Sohaib Albakri
+                        </h5>
+                        <h6 class="role">
+                            Admin
+                        </h6>
+                    </div>
+                    <div class="buttons">
+                        <button class="icon-btn"><i class="fa fa-bell" aria-hidden="true"></i></button>
+                        <button class="icon-btn" id="logout"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- the main section has two sections (side bar, main content) -->
+        <main>
+            <div class="side-bar">
+                <ul class="nav-items">
+                    <li class="nav-item">
+                        <a href="overview.html">
+                            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="manageDrivers.html">
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                            <p>Manage drivers</p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a href="#">
+                            <i class="fa fa-envelope-o active" aria-hidden="true"></i>
+                            <p>Mailbox</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="main-content">
+                <!-- change the class -->
+                <div class="top-container">
+                    <div class="page-infos">
+                        <div class="page-title">
+                            <h2 class="title">Dashboard</h2>
+                            <p class="description">Mailbox</p>
+                        </div>
+                        <div class="page-buttons">
+                            <button><i class="fa fa-plus"></i> Create new chat</button>
+                        </div>
+                    </div>
+
+                    <div class="contacts-cont">
+                        <ul class="list" data-bind="foreach: chatList">
+                            <!-- add a li -->
+                            <li data-bind="click: $parent.displayChat" class="chat active">
+                                <h3 data-bind="text: member">Majed Ahmed</h3>
+                                <p data-bind="text: lastMessage">Hello world</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mid-container">
+                    <!-- Displayed chat -->
+                    <div class="display" data-bind="with: currentChat">
+                        <nav class="chat-nav">
+                            <h4 data-bind="text: member">Majed Ahmed</h4>
+                            <button class="circle-btn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                        </nav>
+                        <ul class="messages" data-bind="foreach: messageList">
+                            <div class="message-cont">
+                                <div data-bind="class: checkSender">
+                                    <li class="message" data-bind="text: content, class: checkSender">Hello world</li>
+                                </div>
+                            </div>
+                        </ul>
+                        <form data-bind="submit: $parent.sendMessage">
+                            <div class="input-cont">
+                                <input type="text" placeholder="Write a message" id="newMessage">
+                                <!-- <input type="submit" value="Send"> -->
+                                <button class="circle-btn" type="submit"><i class="fa fa-paper-plane"
+                                        aria-hidden="true"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
