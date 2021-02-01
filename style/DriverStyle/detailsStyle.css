@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #F2F2F2;
+}
+
+.Home-Bar {
+    background-color: #C4D9B0;
+    height: 68px;
+    width: auto;
+    display: flex;
+    position: relative;
+}
+
+.fa-bars {
+    font-size: 30px;
+    margin-top: 5%;
+    margin-left: 5%;
+    background-color: #C4D9B0;
+    color: #293340;
+}
+
+.Logo {
+    position: absolute;
+    top: 10%;
+    left: 77%;
+    width: 70px;
+    height: 60px;
+    background-color: #C4D9B0;
+}
+
+.header {
+    position: absolute;
+    font-style: normal;
+    font-size: 25px;
+    line-height: 38px;
+    left: 133px;
+    top: 31px;
+    color: #2E5931;
+}
+.odrer {
+    position: absolute;
+    top: 130px;
+    background-color: white;
+    border-radius: 34px;
+    left: 4%;
+    width: 85%;
+    height: 400px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.fa-calendar{
+    position: absolute;
+    top: 90px;
+    left: 40px;
+    color: #707C97;
+    font-size: 25px;
+  
+}
+.date{
+    position: absolute;
+    top: 95px;
+    left: 70px;
+    font-family: Abhaya Libre;
+    color: #707C97;
+    font-size: 20px;
+
+}
+.fa-file-o{
+    position: absolute;
+    top: 90px;
+    left: 190px;
+    
+    color: #707C97;
+    font-size: 25px;
+
+}
+.number{
+    position: absolute;
+    top: 95px;
+    left: 215px;
+    font-family: Abhaya Libre;
+    color: #707C97;
+    font-size: 20px;
+}
+
+.line{
+   
+    width: auto;
+   margin-top: 56%;
+}
+.fa-clock-o{
+    position: absolute;
+    top: 145px;
+    left: 40px;
+   color: #707C97;
+    font-size: 25px;
+}
+.time{
+    position: absolute;
+    top: 145px;
+    left: 70px;
+    font-family: Abhaya Libre;
+   color: #707C97;
+    font-size: 20px;
+}
+.fa-user-o{
+    position: absolute;
+    top: 200px;
+    left: 40px;
+    color: #707C97;
+    font-size: 25px;
+}
+.Recycle{
+    position: absolute;
+    height: 80px;
+    left: 115px;
+    top: 8px;
+}
+.name{
+    position: absolute;
+    font-family: Roboto;
+    text-transform: capitalize;
+    color: #707C97;
+    font-size: 20px;
+    margin-top: 23px;
+    left: 70px;
+}

@@ -43,6 +43,24 @@ body {
     top: 31px;
     color: #2E5931;
 }
+.sing{
+    position: absolute;
+    background-color: #293340;
+    width: auto;
+    height: 54px;
+    top: 545px;
+    display: flex;
+    position: relative;
+}
+.copyright{
+    font-family: Adamina;
+    font-size: 16px;
+    color: #F2F2F2;
+    position: absolute;
+    top: 35%;
+    left: 11%;
+    width: 90%;
+}
 
 .orders {
     height: 90%;
@@ -53,18 +71,76 @@ body {
 }
 
 .odrer {
+    position: absolute;
+    top: 140px;
     background-color: white;
     border-radius: 34px;
-    width: 90%;
+    left: 2.5%;
+    width: 95%;
+    height: 150px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.fa-user {
-    font-size: 50px;
-    margin-left: 4%;
-    margin-top: 3%;
-}
+
 
 .name {
+    position: absolute;
     font-size: 20px;
+    left: 75px;
+    top: 18px;
+    font-family: Roboto;
+    text-transform: capitalize;
+    color: #293340;
+}
+.user{
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: 8%;
+    left: 4%;
+    border-radius: 100%;
+
+}
+.orderNo{
+    position: absolute;
+    left: 75px;
+    top: 40px;
+    font-family: Abhaya Libre;
+    font-size: 18px;
+    color: #707C97;
+}
+.city{
+    position: absolute;
+    left: 75px;
+    top: 70px;
+    font-family: Abhaya Libre;
+    font-size: 18px;
+    color: #707C97;  
+
+}
+.Dis{
+    position: absolute;
+    left: 200px;
+    top: 70px;
+    font-family: Abhaya Libre;
+    font-size: 18px;
+    color: #707C97;  
+
+}
+.swip{
+    position: absolute;
+    left: 120px;
+    top: 115px;
+    width: 80%;
+    font-family: Abhaya Libre;
+    font-size: 18px;
+    color: #707C97;
+
+}
+.fa-arrow-left {
+    position: absolute;
+    left: 100px;
+    top: 117px;
+    font-size: 18px;
+    color: #707C97;
 }
