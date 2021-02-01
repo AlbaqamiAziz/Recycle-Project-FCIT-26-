@@ -45,10 +45,10 @@
 }
 .save{
     position: absolute;
-    top: 485px;
+    top: 470px;
     left: 12.5%;
     width: 75%;
-    height: 35px;
+    height: 45px;
     display: flex;
     font-size: 20px;
     background: linear-gradient(96.78deg, #C4D9B0 0%, #458C3A 100%);
@@ -61,13 +61,13 @@
 .saveIt{
     position: absolute;
     left: 90px;
-    top: 5px;
+    top: 10px;
     color: white;
 }
 .fa-floppy-o{
     position: absolute;
     left: 60px;
-    top: 5px;
+    top: 10px;
     color: white;
 }
 .cancel{
@@ -75,7 +75,7 @@
     top: 535px;
     left: 12.5%;
     width: 75%;
-    height: 35px;
+    height: 45px;
     display: flex;
     font-size: 20px;
     background-color: #2D3748;
@@ -88,12 +88,12 @@
 .cancelIt{
     position: absolute;
     left: 90px;
-    top: 5px;
+    top: 11px;
     color: white;
 }
 .fa-times-circle{
     position: absolute;
     left: 60px;
-    top: 5px;
+    top: 11px;
     color: white;
 }
