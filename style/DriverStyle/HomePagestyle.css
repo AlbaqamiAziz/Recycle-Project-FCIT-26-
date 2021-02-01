@@ -1,0 +1,70 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #F2F2F2;
+}
+
+.Home-Bar {
+    background-color: #C4D9B0;
+    height: 68px;
+    width: auto;
+    display: flex;
+    position: relative;
+}
+
+.fa-bars {
+    font-size: 30px;
+    margin-top: 5%;
+    margin-left: 5%;
+    background-color: #C4D9B0;
+    color: #293340;
+}
+
+.Logo {
+    position: absolute;
+    top: 10%;
+    left: 83%;
+    width: 70px;
+    height: 60px;
+    background-color: #C4D9B0;
+}
+
+.header {
+    position: absolute;
+    font-style: normal;
+    font-size: 25px;
+    line-height: 38px;
+    left: 115px;
+    top: 31px;
+    color: #2E5931;
+}
+
+.orders {
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.odrer {
+    background-color: white;
+    border-radius: 34px;
+    width: 90%;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.fa-user {
+    font-size: 50px;
+    margin-left: 4%;
+    margin-top: 3%;
+}
+
+.name {
+    font-size: 20px;
+}
