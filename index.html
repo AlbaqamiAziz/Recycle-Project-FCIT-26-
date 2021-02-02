@@ -15,7 +15,37 @@
 <body>
 
     <div class="Home-Bar">
-        <button class="Bar-button" ; style="font-size:24px"> <i class="fa fa-bars"></i></button>
+
+        <nav role="navigation">
+            <div id="menuToggle">
+                <!--
+          A fake / hidden checkbox is used as click reciever,
+          so you can use the :checked selector on it.
+          -->
+                <input type="checkbox" />
+
+                <!-- spans to act as a hamburger-->
+                <span></span>
+                <span></span>
+                <span></span>
+
+                <ul id="menu">
+                    <a href="#">
+                        <li>Log in</li>
+                    </a>
+                    <a href="#">
+                        <li>About</li>
+                    </a>
+                    <a href="#">
+                        <li>Info</li>
+                    </a>
+                    <a href="#">
+                        <li>Contact</li>
+                    </a>
+
+                </ul>
+            </div>
+        </nav>
         <img class="Logo" ; src="image/tree-logo.png" ;>
     </div>
 
@@ -36,6 +66,14 @@
         <a class="next" onclick="plusSlides(1)">&#10095;</a>
     </div>
 
+    <div id="About-us">
+        <h1 id="AboutHeader">About Us</h1>
+        <p id="para">
+            Recycle has been founded to reduces pollution by increasing the efficiency of waste management and reducing pollution of all kinds by spreading a culture of recycling among community members to contribute to environmental conservation, energy and resource
+            management in the best possible way. <br> <br> We provide a recyclable waste pick-up service from your place. Awarding our customers for each process they complete by calculating points for them, which they can redeem at our cooperating
+            companies.
+        </p>
+    </div>
 
 
     <script>
