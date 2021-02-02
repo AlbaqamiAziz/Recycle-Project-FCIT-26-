@@ -6,43 +6,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../style/DriverStyle/detailsStyle.css">
     <link rel="stylesheet" href="../../style/DriverStyle/profileStyle.css">
+    <link rel="stylesheet" href="../../style/DriverStyle/main.css">
 
 
 </head>
+
 <body>
-    <div class="Home-Bar">
-        <i class="fa fa-angle-left"></i></button>
-        <p class=header> Profile</p>
-        <img class="Logo" ; src="tree-Logo.png" ;>
+    <div class="container">
+        <!-- nav bar -->
+        <div class="top-bar">
+            <div class="bars">
+                <i class="fa fa-bars"></i>
+            </div>
+            <div class="page-title">
+                <h3>Profile</h3>
+            </div>
+            <div class="logo-container">
+                <img class="Logo" src="../../image/tree-Logo.png">
+            </div>
+        </div>
+
+        <!-- orders section -->
+        <div class="form-container">
+            <form class="form">
+                <div class="top-container">
+                    <i class="fa fa-user-o"></i>
+                </div>
+                <div class="mid-container">
+                    <div class="input">
+                        <label for="fname">First Name</label>
+                        <input type="text" id="fname">
+                    </div>
+                    <div class="input">
+                        <label for="lname">Last Name</label>
+                        <input type="text" id="lname">
+                    </div>
+                    <div class="input">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone">
+                    </div>
+                    <div class="input">
+                        <label for="email">Email</label>
+                        <input type="email" id="email">
+                    </div>
+                </div>
+                <div class="bottom-container">
+                    <button class="save">
+                        <i class="fa fa-floppy-o"></i>
+                        <p class="saveIt"> Save changes</p>
+                    </button>
+
+                    <button class="cancel">
+                        <i class="fa fa-times-circle"></i>
+                        <p class="cancelIt">Cacnel changes</p>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- footer -->
+        <div class="footer">
+            <p class="copyright">Recycle@Copyright 2021 All Right Reserved.</p>
+        </div>
     </div>
-    <i class="fa fa-user-o"></i>
-    <div class="data">
-    
-    <p class="ftext">First Name</p>
-    <input type="text" class="text-line" />
-    <p class="ftext">Last Name</p>
-    <input type="text" class="text-line" />
-    <p class="ftext">Phone</p>
-    <input type="text" class="text-line" />
-    <p class="ftext">Email</p>
-    <input type="text" class="text-line" />
-</div>
-<button class="save">
-    <i class="fa fa-floppy-o"></i>
-    <p class="saveIt"> Save changes</p>
-</button>
 
-<button class="cancel">
-    <i class="fa fa-times-circle"></i>
-    <p class="cancelIt">Cacnel changes</p>
-</button>
 
-<div class="sing">
-    <p class="copyright">Recycle@Copyright 2021 All Right Reserved.</p>
-
-</div>
 
 </body>
 
