@@ -6,142 +6,145 @@
 }
 
 body {
-    background-color: #F2F2F2;
+    background-color: #f2f2f2;
 }
 
-.Home-Bar {
-    background-color: #C4D9B0;
-    height: 68px;
-    width: auto;
+.container {
     display: flex;
-    position: relative;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+/* Nav bar */
+.top-bar {
+    background-color: #c4d9b0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.bars,
+.page-title,
+.logo-container {
+    flex: 1;
 }
 
 .fa-bars {
-    font-size: 30px;
-    margin-top: 5%;
-    margin-left: 5%;
-    background-color: #C4D9B0;
+    font-size: 24px;
+    background-color: #c4d9b0;
     color: #293340;
 }
 
 .Logo {
-    position: absolute;
-    top: 10%;
-    left: 83%;
-    width: 70px;
+    width: 60px;
     height: 60px;
-    background-color: #C4D9B0;
+    background-color: #c4d9b0;
+    float: right;
 }
 
-.header {
-    position: absolute;
-    font-style: normal;
-    font-size: 25px;
-    line-height: 38px;
-    left: 115px;
-    top: 31px;
-    color: #2E5931;
-}
-.sing{
-    position: absolute;
-    background-color: #293340;
-    width: auto;
-    height: 54px;
-    top: 545px;
-    display: flex;
-    position: relative;
-}
-.copyright{
-    font-family: Adamina;
-    font-size: 16px;
-    color: #F2F2F2;
-    position: absolute;
-    top: 35%;
-    left: 11%;
-    width: 90%;
+.page-title h3 {
+    color: #2e5931;
+    text-align: center;
 }
 
+/* orders section */
 .orders {
-    height: 90%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    align-items: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.order {
+    background-color: white;
+    border-radius: 35px;
+    width: 95%;
+    height: 160px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #707c97;
+    padding: 15px;
+    margin: 20px auto;
+}
+
+/* devide the order into 3 parts */
+.top-container,
+.mid-container,
+.bottom-container {
+    display: flex;
+    flex: 1;
     align-items: center;
 }
 
-.odrer {
-    position: absolute;
-    top: 140px;
-    background-color: white;
-    border-radius: 34px;
-    left: 2.5%;
-    width: 95%;
-    height: 150px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-
-
+/* first part */
 .name {
-    position: absolute;
-    font-size: 20px;
-    left: 75px;
-    top: 18px;
-    font-family: Roboto;
+    font-size: 18px;
+    font-weight: bold;
     text-transform: capitalize;
     color: #293340;
 }
-.user{
-    position: absolute;
-    height: 50px;
-    width: 50px;
-    top: 8%;
-    left: 4%;
+
+.user {
+    width: 35px;
     border-radius: 100%;
+    margin-right: 10px;
+}
 
+/* second & third part */
+.mid-container {
+    padding: 0 25px;
+    justify-content: space-evenly;
 }
-.orderNo{
-    position: absolute;
-    left: 75px;
-    top: 40px;
-    font-family: Abhaya Libre;
-    font-size: 18px;
-    color: #707C97;
+.bottom-container {
+    justify-content: center;
 }
-.city{
-    position: absolute;
-    left: 75px;
-    top: 70px;
-    font-family: Abhaya Libre;
-    font-size: 18px;
-    color: #707C97;  
 
-}
-.Dis{
-    position: absolute;
-    left: 200px;
-    top: 70px;
-    font-family: Abhaya Libre;
-    font-size: 18px;
-    color: #707C97;  
-
-}
-.swip{
-    position: absolute;
-    left: 120px;
-    top: 115px;
-    width: 80%;
-    font-family: Abhaya Libre;
-    font-size: 18px;
-    color: #707C97;
-
-}
 .fa-arrow-left {
-    position: absolute;
-    left: 100px;
-    top: 117px;
-    font-size: 18px;
-    color: #707C97;
+    margin: 0 15px;
 }
 
+/* footer */
+.footer {
+    background-color: #293340;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 7vh;
+}
+.copyright {
+    font-size: 14px;
+    color: #f2f2f2;
+}
+
+/* responsive */
+@media screen and (min-width: 768px) {
+    .order {
+        width: 52%;
+        padding: 15px;
+    }
+    .mid-container {
+        padding: 0 0;
+    }
+    .user {
+        width: 40px;
+    }
+}
+@media screen and (min-width: 1024px) {
+    .order {
+        width: 30%;
+        padding: 15px;
+    }
+    .mid-container {
+        padding: 0 0;
+    }
+    .user {
+        width: 40px;
+    }
+}
