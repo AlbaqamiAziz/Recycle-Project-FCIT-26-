@@ -11,57 +11,49 @@
     font-family: sans-serif;
 }
 
-.Home-Bar {
-    background-color: #C4D9B0;
-    height: 87px;
-    width: auto;
+.container {
     display: flex;
-    position: relative;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
 }
 
-.Bar-button {
-    margin: 28px 0px 28px 30px;
-    padding: 0px;
-    background-color: #C4D9B0;
-    border: 0.5px solid #F2F2F2;
+
+/* Nav bar */
+
+.top-bar {
+    background-color: #c4d9b0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
 }
 
-.fa-bars {
-    margin: 2px 8px;
-    background-color: #C4D9B0;
-    color: #f2f2f2;
+.bars,
+.page-title,
+.logo-container {
+    flex: 1;
 }
 
 .Logo {
-    position: absolute;
-    top: 20%;
-    left: 40%;
-    width: 70px;
+    width: 60px;
     height: 60px;
-    background-color: #C4D9B0;
+    background-color: #c4d9b0;
+}
+
+.page-title h3 {
+    color: #2e5931;
+    text-align: center;
 }
 
 
 /*-- Hamburger button menu --*/
 
-
-/*
- * Made by Erik Terwan
- * 24th of November 2015
- * MIT License
- *
- *
- * If you are thinking of using this in
- * production code, beware of the browser
- * prefixes.
- */
-/*--hamp menu--*/
-
 #menuToggle {
     display: block;
-    position: relative;
-    top: 30px;
-    left: 40px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
     z-index: 1;
     -webkit-user-select: none;
     user-select: none;
@@ -92,11 +84,6 @@
     -webkit-touch-callout: none;
 }
 
-
-/*
-  * Just a quick hamburger
-  */
-
 #menuToggle span {
     display: block;
     width: 33px;
@@ -118,33 +105,16 @@
     transform-origin: 0% 100%;
 }
 
-
-/* 
-  * Transform all the slices of hamburger
-  * into a crossmark.
-  */
-
 #menuToggle input:checked~span {
     opacity: 1;
     transform: rotate(45deg) translate(-2px, -1px);
     background: #232323;
 }
 
-
-/*
-  * But let's hide the middle one.
-  */
-/* hide the middle one. */
-
 #menuToggle input:checked~span:nth-last-child(3) {
     opacity: 0;
     transform: rotate(0deg) scale(0.2, 0.2);
 }
-
-
-/*
-  * Ohyeah and the last one should go the other direction
-  */
 
 #menuToggle input:checked~span:nth-last-child(2) {
     transform: rotate(-45deg) translate(0, -1px);
@@ -152,16 +122,16 @@
 
 #menu {
     position: absolute;
-    width: 800%;
+    width: 300px;
     margin: -100px 0 0 -50px;
     padding: 50px;
     padding-top: 125px;
-    background: #f2f2f2;
+    background: #ededed;
     list-style-type: none;
     -webkit-font-smoothing: antialiased;
     transform-origin: 0% 0%;
     transform: translate(-100%, 0);
-    transition: transform 0.1s cubic-bezier(0.77, 00.2s, 0.02, 1.0);
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
 }
 
 #menu li {
@@ -169,18 +139,12 @@
     font-size: 22px;
 }
 
-
-/*
-  * And let's slide it in from the left
-  * slide it in from the left
-  */
-
 #menuToggle input:checked~ul {
     transform: none;
 }
 
 
-/*--slides show--*/
+/*--slides show start--*/
 
 .pics-cont {
     max-width: 100%;
@@ -192,7 +156,7 @@
 
 .pics-cont img {
     width: 100%;
-    height: 200px;
+    height: 100%;
 }
 
 .slides {
@@ -235,53 +199,67 @@
 }
 
 
-/*------*/
-/*--------*/
+/*--End of slides show--*/
 
-#About-us {
+
+/*---- section one -- About us ----*/
+
+.mid-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.Sec-1,
+.Sec-2 {
+    display: flex;
+    flex-direction: column;
+}
+
 .Sec-1 {
     padding: 10px;
     margin: 0;
     width: 100%;
     height: 80%;
     background-color: #F2F2F2;
+    flex: 2;
 }
 
-#AboutHeader {
+#head-Lines {
     color: #3f7f38;
     padding: 6px 10px 0px 10px;
-    font-family: sans-serif;
     font-size: 24px;
 }
 
 #para {
     padding: 10px;
-    font: 1em sans-serif;
     font-size: 18px;
     color: #434343;
 }
 
-#help-button {
-    margin: 0;
-.help-button-box {
+
+/*----End of section one -- About us ----*/
+
+
+/* -- Section of help the enviroment start */
+
+.Sec-2 {
     margin: 0px;
     padding-bottom: 20px;
     width: 100%;
     height: 40%;
+    flex: 1;
 }
 
-#help-ste {
 .enviroment-ste {
     justify-content: center;
     text-align: center;
     padding: 16px 6px;
     color: #3f7f38;
-    font-family: sans-serif;
     font-size: 24px;
-}
-
-.static-head {
-    padding: 2px 2px;
 }
 
 .help-button {
@@ -292,11 +270,11 @@
     font-weight: bold;
     background: linear-gradient(96.78deg, #C4D9B0 0%, #458C3A 100%);
     border: none;
+    outline-style: none;
     border-radius: 5px;
 }
 
 .help-button:active {
-    border: none;
     background: linear-gradient(96.78deg, #458C3A 0%, #C4D9B0 100%);
     cursor: pointer;
 }
@@ -320,11 +298,14 @@
 }
 
 
-/*-------*/
+/* -- End of  of help the enviroment Section*/
+
+
+/*----Recycle process section start---*/
 
 .circle-span {
     display: block;
-    width: 150px;
+    width: 130px;
     height: 130px;
     border-radius: 50%;
     display: flex;
@@ -350,11 +331,89 @@
     background-color: white;
 }
 
+.static-head {
+    margin-bottom: 0px;
+    padding: 2px 4px;
+}
+
 #recycle-line {
+    margin: 0px;
     padding: 0px 2px;
     text-align: center;
     font: 1em sans-serif;
     font-size: 16px;
     color: #434343;
 }
+
+
+/*----End of recycle process section---*/
+
+.accounts {
+    margin: 10px;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex: 2;
+}
+
+.fa-twitter {
+    color: #293340;
+}
+
+.fa-youtube {
+    color: #C4D9B0
+}
+
+.fa-instagram {
+    color: #458C3A
+}
+
+#head-Lines2 {
+    color: #3f7f38;
+    padding: 6px 10px 0px 22px;
+    font-size: 22px;
+}
+
+#Contact-us {
+    display: flex;
+    padding-left: 22px;
+    color: #969CBA;
+}
+
+#Contact-us span {
+    font-size: 14px;
+    text-decoration: underline;
+    padding: 1px;
+}
+
+.icons {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    float: left;
+}
+
+.partners img {
+    width: 30px;
+    height: 30px;
+}
+
+#e-pic {
+    display: block;
+}
+
+
+/* footer */
+
+.footer {
+    background-color: #293340;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 7vh;
+}
+
+.copyright {
+    font-size: 14px;
+    color: #f2f2f2;
 }

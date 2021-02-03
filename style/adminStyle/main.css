@@ -10,13 +10,17 @@ h2 {
     font-size: 24px;
 }
 
+
 /* container  which containes the body of the page*/
+
 .container {
     width: 100%;
     height: 100vh;
 }
 
+
 /* top nav bar */
+
 .top-bar {
     display: flex;
     align-items: center;
@@ -39,6 +43,7 @@ h2 {
     border-right: 1px solid #c9ced6;
     padding: 0 15px;
 }
+
 .buttons {
     flex: 1;
     padding: 0 30px;
@@ -65,14 +70,18 @@ h2 {
     margin: 0 30px 0 0;
 }
 
+
 /* main section */
+
 main {
     height: 90vh;
     display: flex;
     background-color: #f2f2f2;
 }
 
+
 /* side bar */
+
 .side-bar {
     height: 100%;
     background-color: #293340;
@@ -116,7 +125,9 @@ main {
     border-radius: 10px;
 }
 
+
 /* main container */
+
 .main-content {
     padding: 50px 70px;
     flex: 1;
@@ -124,10 +135,14 @@ main {
     flex-direction: column;
     justify-content: space-between;
 }
+
 .description {
     color: #a6acbe;
 }
+
+
 /* conatins the page title */
+
 .mid-container {
     display: flex;
     width: 100%;
@@ -167,6 +182,7 @@ td {
 tr:hover {
     background-color: #c4d9b0;
 }
+
 tr:nth-child(even) {
     background: #f2f2f2;
 }
@@ -174,6 +190,7 @@ tr:nth-child(even) {
 tr:nth-child(even):hover {
     background: #c4d9b0;
 }
+
 .page-buttons button {
     width: 150px;
     height: 40px;
