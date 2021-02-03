@@ -4,12 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recycle | Profile</title>
+    <title>Recycle | Support</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../style/DriverStyle/profileStyle.css">
-    <link rel="stylesheet" href="../../style/DriverStyle/main.css">
-
-
+    <link rel="stylesheet" href="../../style/CustomerStyle/supportStyle.css">
+    <link rel="stylesheet" href="../../style/CustomerStyle/main.css">
 </head>
 
 <body>
@@ -17,10 +15,10 @@
         <!-- nav bar -->
         <div class="top-bar">
             <div class="bars">
-                <i class="fa fa-bars"></i>
+                <i class="fa fa-angle-left"></i>
             </div>
             <div class="page-title">
-                <h3>Profile</h3>
+                <h3>Support</h3>
             </div>
             <div class="logo-container">
                 <img class="Logo" src="../../image/tree-Logo.png">
@@ -31,35 +29,25 @@
         <div class="form-container">
             <form class="form">
                 <div class="top-container">
-                    <i class="fa fa-user-o"></i>
+                    <i class="fa fa-wrench"></i>
                 </div>
                 <div class="mid-container">
                     <div class="input">
-                        <label for="fname">First Name</label>
+                        <label for="fname">Subject</label>
                         <input type="text" id="fname">
                     </div>
                     <div class="input">
-                        <label for="lname">Last Name</label>
-                        <input type="text" id="lname">
-                    </div>
-                    <div class="input">
-                        <label for="phone">Phone</label>
-                        <input type="tel" id="phone">
-                    </div>
-                    <div class="input">
-                        <label for="email">Email</label>
-                        <input type="email" id="email">
+                        <label for="lname">Type</label>
+                        <select id="type">
+                            <option value="support">Support</option>
+                            <option value="complaint">Complaint</option>
+                        </select>
                     </div>
                 </div>
                 <div class="bottom-container">
-                    <button class="save">
-                        <i class="fa fa-floppy-o"></i>
-                        <p class="saveIt"> Save changes</p>
-                    </button>
-
-                    <button class="cancel">
-                        <i class="fa fa-times-circle"></i>
-                        <p class="cancelIt">Cacnel changes</p>
+                    <button>
+                        <i class="fa fa-send"></i>
+                        <p>Submit</p>
                     </button>
                 </div>
             </form>
@@ -70,9 +58,7 @@
             <p class="copyright">Recycle@Copyright 2021 All Right Reserved.</p>
         </div>
     </div>
-
-
-
+    <!-- TODO add script for creating new chat with admin -->
 </body>
 
 </html>

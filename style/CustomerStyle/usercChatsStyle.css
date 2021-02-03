@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+/* chating container */
+.chating-container {
+    flex: 1;
+    display: flex;
+}
+
+.display {
+    flex: 2;
+}
+
+nav {
+    background-color: #c4d9b0;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    padding: 10px 30px;
+    color: #293340;
+    font-size: 18px;
+    position: relative;
+}
+
+nav .fa-arrow-left {
+    display: none;
+    margin-right: 30px;
+}
+
+nav .circle-btn {
+    position: absolute;
+    right: 30px;
+}
+
+.messages {
+    height: 80vh;
+    padding: 10px 30px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #f2f2f2;
+}
+
+.message {
+    width: fit-content;
+    padding: 10px;
+    border-radius: 10px;
+    list-style: none;
+    margin-bottom: 10px;
+    float: left;
+    background: #293340;
+    border: 1px solid rgba(112, 124, 151, 0.25);
+    box-sizing: border-box;
+    box-shadow: 10px 10px 25px rgba(112, 124, 151, 0.05), 15px 15px 35px rgba(112, 124, 151, 0.05);
+    border-radius: 6px;
+    color: #f2f2f2;
+}
+
+.message.me {
+    float: right;
+    align-self: flex-end;
+    background: #ffffff;
+    border: 1px solid rgba(112, 124, 151, 0.25);
+    box-sizing: border-box;
+    box-shadow: 10px 10px 25px rgba(112, 124, 151, 0.05), 15px 15px 35px rgba(112, 124, 151, 0.05);
+    border-radius: 6px;
+    color: #293340;
+}
+
+form {
+    height: 10vh;
+}
+.other {
+    align-self: flex-start;
+}
+
+.message-cont {
+    padding: 10px 10px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-self: flex-end;
+}
+
+.inline-cont {
+    display: inline-flex;
+}
+
+.inline-cont.me {
+    flex-direction: row-reverse;
+}
+
+.input-cont {
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+.input-cont input {
+    border: none;
+    outline: none;
+}
+
+.input-cont input[type="text"] {
+    flex: 1;
+    height: 100%;
+}
+
+.circle-btn {
+    border: none;
+    box-shadow: 4px 4px 25px rgba(42, 139, 242, 0.15), 2px 2px 25px rgba(42, 139, 242, 0.05),
+        4px 6px 10px rgba(42, 139, 242, 0.15);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    float: right;
+    text-align: center;
+}
+
+.display .input-cont .circle-btn {
+    background: linear-gradient(96.78deg, #c4d9b0 0%, #458c3a 100%);
+    color: #f2f2f2;
+}
