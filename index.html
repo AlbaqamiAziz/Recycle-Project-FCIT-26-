@@ -8,6 +8,7 @@
     <title>Recycle | Home Page</title>
 
     <link rel="stylesheet" type="text/css" href="style/indexStyle.css">
+    <link rel="stylesheet" type="text/css" href="style/DriverStyle/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
@@ -69,7 +70,7 @@
     <!-- end of slides show div -->
 
     <div class="Sec-1">
-        <h1 id="AboutHeader">About Us</h1>
+        <h1 id="head-Lines">About Us</h1>
         <p id="para">
             Recycle has been founded to reduces pollution by increasing the efficiency of waste management and reducing pollution of all kinds by spreading a culture of recycling among community members to contribute to environmental conservation, energy and resource
             management in the best possible way. <br> <br> We provide a recyclable waste pick-up service from your place. Awarding our customers for each process they complete by calculating points for them, which they can redeem at our cooperating
@@ -92,15 +93,53 @@
 
     </div>
 
-    <div class="recycle-num process">
+    <div class="sec-2 process">
         <span class="circle-span recycle-span">
-            <i class="fa fa-recycle"></i>
+            <i class="fa fa-recycle" style="font-size:110px"></i>
+            <strong class="fa-stack-1x calendar-text" style="color: #293340;">365</strong>
         </span>
+
         <h2 class="enviroment-ste static-head">Recycling process</h2>
         <p id="recycle-line">We provided to protect the environment so far</p>
     </div>
 
 
+    <div class="sec-2 foot">
+        <a href="https://twitter.com/twitter?lang=en">
+            <i class="fa fa-twitter" aria-hidden="true" style="font-size:30px"></i>
+        </a>
+        <a href="#">
+            <i class="fa fa-youtube" aria-hidden="true" style="font-size:30px"></i>
+        </a>
+        <a href="#">
+            <i class="fa fa-instagram" aria-hidden="true" style="font-size:30px"></i>
+        </a>
+
+    </div>
+
+    <div class="sec-2 partners">
+        <h2 id="head-Lines">Recycle Partners</h2>
+        <div id="j-pic">
+            <img src="image/jarir.png">
+        </div>
+        <div id="c-pic">
+            <img src="image/careem.png">
+        </div>
+        <div id="e-pic">
+            <img src="image/extra.png">
+        </div>
+        <h2 id="head-Lines">Contact Us</h2>
+
+        <div id="Contact-us">
+            <i class="fa fa-envelope-o active" aria-hidden="true"></i>
+            <span>Info@recycle.com</span>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div class="footer">
+        <p class="copyright">Recycle@Copyright 2021 All Right Reserved.</p>
+    </div>
 
 
 
@@ -110,15 +149,15 @@
 
         function carousel() {
             var i;
-            var x = document.getElementsByClassName("slides");
+            var x = document.getElementsByClassName("slides ");
             for (i = 0; i < x.length; i++) {
-                x[i].style.display = "none";
+                x[i].style.display = "none ";
             }
             slideIndex++;
             if (slideIndex > x.length) {
                 slideIndex = 1
             }
-            x[slideIndex - 1].style.display = "block";
+            x[slideIndex - 1].style.display = "block ";
             setTimeout(carousel, 10000); // Change image every 2 seconds
         }
 
@@ -129,7 +168,7 @@
 
         function showSlides(n) {
             var i;
-            var slides = document.getElementsByClassName("slides");
+            var slides = document.getElementsByClassName("slides ");
             if (n > slides.length) {
                 slideIndex = 1
             }
@@ -137,9 +176,9 @@
                 slideIndex = slides.length
             }
             for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
+                slides[i].style.display = "none ";
             }
-            slides[slideIndex - 1].style.display = "block";
+            slides[slideIndex - 1].style.display = "block ";
         }
     </script>
 
