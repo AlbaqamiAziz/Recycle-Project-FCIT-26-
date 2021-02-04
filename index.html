@@ -13,139 +13,144 @@
 </head>
 
 <body>
+    <!--Side menu-->
+    <div id="side_menu" class="side_menu">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="side_menu-content">
+            <a href="pages/login.html"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+            <a href="#"><i class="fa fa-recycle" aria-hidden="true"></i> About us</a>
+            <a href="#" target="_blank"><i class="fa fa-info" aria-hidden="true"></i> Info</a>
+            <a href="" onclick="logout()"><i class="fa fa-phone" aria-hidden="true"></i> Contact us</a>
+        </div>
+    </div>
 
     <div class="container">
-
-        <div class="top-bar">
-            <nav role="navigation">
-                <div id="menuToggle">
-
-                    <input type="checkbox" />
-
-                    <!-- spans to act as a hamburger-->
-                    <span></span>
-                    <span></span>
-                    <span></span>
-
-                    <ul id="menu">
-                        <a href="pages\login.html">
-                            <li>Log in</li>
-                        </a>
-                        <a href="#">
-                            <li>About</li>
-                        </a>
-                        <a href="#">
-                            <li>Info</li>
-                        </a>
-                        <a href="#">
-                            <li>Contact</li>
-                        </a>
-
-                    </ul>
+        <!-- nav bar -->
+        <nav>
+            <div class="top-bar">
+                <div class="bars" onclick="openNav()">
+                    <i class="fa fa-bars"></i>
                 </div>
-            </nav>
-
-            <div class="logo-container">
-                <img class="Logo" src="image/tree-Logo.png">
+                <div class="logo-container">
+                    <img class="Logo" src="image/tree-Logo.png">
+                </div>
             </div>
-        </div>
-
-        <!-- end of home bar div -->
+        </nav>
 
         <div class="mid-body">
+            <!--Slideshow section-->
             <div class="pics-cont">
-
                 <div class="slides">
-                    <img src="image\rsz_firstslide-imge.jpg">
+                    <img src="image/rsz_firstslide-imge.jpg">
                 </div>
                 <div class="slides">
-                    <img src="image\secSlide-imge.jpg">
+                    <img src="image/rsz_firstslide-imge.jpg">
                 </div>
-
+                <div class="slides">
+                    <img src="image/rsz_firstslide-imge.jpg">
+                </div>
                 <!-- Next and previous buttons -->
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
             </div>
-            <!-- end of slides show div -->
 
-            <div class="Sec-1">
-                <h1 id="head-Lines">About Us</h1>
-                <p id="para">
-                    Recycle has been founded to reduces pollution by increasing the efficiency of waste management and reducing pollution of all kinds by spreading a culture of recycling among community members to contribute to environmental conservation, energy and resource
-                    management in the best possible way. <br> <br> We provide a recyclable waste pick-up service from your place. Awarding our customers for each process they complete by calculating points for them, which they can
-                    redeem at our cooperating companies.
-                </p>
-            </div>
-            <!-- end of about-us div -->
-
-
-            <div class="Sec-2">
-                <h1 class="enviroment-ste">Help The Environment</h1>
-                <button class="help-button" onclick="window.location.href='pages\login.html'">
-                    <p class="help-button-text"> Join us <br> <span> Now </span></p>
-                </button>
-            </div>
-            <!-- end of help-enviroment div -->
-
-
-            <div class="Sec-1">
-                <!-- will add static here !! -->
-            </div>
-
-            <div class="Sec-2 process">
-                <span class="circle-span recycle-span">
-                    <i class="fa fa-recycle" style="font-size:100px"></i>
-                    <!-- <strong class="fa-stack-1x calendar-text" style="color: #293340;">365</strong> -->
-                </span>
-
-                <h2 class="enviroment-ste static-head">Recycling process</h2>
-                <p id="recycle-line">We provided to protect the environment so far</p>
-            </div>
-
-
-            <div class="Sec-2 accounts">
-                <a href="https://twitter.com/twitter?lang=en">
-                    <i class="fa fa-twitter" aria-hidden="true" style="font-size:30px"></i>
-                </a>
-                <a href="#">
-                    <i class="fa fa-youtube" aria-hidden="true" style="font-size:30px"></i>
-                </a>
-                <a href="#">
-                    <i class="fa fa-instagram" aria-hidden="true" style="font-size:30px"></i>
-                </a>
-            </div>
-
-            <div class="Sec-2 partners">
-                <h2 id="head-Lines2">Recycle Partners</h2>
-                <div class="partners icons">
-                    <div id="j-pic">
-                        <img src="image/jarir.png">
-                    </div>
-                    <div id="c-pic">
-                        <img src="image/careem.png">
-                    </div>
-                    <div id="e-pic">
-                        <img src="image/extra.png">
-                    </div>
-                </div>
-
-                <h2 id="head-Lines2">Contact Us</h2>
-                <div id="Contact-us">
-                    <i class="fa fa-envelope-o active" aria-hidden="true"></i>
-                    <span>Info@recycle.com</span>
+            <div class="sec gray">
+                <div class="content">
+                    <h3>About us</h3>
+                    <br>
+                    <p>Recycle has been founded to reduces pollution by increasing the efficiency of waste management
+                        and
+                        reducing pollution of all kinds by spreading a culture of recycling among community members to
+                        contribute to environmental conservation, energy and resource management in the best possible
+                        way.
+                        <br>
+                        <br>
+                        We provide a recyclable waste pick-up service from your place. Awarding our customers for each
+                        process they complete by calculating points for them, which they can redeem at our cooperating
+                        companies.
+                    </p>
                 </div>
             </div>
+
+            <div class="sec center">
+                <div class="content">
+                    <h3>Help The Enviroment</h3>
+                    <br>
+                    <button class="btn" onclick="window.location.href= 'pages/login.html'">
+                        <span class="left">Join Us</span>
+                        <span class="right">NOW</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="sec gray">
+                <div class="content">
+                    <h3>Statics</h3>
+                    <br>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, fuga. Atque facilis odio ab.
+                        Tempora doloribus odit enim, commodi esse, fugit minima praesentium aspernatur in, neque earum
+                        illum
+                        fugiat voluptas!
+                        <br><br>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt inventore fuga nulla quaerat quos
+                        molestias officiis, nesciunt saepe aliquam eaque! Harum beatae quod tenetur veniam debitis, unde
+                        numquam veritatis iure.
+                    </p>
+                </div>
+            </div>
+
+            <div class="sec center static">
+                <div class="content process">
+                    <div class="icon">
+                        <span id="num">300</span>
+                        <i class="fa fa-recycle" aria-hidden="true"></i>
+                    </div>
+                    <div class="text">
+                        <h3>Recycling process</h3>
+                        <p>We provided to protect the environment so far.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sec gray bottom">
+                <div class="content">
+                    <div class="partners">
+                        <h3>Partners</h3>
+                        <div class="inline">
+                            <img class="partner" src="image/jarir.png">
+                            <img class="partner" src="image/extra.png">
+                            <img class="partner" src="image/careem.png">
+                        </div>
+                    </div>
+                    <div class="contact">
+                        <h3>Contact us</h3>
+                        <div class="inline">
+                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                            <i class="fa fa-youtube" aria-hidden="true"></i>
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- footer -->
         <div class="footer">
             <p class="copyright">Recycle@Copyright 2021 All Right Reserved.</p>
         </div>
 
     </div>
 
-
     <script>
+        function openNav() {
+            document.getElementById("side_menu").style.width = "100%";
+        }
+
+        function closeNav() {
+            document.getElementById("side_menu").style.width = "0%";
+        }
+
         var slideIndex = 0;
         carousel();
 
