@@ -96,7 +96,7 @@ body {
     flex: 1;
 }
 
-.bottom-container button {
+.bottom-container .btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -110,7 +110,7 @@ body {
     cursor: pointer;
 }
 
-.bottom-container button:hover {
+.bottom-container .btn:hover {
     background: linear-gradient(97deg, #458c3a 0%, #c4d9b0 100%);
 }
 

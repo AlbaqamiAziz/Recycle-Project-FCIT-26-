@@ -21,13 +21,12 @@
 .bottom-container {
     flex-direction: column;
     justify-content: space-evenly;
-    border-bottom: 1px solid #707C97;
+    border-bottom: 1px solid #707c97;
 }
 
 .top-container {
     flex: 3;
 }
-
 
 /* order informations section */
 
@@ -67,7 +66,6 @@
     text-transform: capitalize;
 }
 
-
 /* buttons section */
 
 .bottom-container {
@@ -77,12 +75,19 @@
 }
 
 .fa-phone-square {
-    color: #2E5931;
+    color: #2e5931;
     font-size: 42px;
 }
 
 .fa-times {
-    color: #B22222;
+    color: #b22222;
+}
+
+/* bottom section */
+.bottom-container {
+    justify-content: space-evenly;
+    width: 100%;
+    flex: 1;
 }
 
 button {
@@ -96,7 +101,6 @@ button {
     font-size: 46px;
     color: #f2f2f2;
 }
-
 
 /* responsive */
 
