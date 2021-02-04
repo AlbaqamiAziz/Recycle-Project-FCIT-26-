@@ -12,6 +12,7 @@
     height: 100vh;
 }
 
+
 /* Nav bar */
 
 .top-bar {
@@ -39,6 +40,7 @@
     background-color: #c4d9b0;
     float: right;
 }
+
 
 /* Side menu*/
 
@@ -84,6 +86,7 @@
     font-size: 60px;
 }
 
+
 /* Slide show*/
 
 .pics-cont {
@@ -100,7 +103,9 @@
     background-color: #f2f2f2;
 }
 
+
 /* Next & previous buttons */
+
 .prev,
 .next {
     cursor: pointer;
@@ -133,7 +138,9 @@
     color: white;
 }
 
+
 /*---- section one -- About us ----*/
+
 .mid-body {
     display: flex;
     flex-direction: column;
@@ -142,30 +149,34 @@
     overflow-y: auto;
     flex: 1;
 }
+
 .sec {
     width: 100%;
     padding: 10px 20px;
     height: 50vh;
-
 }
-.content{
+
+.content {
     display: flex;
     height: 40vh;
     justify-content: center;
     flex-direction: column;
 }
+
 .sec.gray {
     background-color: #f2f2f2;
-
 }
+
 .sec h3 {
     font-weight: 600;
     font-size: 24px;
     color: #458c3a;
 }
+
 .sec.center {
     text-align: center;
 }
+
 .btn {
     width: 50%;
     height: 20%;
@@ -182,6 +193,7 @@
     font-size: 18px;
     font-weight: bold;
 }
+
 .btn .left {
     position: absolute;
     top: 13%;
@@ -194,11 +206,12 @@
     bottom: 13%;
     right: 23%;
     color: white;
-
 }
-.sec.static{
+
+.sec.static {
     box-sizing: content-box;
 }
+
 .icon {
     width: 150px;
     height: 150px;
@@ -212,6 +225,7 @@
     margin: 10px auto;
     color: #458c3a;
 }
+
 #num {
     position: absolute;
     font-size: 18px;
@@ -222,21 +236,21 @@
     justify-content: center;
     align-items: center;
 }
-.inline{
+
+.inline {
     display: flex;
     justify-content: space-around;
     font-size: 24px;
-}
-
-.inline{
     margin: 30px 0;
 }
-.partner{
+
+.partner {
     width: 40px;
 }
 
 
 /* footer */
+
 .footer {
     background-color: #293340;
     width: auto;
@@ -250,26 +264,29 @@
     font-size: 14px;
     color: #f2f2f2;
 }
-.fa-twitter{
-        color: #293340;
-        
-}
-.fa-instagram{
-        color: #458c3a;
-        
-}
-.fa-youtube{
-        color: #C4D9B0;
-        
+
+.fa-twitter {
+    color: #293340;
 }
 
-@media screen and (min-width: 768px){
-    .content{
+.fa-instagram {
+    color: #458c3a;
+}
+
+.fa-youtube {
+    color: #C4D9B0;
+}
+
+@media screen and (min-width: 768px) {
+    .content {
         width: 50%;
         margin: auto;
     }
-    .btn{
+    .btn {
         width: 30%;
         height: 20%;
+    }
+    .bottom h3 {
+        text-align: center;
     }
 }
