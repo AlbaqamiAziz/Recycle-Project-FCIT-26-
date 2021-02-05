@@ -72,10 +72,12 @@ body {
     justify-content: center;
     flex: 1;
 }
+
 .form {
     width: 100%;
     margin: 20px 0;
 }
+
 .input input,
 .input select {
     background-color: transparent;
@@ -85,11 +87,15 @@ body {
     font-size: 16px;
     padding: 10px 0px;
 }
-.input input:focus, .input select:focus {
+
+.input input:focus,
+.input select:focus {
     border-bottom: 2px solid #5a9851;
 }
 
+
 /* bottom section */
+
 .bottom-container {
     justify-content: space-evenly;
     width: 70%;
@@ -127,6 +133,7 @@ body {
 .bottom-container button .fa {
     margin-right: 15px;
 }
+
 .Logo {
     width: 60px;
     height: 60px;
