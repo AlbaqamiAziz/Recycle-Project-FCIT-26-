@@ -1,14 +1,4 @@
 /* orders section */
-
-.orders {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow-x: hidden;
-    overflow-y: auto;
-    flex: 1;
-}
-
 .order {
     background-color: white;
     border-radius: 35px;
