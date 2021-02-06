@@ -9,9 +9,8 @@
     <link rel="stylesheet" href="../../style/CustomerStyle/main.css">
     <link rel="stylesheet" href="../../style/CustomerStyle/newRequestStyle.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQ8meSSWoJde_1JXXgkUjoqovO1OkTYPU&libraries=geometry,places&callback=initMap">
-        </script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQ8meSSWoJde_1JXXgkUjoqovO1OkTYPU&libraries=geometry,places&callback=initMap">
+    </script>
 </head>
 
 <body>
@@ -73,7 +72,10 @@
 
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
-                center: { lat: 24.774265, lng: 46.738586 },
+                center: {
+                    lat: 24.774265,
+                    lng: 46.738586
+                },
                 zoom: 7,
             });
             infoWindow = new google.maps.InfoWindow();
@@ -81,7 +83,9 @@
                 if (marker) {
                     marker.setMap(null);
                 }
-                marker = new google.maps.Marker({ position: mapsMouseEvent.latLng });
+                marker = new google.maps.Marker({
+                    position: mapsMouseEvent.latLng
+                });
                 marker.setMap(map);
             });
 
@@ -103,16 +107,18 @@
             };
             map.setCenter(pos);
             map.setZoom(15);
-            marker = new google.maps.Marker({ position: pos });
+            marker = new google.maps.Marker({
+                position: pos
+            });
             marker.setMap(map);
         }
 
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
             infoWindow.setPosition(pos);
             infoWindow.setContent(
-                browserHasGeolocation
-                    ? "Error: The Geolocation service failed."
-                    : "Error: Your browser doesn't support geolocation."
+                browserHasGeolocation ?
+                "Error: The Geolocation service failed." :
+                "Error: Your browser doesn't support geolocation."
             );
             infoWindow.open(map);
         }

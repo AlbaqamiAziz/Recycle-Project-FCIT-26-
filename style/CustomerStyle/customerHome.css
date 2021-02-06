@@ -3,7 +3,7 @@
 }
 
 .mid-container {
-    height: 43vh;
+    height: 50vh;
 }
 
 
@@ -37,7 +37,7 @@
 /* buttons */
 
 .user-info {
-    margin-top: 10px;
+    margin-top: 20px;
     display: flex;
 }
 
@@ -82,7 +82,7 @@
 .sec {
     width: 100%;
     padding: 10px 20px 0px;
-    height: 40vh;
+    height: 30vh;
 }
 
 .content {
@@ -132,9 +132,13 @@
 @media screen and (min-width: 768px) {
     .mid-container {
         width: 50%;
+        margin: auto;
     }
     .bottom h3 {
         text-align: center;
+    }
+    .sec h3 {
+        margin-left: 0px;
     }
 }
 
