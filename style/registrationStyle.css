@@ -49,6 +49,9 @@ main {
     flex-direction: column;
     align-items: center;
 }
+.form{
+    width: 100%;
+}
 
 .header,
 .input-container,
@@ -90,6 +93,11 @@ main {
 .input-container a {
     font-size: 14px;
     line-height: 16px;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    flex: 2;
 }
 
 .btn {
@@ -143,6 +151,10 @@ a {
     .header h1 {
         font-size: 25px;
     }
+
+    .form.signup{
+        flex: 3;
+    }
     .input-container input,
     .btn-container button {
         width: 80%;
@@ -155,4 +167,3 @@ a {
         height: 80%;
     }
 }
-/*# sourceMappingURL=style.css.map */
