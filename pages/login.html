@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recycle | Login</title>
     <link rel="stylesheet" href="../style/registrationStyle.css">
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+      <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+
+      <!-- Authentication SDK -->
+      <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+  
+      <!-- Realtime Database SDK -->
+      <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 </head>
 
 <body>
@@ -23,8 +31,8 @@
                         <a href="#">Forget Password</a>
                     </div>
                     <div class="btn-container">
-                        <button class="btn" onclick="window.location.href='new_order.html'">Sign-In</button>
-                        <button class="btn google"><img src="../image/google.png"> or Sign-In with Google</button>
+                        <button type="submit" class="btn">Sign-In</button>
+                        <button type="button" id="google-btn" class="btn google"><img src="../image/google.png"> or Sign-In with Google</button>
                         <p>Don't have an account? <a href="signup.html">Click here</a></p>
                     </div>
                 </form>
@@ -35,6 +43,9 @@
             </div>
         </div>
     </main>
+    <script src="../scripts/firbaseConfig.js"></script>
+    <script src="../scripts/customer/registeration.js"></script>
+    <script src="../scripts/login.js"></script>
 </body>
 
 </html>

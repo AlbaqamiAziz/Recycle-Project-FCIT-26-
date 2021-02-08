@@ -3,21 +3,24 @@
 }
 
 .mid-container {
-    height: 50vh;
+    height: 55vh;
 }
 
+.top-container {
+    flex: 1;
+}
 
 /* edit for home page */
 
 .fa-bars {
-    color: #458C3A;
+    color: #458c3a;
     background-color: #f2f2f2;
 }
 
 .page-title,
 .page-title h3 {
     text-align: center;
-    color: #458C3A;
+    color: #458c3a;
 }
 
 .page-title {
@@ -26,18 +29,30 @@
 
 .fa-user {
     font-size: 30px;
-    color: #455A64;
+    color: #455a64;
 }
 
 .fa-send {
     direction: un;
 }
 
+.bottom-container .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 45px;
+    background: linear-gradient(97deg, #c4d9b0 0%, #458c3a 100%);
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
 
 /* buttons */
 
 .user-info {
-    margin-top: 20px;
     display: flex;
 }
 
@@ -53,7 +68,7 @@
     box-shadow: 0px -3px rgba(0, 0, 0, 0.6);
     background-color: #f2f2f2;
     outline: none;
-    cursor: pointer
+    cursor: pointer;
 }
 
 .user-info button:hover {
@@ -73,9 +88,8 @@
 }
 
 .user-info span {
-    color: #2E5931;
+    color: #2e5931;
 }
-
 
 /* .partner section */
 
@@ -123,9 +137,8 @@
 }
 
 .fa-youtube {
-    color: #C4D9B0;
+    color: #c4d9b0;
 }
-
 
 /* responsive */
 

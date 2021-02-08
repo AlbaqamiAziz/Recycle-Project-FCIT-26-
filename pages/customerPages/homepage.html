@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="../../style/CustomerStyle/main.css">
     <link rel="stylesheet" href="../../style/CustomerStyle/customerHome.css">
 
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+
+    <!-- Authentication SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+
+    <!-- Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 </head>
 
 <body>
@@ -16,10 +24,10 @@
     <div id="side_menu" class="side_menu">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <div class="side_menu-content">
-            <a href="pages/login.html"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</a>
+            <a onclick="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</a>
             <a href="#"><i class="fa fa-recycle" aria-hidden="true"></i> About us</a>
             <a href="#" target="_blank"><i class="fa fa-info" aria-hidden="true"></i> Info</a>
-            <a href="" onclick="logout()"><i class="fa fa-phone" aria-hidden="true"></i> Contact us</a>
+            <a href="#"><i class="fa fa-phone" aria-hidden="true"></i> Contact us</a>
         </div>
     </div>
 
@@ -31,7 +39,7 @@
             </div>
             <div class="page-title">
                 <i class="fa fa-user" aria-hidden="true"></i>
-                <h3>Aziz</h3>
+                <h3 id="name"></h3>
             </div>
             <div class="logo-container">
                 <img class="Logo" src="../../image/tree-Logo.png">
@@ -44,7 +52,7 @@
                 <div class="user-info">
                     <button>
                         <h4>Points</h4>
-                        <span>365</span>
+                        <span id="points"></span>
                     </button>
                     <button class="mid-btn">
                         <h4>23</h4>
@@ -58,10 +66,10 @@
             </div>
 
             <div class="bottom-container">
-                <button class="btn" onclick="window.location.href= 'pages/customerPages/newRequest.html'">
+                <a href="newRequest.html" class="btn">
                     <i class="fa fa-send"></i>
                     <p>New Request</p>
-                </button>
+                </a>
             </div>
         </div>
 
@@ -102,6 +110,38 @@
 
         function closeNav() {
             document.getElementById("side_menu").style.width = "0%";
+        }
+    </script>
+    <script src="../../scripts/firbaseConfig.js"></script>
+    
+    <script>
+        function logout() {
+            firebase.auth().signOut().then(() => {
+                window.location.href = "../login.html";
+            }).catch((error) => {
+                alert(error.message);
+            });
+        }
+
+        var currentUser;
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                currentUser = user;
+                getUserData();
+            }
+        });
+
+        function getUserData() {
+            var usertRef = firebase.database().ref('users/' + currentUser.uid);
+            usertRef.on('value', (snapshot) => {
+                var points = snapshot.val().current_points;
+                var name = snapshot.val().name;
+                var index = name.indexOf(" ");
+                name = (index > -1) ? name.substring(0, index) : name;
+                document.getElementById("name").innerHTML = name;
+                document.getElementById('points').innerText = points;
+                document.getElementById('name').innerText = name;
+            });
         }
     </script>
 </body>

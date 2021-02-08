@@ -52,7 +52,7 @@ function isValidPassword(passwordInput) {
 
 // -----------------{Create user & add him to the database}---------------------
 function writeUserData(newUser, uid) {
-    firebase.database().ref('users/customers/' + uid).set(newUser, function (error) {
+    firebase.database().ref('users/' + uid).set(newUser, function (error) {
         if (error) {
             var errorMessage = error.message;
             // TODO: Add a an error message container
