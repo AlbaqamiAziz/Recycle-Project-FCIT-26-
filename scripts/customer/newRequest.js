@@ -73,7 +73,7 @@ function validateForm() {
     var isValid = isTimeSelected(timeInput);
     if (isValid) {
         var option = document.getElementById("location").value;
-        var selectedLocation = option == 'change' ? newLocation : savedLocation;
+        var selectedLocation = getSelectedLocation(option);
         createRequest(dateInput.value, timeInput.value, selectedLocation);
     }
 }
@@ -89,6 +89,16 @@ function isTimeSelected(timeInput) {
     }
     return isValid;
 }
+
+function getSelectedLocation(option) {
+    var selectedLocation
+    if (savedLocation) {
+        selectedLocation = option == 'change' ? newLocation : savedLocation;
+    } else {
+        selectedLocation = newLocation;
+    }
+    return selectedLocation;
+}
 // ----------------------------------------------------------------------------------------------
 
 // -----------------{Create request & add it to the database & update customers' location}---------------------
@@ -103,6 +113,7 @@ function createRequest(date, time, selectedLocation) {
 }
 
 function writeRequestData(newRequest, selectedLocation) {
+
     var requestsRef = firebase.database().ref('requests');
     var newRequestRef = requestsRef.push();
     newRequestRef.set(newRequest, function (error) {
@@ -155,6 +166,7 @@ function initMap() {
         },
         zoom: 7,
     });
+
     infoWindow = new google.maps.InfoWindow();
     map.addListener("click", (mapsMouseEvent) => {
         if (marker) {
@@ -188,6 +200,7 @@ function showPosition(position) {
         position: pos
     });
     marker.setMap(map);
+    newLocation = "https://maps.google.com/?q=" + position.coords.latitude + "," + position.coords.longitude;
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
