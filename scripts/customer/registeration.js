@@ -51,6 +51,19 @@ function isValidPassword(passwordInput) {
 
 
 // -----------------{Create user & add him to the database}---------------------
+
+function createUser(user, name, phone) {
+    var newUser = {
+        name: name,
+        phone: phone,
+        type: 'customer',
+        location: '',
+        current_points: 0,
+        total_points: 0
+    };
+    writeUserData(newUser, user.uid);
+}
+
 function writeUserData(newUser, uid) {
     firebase.database().ref('users/' + uid).set(newUser, function (error) {
         if (error) {
@@ -61,18 +74,5 @@ function writeUserData(newUser, uid) {
             window.location.href = "customerPages/homepage.html";
         }
     });
-}
-
-function createUser(user, name, phone, email) {
-    var newUser = {
-        name: name,
-        phone: phone,
-        email: email,
-        type: 'customer',
-        location: '',
-        current_points: 0,
-        total_points: 0
-    };
-    writeUserData(newUser, user.uid);
 }
 // ------------------------------------------------------------------------

@@ -8,17 +8,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../style/CustomerStyle/main.css">
     <link rel="stylesheet" href="../../style/CustomerStyle/newRequestStyle.css">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5K-rEhowyN-DLAQ3eliQLIK1ego12Ff4&libraries=geometry,places&callback=initMap">
-        </script>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5K-rEhowyN-DLAQ3eliQLIK1ego12Ff4&libraries=geometry,places&callback=initMap"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+
+    <!-- Authentication SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+
+    <!-- Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 </head>
 
 <body>
     <div class="container">
         <!-- nav bar -->
         <div class="top-bar">
-            <div class="bars">
+            <div class="bars" id="backBtn">
                 <i class="fa fa-angle-left"></i>
             </div>
             <div class="page-title">
@@ -31,7 +38,7 @@
 
         <!-- orders section -->
         <div class="form-container">
-            <form class="form">
+            <form class="form" id="form">
                 <div class="top-container">
                     <div class="input inline">
                         <input type="date" id="date">
@@ -54,7 +61,7 @@
                 </div>
                 <div class="mid-container">
                     <div class="input">
-                        <select>
+                        <select id="location">
                             <option value="saved">
                                 Use the saved location
                             </option>
@@ -63,9 +70,10 @@
                             </option>
                         </select>
                     </div>
-                    <div class="input">
+                    <!-- TODO: add search box after apply billing on google maps api -->
+                    <!-- <div class="input">
                         <input type="text" id="search" placeholder="Search location">
-                    </div>
+                    </div> -->
                     <div id="map"></div>
                 </div>
                 <div class="bottom-container">
@@ -82,142 +90,10 @@
             <p class="copyright">Recycle@Copyright 2021 All Right Reserved.</p>
         </div>
     </div>
+    <script src="../../scripts/firbaseConfig.js"></script>
+    <script src="../../scripts/customer/newRequest.js"></script>
     <script>
-        // init date picker 
-        var datePicker = document.getElementById("date");
-        var today = new Date();
-        var nextWeek = new Date();
-        nextWeek.setDate(nextWeek.getDate() + 7);
 
-        // calculate current date and one week
-        var min = dateFormat(today);
-        var max = dateFormat(nextWeek);
-
-        // set current, min and max
-        datePicker.min = min;
-        datePicker.value = min;
-        datePicker.max = max;
-
-
-        var timePicker = document.getElementById("time");
-        timePicker.min = '20:00';
-        timePicker.max = '24:00';
-
-        function dateFormat(date) {
-            var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-            return date.getFullYear() + "-" + month + "-" + day;
-        }
-
-        let map, infoWindow, marker, pos;
-
-        function initMap() {
-            map = new google.maps.Map(document.getElementById("map"), {
-                center: {
-                    lat: 24.774265,
-                    lng: 46.738586
-                },
-                zoom: 7,
-            });
-            infoWindow = new google.maps.InfoWindow();
-            map.addListener("click", (mapsMouseEvent) => {
-                if (marker) {
-                    marker.setMap(null);
-                }
-                marker = new google.maps.Marker({
-                    position: mapsMouseEvent.latLng
-                });
-                marker.setMap(map);
-            });
-
-            const input = document.getElementById("search");
-            const searchBox = new google.maps.places.SearchBox(input);
-            // Bias the SearchBox results towards current map's viewport.
-            map.addListener("bounds_changed", () => {
-                searchBox.setBounds(map.getBounds());
-            });
-
-            // Listen for the event fired when the user selects a prediction and retrieve
-            // more details for that place.
-            let markers = [];
-            searchBox.addListener("places_changed", () => {
-                const places = searchBox.getPlaces();
-
-                if (places.length == 0) {
-                    return;
-                }
-                // Clear out the old markers.
-                markers.forEach((marker) => {
-                    marker.setMap(null);
-                });
-                markers = [];
-                // For each place, get the icon, name and location.
-                const bounds = new google.maps.LatLngBounds();
-                places.forEach((place) => {
-                    if (!place.geometry) {
-                        console.log("Returned place contains no geometry");
-                        return;
-                    }
-                    const icon = {
-                        url: place.icon,
-                        size: new google.maps.Size(71, 71),
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(17, 34),
-                        scaledSize: new google.maps.Size(25, 25),
-                    };
-                    // Create a marker for each place.
-                    markers.push(
-                        new google.maps.Marker({
-                            map,
-                            icon,
-                            title: place.name,
-                            position: place.geometry.location,
-                        })
-                    );
-
-                    if (place.geometry.viewport) {
-                        // Only geocodes have viewport.
-                        bounds.union(place.geometry.viewport);
-                    } else {
-                        bounds.extend(place.geometry.location);
-                    }
-                });
-                map.fitBounds(bounds);
-            });
-
-            getLocation();
-        }
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
-            }
-        }
-
-        function showPosition(position) {
-            pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            map.setCenter(pos);
-            map.setZoom(15);
-            marker = new google.maps.Marker({
-                position: pos
-            });
-            marker.setMap(map);
-        }
-
-        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-            infoWindow.setPosition(pos);
-            infoWindow.setContent(
-                browserHasGeolocation ?
-                    "Error: The Geolocation service failed." :
-                    "Error: Your browser doesn't support geolocation."
-            );
-            infoWindow.open(map);
-        }
     </script>
 </body>
 

@@ -17,6 +17,6 @@ function validateForm() {
     var phoneInput = document.getElementById('phone');
     var isValid = isValidPhone(phoneInput) && isValidName(nameInput);
     if (isValid) {
-        createUser(currentUser, nameInput.value, phoneInput.value, currentUser.email)
+        createUser(currentUser, nameInput.value, phoneInput.value);
     }
 }

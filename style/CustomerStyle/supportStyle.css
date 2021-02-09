@@ -4,6 +4,7 @@
 
 .form {
     height: 65vh;
+    display: none;
 }
 
 /* top section */

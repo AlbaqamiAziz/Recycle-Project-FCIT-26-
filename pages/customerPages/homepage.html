@@ -22,19 +22,19 @@
 <body>
     <!--Side menu-->
     <div id="side_menu" class="side_menu">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a class="closebtn" id="closeBtn">&times;</a>
         <div class="side_menu-content">
-            <a onclick="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</a>
-            <a href="#"><i class="fa fa-recycle" aria-hidden="true"></i> About us</a>
-            <a href="#" target="_blank"><i class="fa fa-info" aria-hidden="true"></i> Info</a>
-            <a href="#"><i class="fa fa-phone" aria-hidden="true"></i> Contact us</a>
+            <a href="profile.html"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
+            <a href="support.html"><i class="fa fa-wrench" aria-hidden="true"></i> Support</a>
+            <a href="history.html"><i class="fa fa-clock-o" aria-hidden="true"></i> History</a>
+            <a id="logoutBtn"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</a>
         </div>
     </div>
 
     <div class="container">
         <!-- nav bar -->
         <div class="top-bar">
-            <div class="bars" onclick="openNav()">
+            <div class="bars" id="openBtn">
                 <i class="fa fa-bars"></i>
             </div>
             <div class="page-title">
@@ -66,10 +66,10 @@
             </div>
 
             <div class="bottom-container">
-                <a href="newRequest.html" class="btn">
+                <button class="btn" id="newRequestbtn">
                     <i class="fa fa-send"></i>
                     <p>New Request</p>
-                </a>
+                </button=>
             </div>
         </div>
 
@@ -103,47 +103,8 @@
         </div>
     </div>
 
-    <script>
-        function openNav() {
-            document.getElementById("side_menu").style.width = "100%";
-        }
-
-        function closeNav() {
-            document.getElementById("side_menu").style.width = "0%";
-        }
-    </script>
     <script src="../../scripts/firbaseConfig.js"></script>
-    
-    <script>
-        function logout() {
-            firebase.auth().signOut().then(() => {
-                window.location.href = "../login.html";
-            }).catch((error) => {
-                alert(error.message);
-            });
-        }
-
-        var currentUser;
-        firebase.auth().onAuthStateChanged(function (user) {
-            if (user) {
-                currentUser = user;
-                getUserData();
-            }
-        });
-
-        function getUserData() {
-            var usertRef = firebase.database().ref('users/' + currentUser.uid);
-            usertRef.on('value', (snapshot) => {
-                var points = snapshot.val().current_points;
-                var name = snapshot.val().name;
-                var index = name.indexOf(" ");
-                name = (index > -1) ? name.substring(0, index) : name;
-                document.getElementById("name").innerHTML = name;
-                document.getElementById('points').innerText = points;
-                document.getElementById('name').innerText = name;
-            });
-        }
-    </script>
+    <script src="../../scripts/customer/homepage.js"></script>
 </body>
 
 </html>

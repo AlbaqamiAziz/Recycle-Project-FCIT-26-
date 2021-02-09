@@ -6,24 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recycle | Chat</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../style/CustomerStyle/usercChatsStyle.css">
     <link rel="stylesheet" href="../../style/CustomerStyle/main.css">
+    <link rel="stylesheet" href="../../style/CustomerStyle/usercChatsStyle.css">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+
+    <!-- Authentication SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+
+    <!-- Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 </head>
 
 <body>
+    <div id="myDropdown" class="dropdown-content">
+        <a href="#">Delete messages</a>
+        <a href="#">End Chat</a>
+    </div>
+
     <div class="container">
         <div class="chating-container">
             <!-- Displayed chat -->
-            <div class="display" data-bind="with: currentChat">
+            <div class="display" id="display" data-bind="with: currentChat">
                 <nav>
                     <i data-bind="click: $parent.goBack" class="fa fa-arrow-left" aria-hidden="true"></i>
                     <h4 data-bind="text: member"></h4>
-                    <button class="circle-btn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                    <button data-bind="click: $parent.openSideMenu" class="circle-btn" id="openBtn"><i
+                            class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+
                 </nav>
                 <ul class="messages" data-bind="foreach: messageList">
                     <div class="message-cont">
                         <div data-bind="class: checkSender">
-                            <li class="message" data-bind="text: content, class: checkSender">hello world</li>
+                            <li class="message" data-bind="text: content, class: checkSender"></li>
                         </div>
                     </div>
                 </ul>
@@ -35,9 +51,29 @@
                     </div>
                 </form>
             </div>
+            <div class="loader" id="loader"></div>
         </div>
     </div>
-    <!-- TODO add script for adding the messages -->
+    <script src="../../scripts/libs/knockout-3.5.1.js"></script>
+    <script src="../../scripts/firbaseConfig.js"></script>
+    <script src="../../scripts/customer/customerChat.js"></script>
+    <script>
+        // Close the dropdown menu if the user clicks outside of it
+        window.onclick = function (event) {
+            console.log('test');
+            if (!event.target.matches('#openBtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
 </body>
+
 
 </html>

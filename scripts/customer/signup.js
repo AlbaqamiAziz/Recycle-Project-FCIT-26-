@@ -12,10 +12,10 @@ document.getElementById('google-btn').onclick = function (e) {
 // -----------------{Firebase Authntication}----------------
 
 // Regular Signup
-function signup(nameInput, phoneInput, emailInput, passwordInput) {
-    firebase.auth().createUserWithEmailAndPassword(emailInput.value, passwordInput.value).then((userCredential) => {
+function signup(name, phone, email, password) {
+    firebase.auth().createUserWithEmailAndPassword(email, password).then((userCredential) => {
         var user = userCredential.user;
-        createUser(user, nameInput.value, phoneInput.value, emailInput.value);
+        createUser(user, name, phone);
     }).catch((error) => {
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -39,7 +39,7 @@ function validateForm() {
     var passwordInput = document.getElementById('password');
     var isValid = isValidName(nameInput) && isValidEmail(emailInput) && isValidPhone(phoneInput) && isValidPassword(passwordInput);
     if (isValid) {
-        signup(nameInput, phoneInput, emailInput, passwordInput);
+        signup(nameInput.value, phoneInput.value, emailInput.value, passwordInput.value);
     }
 }
 
