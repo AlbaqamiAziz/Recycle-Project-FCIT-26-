@@ -9,17 +9,35 @@
     <link rel="stylesheet" href="../../style/DriverStyle/newOrdersStyle.css">
     <link rel="stylesheet" href="../../style/DriverStyle/main.css">
 
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+
+    <!-- Authentication SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+
+    <!-- Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 </head>
 
 <body>
+    <!--Side menu-->
+    <div id="side_menu" class="side_menu">
+        <a class="closebtn" id="closeBtn">&times;</a>
+        <div class="side_menu-content">
+            <a href="profile.html"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
+            <a href="history.html"><i class="fa fa-clock-o" aria-hidden="true"></i> History</a>
+            <a id="logoutBtn"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</a>
+        </div>
+    </div>
+
     <div class="container">
         <!-- nav bar -->
         <div class="top-bar">
-            <div class="bars">
+            <div class="bars" id="openBtn">
                 <i class="fa fa-bars"></i>
             </div>
             <div class="page-title">
-                <h3>New Orders</h3>
+                <h4>New Requests</h4>
             </div>
             <div class="logo-container">
                 <img class="Logo" src="../../image/tree-Logo.png">
@@ -73,6 +91,9 @@
             <p class="copyright">Recycle@Copyright 2021 All Right Reserved.</p>
         </div>
     </div>
+
+    <script src="../../scripts/firbaseConfig.js"></script>
+    <script src="../../scripts/driver/homepage.js"></script>
 </body>
 
 </html>

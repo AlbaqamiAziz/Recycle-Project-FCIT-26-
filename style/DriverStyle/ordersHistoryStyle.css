@@ -30,9 +30,18 @@
     text-decoration: underline;
 }
 
+.orders {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex: 1;
+}
 
-table{
-width: 100%;
+table {
+    width: 100%;
+    display: none;
 }
 
 .order {
@@ -66,8 +75,8 @@ width: 100%;
     color: #458c3a;
 }
 
-
-tr:hover, tr:nth-child(even):hover {
+tr:hover,
+tr:nth-child(even):hover {
     background: #d1d1d1;
 }
 

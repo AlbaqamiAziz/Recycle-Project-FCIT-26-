@@ -8,14 +8,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../style/DriverStyle/orderDetailsStyle.css">
     <link rel="stylesheet" href="../../style/DriverStyle/main.css">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+
+    <!-- Authentication SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+
+    <!-- Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 </head>
 
 <body>
     <div class="container">
         <!-- nav bar -->
         <div class="top-bar">
-            <div class="bars">
-                <i class="fa fa-bars"></i>
+            <div class="bars" id="backBtn">
+                <i class="fa fa-angle-left"></i>
             </div>
             <div class="page-title">
                 <h3>Details</h3>
@@ -27,7 +36,7 @@
 
         <!-- order details section  -->
         <div class="order-container">
-            <div class="order">
+            <div class="order" id="order">
 
                 <!-- top -->
                 <div class="top-container">
@@ -36,18 +45,8 @@
                     </div>
                     <div class="text-container">
                         <div class="text">
-                            <i class="fa fa-calendar"></i>
-                            <p class="date">25/1/21</p>
-                        </div>
-                        <div class="text">
-                            <i class="fa fa-file"></i>
-                            <p class="number">11252</p>
-                        </div>
-                    </div>
-                    <div class="text-container">
-                        <div class="text">
-                            <i class="fa fa-clock-o"></i>
-                            <p class="time">10:00 AM - 4:00 PM</p>
+                            <i class="fa fa-user"></i>
+                            <p id="customer"></p>
                         </div>
                     </div>
                 </div>
@@ -56,32 +55,33 @@
                 <div class="mid-container">
                     <div class="text-container">
                         <div class="text">
-                            <i class="fa fa-user"></i>
-                            <p class="name">Ibrahim Saleh</p>
+                            <i class="fa fa-calendar"></i>
+                            <p id="date"></p>
+                        </div>
+                        <div class="text">
+                            <i class="fa fa-file"></i>
+                            <p id="id"></p>
                         </div>
                     </div>
                     <div class="text-container">
                         <div class="text">
-                            <i class="fa fa-street-view" aria-hidden="true"></i>
-                            <p class="city">Jeddah</p>
-                        </div>
-                        <div class="text">
-                            <i class="fa fa-home"></i>
-                            <p class="dis">Al-Safa</p>
+                            <i class="fa fa-clock-o"></i>
+                            <p id="time"></p>
                         </div>
                     </div>
                 </div>
 
                 <!-- bottom -->
                 <div class="bottom-container">
-                    <button class="phone">
+                    <button id="callBtn">
                         <i class="fa fa-phone"></i>
                     </button>
-                    <button class="location">
+                    <button id="locationBtn">
                         <i class="fa fa-map-marker"></i>
                     </button>
                 </div>
             </div>
+            <div class="loader" id="loader"></div>
         </div>
 
         <!-- footer -->
@@ -89,6 +89,9 @@
             <p class="copyright">Recycle@Copyright 2021 All Right Reserved.</p>
         </div>
     </div>
+
+    <script src="../../scripts/firbaseConfig.js"></script>
+    <script src="../../scripts/driver/details.js"></script>
 </body>
 
 </html>

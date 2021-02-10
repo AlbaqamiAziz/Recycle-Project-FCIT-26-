@@ -6,18 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recycle | Profile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../style/DriverStyle/profileStyle.css">
-    <link rel="stylesheet" href="../../style/DriverStyle/main.css">
+    <link rel="stylesheet" href="../../style/CustomerStyle/main.css">
+    <link rel="stylesheet" href="../../style/CustomerStyle/profileStyle.css">
 
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
 
+    <!-- Authentication SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+
+    <!-- Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 </head>
 
 <body>
     <div class="container">
         <!-- nav bar -->
         <div class="top-bar">
-            <div class="bars">
-                <i class="fa fa-bars"></i>
+            <div class="bars" id="backBtn">
+                <i class="fa fa-angle-left"></i>
             </div>
             <div class="page-title">
                 <h3>Profile</h3>
@@ -27,42 +34,39 @@
             </div>
         </div>
 
-        <!-- orders section -->
+        <!-- form section -->
         <div class="form-container">
-            <form class="form">
+            <form class="form" id="form">
                 <div class="top-container">
                     <i class="fa fa-user-o"></i>
                 </div>
                 <div class="mid-container">
                     <div class="input">
-                        <label for="fname">First Name</label>
-                        <input type="text" id="fname">
+                        <label for="fname">Name</label>
+                        <input type="text" id="name">
                     </div>
-                    <div class="input">
-                        <label for="lname">Last Name</label>
-                        <input type="text" id="lname">
+                    <div class="input" id="email-container">
+                        <label for="email">Email</label>
+                        <input type="email" id="email">
                     </div>
                     <div class="input">
                         <label for="phone">Phone</label>
                         <input type="tel" id="phone">
                     </div>
-                    <div class="input">
-                        <label for="email">Email</label>
-                        <input type="email" id="email">
-                    </div>
                 </div>
                 <div class="bottom-container">
-                    <button class="save">
+                    <button type="submit" class="save">
                         <i class="fa fa-floppy-o"></i>
                         <p class="saveIt"> Save changes</p>
                     </button>
 
-                    <button class="cancel">
+                    <button type="button" class="cancel" id="cancelBtn">
                         <i class="fa fa-times-circle"></i>
                         <p class="cancelIt">Cacnel changes</p>
                     </button>
                 </div>
             </form>
+            <div class="loader" id="loader"></div>
         </div>
 
         <!-- footer -->
@@ -71,8 +75,9 @@
         </div>
     </div>
 
-
-
+    <script src="../../scripts/firbaseConfig.js"></script>
+    <script src="../../scripts/customer/registeration.js"></script>
+    <script src="../../scripts/driver/profile.js"></script>
 </body>
 
-</html>
+</html> 

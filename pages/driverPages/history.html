@@ -6,9 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recycle | Orders History</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../style/CustomerStyle/ordersHistoryStyle.css">
-    <link rel="stylesheet" href="../../style/CustomerStyle/main.css">
+    <link rel="stylesheet" href="../../style/DriverStyle/ordersHistoryStyle.css">
+    <link rel="stylesheet" href="../../style/DriverStyle/main.css">
 
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+
+    <!-- Authentication SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+
+    <!-- Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 </head>
 
 <body>
@@ -16,11 +24,11 @@
         <!-- nav bar -->
         <nav>
             <div class="top-bar">
-                <div class="bars">
-                    <i class="fa fa-arrow-left"></i>
+                <div class="bars" id="backBtn">
+                    <i class="fa fa-angle-left"></i>
                 </div>
                 <div class="page-title">
-                    <h3>Orders</h3>
+                    <h3>History</h3>
                 </div>
                 <div class="logo-container">
                     <img class="Logo" src="../../image/tree-Logo.png">
@@ -36,20 +44,20 @@
             </div>
         </nav>
 
-        <!-- orders section -->
+        <!-- requests section -->
         <div class="orders">
             <!-- bind the orders table with the current category -->
-            <table data-bind="with: currentCategory">
+            <table data-bind="with: currentCategory" id="table">
                 <!-- bind the table body with the orders list of the current category -->
                 <tbody data-bind="foreach: list">
-                    <tr data-bind="click: $root.showOrder">
+                    <tr data-bind="click: $root.showRequest">
                         <td class="order">
                             <div class="left">
                                 <div class="icon">
                                     <i class="fa fa-home"></i>
                                 </div>
                                 <div class="text">
-                                    <h3>Recycle Order NO.<span data-bind="text: id"></span></h3>
+                                    <h3>Recycle Request NO.<span data-bind="text: id"></span></h3>
                                     <p><span data-bind="text: date"></span> <span data-bind="time"></span></p>
                                 </div>
                             </div>
@@ -63,11 +71,13 @@
             </table>
         </div>
 
+
         <!-- footer -->
         <div class="footer">
             <p class="copyright">Recycle@Copyright 2021 All Right Reserved.</p>
         </div>
     </div>
+    <script src="../../scripts/firbaseConfig.js"></script>
     <script src="../../scripts/libs/knockout-3.5.1.js"></script>
     <script src="../../scripts/driver/history.js"></script>
 </body>

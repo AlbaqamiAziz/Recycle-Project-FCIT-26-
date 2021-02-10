@@ -54,9 +54,6 @@ function app() {
             getRequests(self.currentCategory);
         };
 
-        // set the first category to active
-        this.displayCategory(this.categoryList()[0]);
-
         this.showRequest = function (clickedRequest) {
             localStorage.setItem('requestID', clickedRequest.requestID());
             localStorage.setItem('state', clickedRequest.state());
