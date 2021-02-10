@@ -46,12 +46,10 @@ function isValidPassword(passwordInput) {
     }
     return isValid;
 }
-
 // -----------------------------------------------------------------
 
 
-// -----------------{Create user & add him to the database}---------------------
-
+// -----------------------------{Create user}------------------------------
 function createUser(user, name, phone) {
     var newUser = {
         name: name,

@@ -20,11 +20,6 @@
 </head>
 
 <body>
-    <div id="myDropdown" class="dropdown-content">
-        <a href="#">Delete messages</a>
-        <a href="#">End Chat</a>
-    </div>
-
     <div class="container">
         <div class="chating-container">
             <!-- Displayed chat -->
@@ -32,9 +27,13 @@
                 <nav>
                     <i data-bind="click: $parent.goBack" class="fa fa-arrow-left" aria-hidden="true"></i>
                     <h4 data-bind="text: member"></h4>
-                    <button data-bind="click: $parent.openSideMenu" class="circle-btn" id="openBtn"><i
-                            class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
-
+                    <button data-bind="click: $parent.openSideMenu" class="circle-btn" id="openBtn">
+                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    </button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a data-bind="click: $parent.deleteMessages" href="#" id="deleteBtn">Delete messages</a>
+                        <a data-bind="click: $parent.endChat" href="#" id="endBtn">End Chat</a>
+                    </div>
                 </nav>
                 <ul class="messages" data-bind="foreach: messageList">
                     <div class="message-cont">
@@ -57,22 +56,6 @@
     <script src="../../scripts/libs/knockout-3.5.1.js"></script>
     <script src="../../scripts/firbaseConfig.js"></script>
     <script src="../../scripts/customer/customerChat.js"></script>
-    <script>
-        // Close the dropdown menu if the user clicks outside of it
-        window.onclick = function (event) {
-            console.log('test');
-            if (!event.target.matches('#openBtn')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                var i;
-                for (i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
-    </script>
 </body>
 
 

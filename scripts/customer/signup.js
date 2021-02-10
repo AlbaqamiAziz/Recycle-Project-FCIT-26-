@@ -10,7 +10,6 @@ document.getElementById('google-btn').onclick = function (e) {
 // --------------------------------------------------------------
 
 // -----------------{Firebase Authntication}----------------
-
 // Regular Signup
 function signup(name, phone, email, password) {
     firebase.auth().createUserWithEmailAndPassword(email, password).then((userCredential) => {

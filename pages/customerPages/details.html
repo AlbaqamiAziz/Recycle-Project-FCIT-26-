@@ -10,15 +10,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../style/CustomerStyle/main.css">
     <link rel="stylesheet" href="../../style/CustomerStyle/requestDetailsStyle.css">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+
+    <!-- Authentication SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+
+    <!-- Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 </head>
 
 <body>
-
+    <div class="overlay" id="overlay">
+        <div class="popup">
+            <p class="text">Are you sure you want to cancel?</p>
+            <div class="btn-container">
+                <button class="btn" id="yesBtn">Yes, Cancel</button>
+                <button class="btn btn-no" id="noBtn">No</button>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
         <!-- back to home page-->
         <div class="top-bar">
-            <div class="exit-left">
+            <div class="bars" id="backBtn">
                 <a href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
             </div>
             <div class="page-title">
@@ -31,8 +48,7 @@
 
         <!-- order details section  -->
         <div class="order-container">
-            <div class="order">
-
+            <div class="order" id="order">
                 <!-- top -->
                 <div class="top-container">
                     <div class="icon">
@@ -41,17 +57,17 @@
                     <div class="text-container">
                         <div class="text">
                             <i class="fa fa-calendar"></i>
-                            <p class="date">25/1/21</p>
+                            <p id="date"></p>
                         </div>
                         <div class="text">
                             <i class="fa fa-file"></i>
-                            <p class="number">11252</p>
+                            <p id="id"></p>
                         </div>
                     </div>
                     <div class="text-container">
                         <div class="text">
                             <i class="fa fa-clock-o"></i>
-                            <p class="time">10:00 AM - 4:00 PM</p>
+                            <p id="time"></p>
                         </div>
                     </div>
                 </div>
@@ -61,31 +77,22 @@
                     <div class="text-container">
                         <div class="text">
                             <i class="fa fa-truck"></i>
-                            <p class="name">Ibrahim Saleh</p>
+                            <p id="driver"></p>
                         </div>
                     </div>
-                    <!-- <div class="text-container">
-                        <div class="text">
-                            <i class="fa fa-street-view" aria-hidden="true"></i>
-                            <p class="city">Jeddah</p>
-                        </div>
-                        <div class="text">
-                            <i class="fa fa-home"></i>
-                            <p class="dis">Al-Safa</p>
-                        </div>
-                    </div> -->
                 </div>
 
                 <!-- bottom -->
                 <div class="bottom-container">
-                    <button class="phone">
+                    <button id="callBtn">
                         <i class="fa fa-phone-square"></i>
                     </button>
-                    <button class="location">
+                    <button id="cancelBtn">
                         <i class="fa fa-times"></i>
                     </button>
                 </div>
             </div>
+            <div class="loader" id="loader"></div>
         </div>
 
         <!-- footer -->
@@ -93,6 +100,9 @@
             <p class="copyright">Recycle@Copyright 2021 All Right Reserved.</p>
         </div>
     </div>
+
+    <script src="../../scripts/firbaseConfig.js"></script>
+    <script src="../../scripts/customer/details.js"></script>
 
 </body>
 

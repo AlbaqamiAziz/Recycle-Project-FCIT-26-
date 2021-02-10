@@ -1,31 +1,13 @@
-// -----------------{Init date picker}----------------  
-var datePicker = document.getElementById("date");
-var today = new Date();
-var nextWeek = new Date();
-nextWeek.setDate(nextWeek.getDate() + 7);
-
-// calculate current date and one week
-var min = dateFormat(today);
-var max = dateFormat(nextWeek);
-
-// set current, min and max
-datePicker.min = min;
-datePicker.value = min;
-datePicker.max = max;
-
-
-var timePicker = document.getElementById("time");
-timePicker.min = '20:00';
-timePicker.max = '24:00';
-
-function dateFormat(date) {
-    var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-    var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-    return date.getFullYear() + "-" + month + "-" + day;
-}
-// --------------------------------------------------
-
 // -----------------{Event listeners}---------------- 
+var currentUser, savedLocation, newLocation;
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        currentUser = user;
+        checkLocation();
+        initDatePicker();
+    }
+});
+
 document.getElementById('form').onsubmit = function (e) {
     e.preventDefault();
     validateForm();
@@ -42,27 +24,6 @@ document.getElementById('location').onchange = function () {
 
 document.getElementById('backBtn').onclick = function () {
     window.location.href = "homepage.html";
-}
-
-var currentUser, savedLocation, newLocation;
-firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-        currentUser = user;
-        checkLocation();
-    }
-});
-
-
-function checkLocation() {
-    firebase.database().ref('/users/' + currentUser.uid).once('value').then(function (snapshot) {
-        // if customer has registered location
-        if (snapshot.val().location) {
-            savedLocation = snapshot.val().location;
-            document.getElementById('map').style.display = 'none';
-        } else {
-            document.getElementById('location').style.display = 'none';
-        }
-    });
 }
 // --------------------------------------------------
 
@@ -90,6 +51,21 @@ function isTimeSelected(timeInput) {
     return isValid;
 }
 
+function checkLocation() {
+    firebase.database().ref('/users/' + currentUser.uid).once('value').then(function (snapshot) {
+        // if customer has registered location
+        if (snapshot.val().location) {
+            savedLocation = snapshot.val().location;
+            document.getElementById('map').style.display = 'none';
+        } else {
+            document.getElementById('location').style.display = 'none';
+        }
+        // remove the loader
+        removeElement(document.getElementById('loader'));
+        document.getElementById('form').style.display = 'flex';
+    });
+}
+
 function getSelectedLocation(option) {
     var selectedLocation
     if (savedLocation) {
@@ -101,20 +77,41 @@ function getSelectedLocation(option) {
 }
 // ----------------------------------------------------------------------------------------------
 
-// -----------------{Create request & add it to the database & update customers' location}---------------------
+// -----------------{Create request & update customers' location}---------------------
 function createRequest(date, time, selectedLocation) {
-    var newRequest = {
-        date: date,
-        time: time,
-        state: 'new',
-        location: selectedLocation
-    };
-    writeRequestData(newRequest, selectedLocation);
+    // get request id
+    firebase.database().ref("requests/count").once("value").then(function (snapshot) {
+        var newId = snapshot.val() + 1;
+        var newRequest = {
+            id: newId,
+            date: date,
+            time: time,
+            customer_id: currentUser.uid,
+            driver_id: "",
+            state: 'Active',
+            location: selectedLocation
+        };
+        updateCount(newId, newRequest, selectedLocation);
+    });
+}
+
+function updateCount(newId, newRequest, selectedLocation) {
+    firebase.database().ref('requests').update({
+        count: newId
+    }, function (error) {
+        if (error) {
+            var errorMessage = error.message;
+            // TODO: Add a an error message container
+            alert(errorMessage);
+        } else {
+            // write the new request to the database
+            writeRequestData(newRequest, selectedLocation);
+        }
+    });
 }
 
 function writeRequestData(newRequest, selectedLocation) {
-
-    var requestsRef = firebase.database().ref('requests');
+    var requestsRef = firebase.database().ref('requests/Active');
     var newRequestRef = requestsRef.push();
     newRequestRef.set(newRequest, function (error) {
         if (error) {
@@ -153,7 +150,36 @@ function updateUserLocation(selectedLocation) {
         }
     });
 }
-// ------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+
+// -----------------{Init date picker}----------------  
+function initDatePicker() {
+    var datePicker = document.getElementById("date");
+    var today = new Date();
+    var nextWeek = new Date();
+    nextWeek.setDate(nextWeek.getDate() + 7);
+
+    // calculate current date and one week
+    var min = dateFormat(today);
+    var max = dateFormat(nextWeek);
+
+    // set current, min and max
+    datePicker.min = min;
+    datePicker.value = min;
+    datePicker.max = max;
+
+
+    var timePicker = document.getElementById("time");
+    timePicker.min = '20:00';
+    timePicker.max = '24:00';
+
+    function dateFormat(date) {
+        var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+        return date.getFullYear() + "-" + month + "-" + day;
+    }
+}
+// --------------------------------------------------
 
 // -----------------{Init map}----------------  
 let map, infoWindow, marker, pos;
@@ -213,3 +239,8 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.open(map);
 }
 // --------------------------------------------------------------------
+
+function removeElement(element) {
+    var parent = element.parentNode;
+    parent.removeChild(element);
+}

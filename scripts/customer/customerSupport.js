@@ -1,17 +1,11 @@
-//save the current user
+// ---------------{Event listeners}------------------
 var currentUser;
 
 firebase.auth().onAuthStateChanged(function (user) {
-    currentUser = user;
-    //get chats from firebase
-    firebase.database().ref("userChats/" + currentUser.uid).once("value", function (snapshot) {
-        if (snapshot.val()) {
-            window.location.href = 'chat.html';
-        } else {
-            removeElement(document.getElementById('loader'));
-            document.getElementById('form').style.display = 'flex';
-        }
-    });
+    if (user) {
+        currentUser = user;
+        checkChat();
+    }
 });
 
 document.getElementById('backBtn').onclick = function () {
@@ -22,13 +16,10 @@ document.getElementById('form').onsubmit = function (e) {
     e.preventDefault();
     validateForm();
 }
+// -----------------------------------------------------
 
 
-function removeElement(element) {
-    var parent = element.parentNode;
-    parent.removeChild(element);
-}
-
+// -----------------{Form validation}--------------------
 function validateForm() {
     var subjectInput = document.getElementById('subject');
     var typeInput = document.getElementById('type');
@@ -36,6 +27,17 @@ function validateForm() {
     if (isValid) {
         createChat(subjectInput.value, typeInput.value);
     }
+}
+
+function checkChat() {
+    firebase.database().ref("userChats/" + currentUser.uid).once("value", function (snapshot) {
+        if (snapshot.val()) {
+            window.location.href = 'chat.html';
+        } else {
+            removeElement(document.getElementById('loader'));
+            document.getElementById('form').style.display = 'flex';
+        }
+    });
 }
 
 function isValidSubject(subjectInput) {
@@ -61,7 +63,9 @@ function isTypeSelected(typeInput) {
     }
     return isValid;
 }
+// --------------------------------------------------------
 
+// ------------------{Create chat}-------------------------
 function createChat(subject, type) {
     var newChatRef = firebase.database().ref("chats").push();
 
@@ -91,4 +95,10 @@ function createChat(subject, type) {
             window.location.href = 'chat.html';
         }
     });
+}
+// --------------------------------------------------------
+
+function removeElement(element) {
+    var parent = element.parentNode;
+    parent.removeChild(element);
 }

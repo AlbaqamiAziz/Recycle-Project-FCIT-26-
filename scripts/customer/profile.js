@@ -23,38 +23,6 @@ document.getElementById('cancelBtn').onclick = function () {
         window.location.href = "homepage.html";
     }
 }
-
-
-// -------------------------------------------------------
-
-var notGoogle = true;
-function getUserData(providerId) {
-    var userRef = firebase.database().ref('users/' + currentUser.uid);
-    userRef.once('value', (snapshot) => {
-        var name = snapshot.val().name;
-        var phone = snapshot.val().phone;
-        var email = currentUser.email;
-
-        document.getElementById("name").value = name;
-        document.getElementById('phone').value = phone;
-        document.getElementById('email').value = email;
-
-        //if the user signed in using google account he can't change his email
-        if (providerId == 'google.com') {
-            removeElement(document.getElementById('email-container'));
-            notGoogle = false;
-        }
-
-        // remove the loader after retriving customer's data
-        removeElement(document.getElementById('loader'));
-        document.getElementById('form').style.display = 'flex';
-    });
-}
-
-function removeElement(element) {
-    var parent = element.parentNode;
-    parent.removeChild(element);
-}
 // -------------------------------------------------------
 
 // -----------------{Form validation}-------------------
@@ -75,8 +43,34 @@ function validateForm() {
         updateUserData(nameInput.value, phoneInput.value);
     }
 }
+// --------------------------------------------------------
 
+// -----------------{Get data from firebase}----------------
+var notGoogle = true;
+function getUserData(providerId) {
+    firebase.database().ref('users/' + currentUser.uid).once('value', (snapshot) => {
+        var name = snapshot.val().name;
+        var phone = snapshot.val().phone;
+        var email = currentUser.email;
 
+        document.getElementById("name").value = name;
+        document.getElementById('phone').value = phone;
+        document.getElementById('email').value = email;
+
+        //if the user signed in using google account he can't change his email
+        if (providerId == 'google.com') {
+            removeElement(document.getElementById('email-container'));
+            notGoogle = false;
+        }
+
+        // remove the loader after retriving customer's data
+        removeElement(document.getElementById('loader'));
+        document.getElementById('form').style.display = 'flex';
+    });
+}
+// -------------------------------------------------------
+
+// ------------------{Update user}--------------------
 function updateUserEmail(name, phone, email) {
     if (notGoogle && email != currentUser.email) {
         currentUser.updateEmail(email).then(function () {
@@ -106,4 +100,9 @@ function updateUserData(name, phone) {
         }
     });
 }
-// -----------------------------------------------------------------
+// --------------------------------------------------------
+
+function removeElement(element) {
+    var parent = element.parentNode;
+    parent.removeChild(element);
+}

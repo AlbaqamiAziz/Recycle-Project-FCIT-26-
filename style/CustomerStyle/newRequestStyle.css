@@ -1,6 +1,7 @@
 .form {
     height: 83vh;
     margin: 0;
+    display: none;
 }
 
 .top-container,
