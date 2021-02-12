@@ -56,7 +56,7 @@ function app() {
 
         this.showRequest = function (clickedRequest) {
             localStorage.setItem('requestID', clickedRequest.requestID());
-            localStorage.setItem('state', clickedRequest.state());
+            localStorage.setItem('state', self.currentCategory().name());
             window.location.href = "details.html";
         };
     };

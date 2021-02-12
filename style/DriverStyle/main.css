@@ -86,6 +86,13 @@ body {
     font-size: 60px;
 }
 
+.loader-container{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .loader {
     border: 16px solid #d1d1d1; /* Light grey */
     border-top: 16px solid #5a9851; /* green */

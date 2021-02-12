@@ -13,7 +13,6 @@ document.getElementById('backBtn').onclick = function () {
 
 function app() {
     var categories = ['Active', 'Previous', 'Canceled'];
-
     document.getElementById('table').style.display = 'table';
 
     // the category is the top bar item that contains a list of requests
@@ -56,7 +55,7 @@ function app() {
 
         this.showRequest = function (clickedRequest) {
             localStorage.setItem('requestID', clickedRequest.requestID());
-            localStorage.setItem('state', clickedRequest.state());
+            localStorage.setItem('state', self.currentCategory().name());
             window.location.href = "details.html";
         };
     };
@@ -68,7 +67,7 @@ function app() {
         });
     }
 
-    function getRequests(currentCategory) {
+    function getRequests(currentCategory) { 
         //clear current requests
         currentCategory().list.removeAll();
 

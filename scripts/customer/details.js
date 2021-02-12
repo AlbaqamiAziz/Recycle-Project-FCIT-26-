@@ -37,14 +37,14 @@ function getRequestData() {
         var id = request.val().id;
         var driverID = request.val().driver_id;
 
-        setRequestData(date, time, id, driverID);
+        setRequestData(date, time, id, driverID, state);
 
         removeElement(document.getElementById('loader'));
         document.getElementById('order').style.display = 'flex';
     });
 }
 
-function setRequestData(date, time, id, driverID) {
+function setRequestData(date, time, id, driverID, state) {
     // set request details
     document.getElementById("date").innerText = date;
     document.getElementById('id').innerText = id;
@@ -52,13 +52,21 @@ function setRequestData(date, time, id, driverID) {
 
     // check if request is accepted by driver
     if (driverID == '') {
-        document.getElementById('driver').innerText = 'Request is not accepted yet';
         removeElement(document.getElementById('callBtn'));
+        document.getElementById('driver').innerText = 'Request is not accepted yet';
     } else {
         firebase.database().ref('users/' + driverID).once('value', (driver) => {
             var driverName = driver.val().name;
             document.getElementById('driver').innerText = driverName;
         });
+    }
+
+    if (state == 'Canceled' || state == 'Previous') {
+        var callBtn = document.getElementById('callBtn');
+        if (callBtn) {
+            removeElement(callBtn);
+        }
+        removeElement(document.getElementById('cancelBtn'));
     }
 }
 // -------------------------------------------------------
@@ -67,11 +75,11 @@ function setRequestData(date, time, id, driverID) {
 function cancelRequest() {
     // Remove request from active 
     firebase.database().ref('requests/' + cuurentRequest.val().state + '/' + cuurentRequest.key).remove();
-    
+
     // copy request data to a new request
     var request = cuurentRequest.val();
-    request.state = 'Canceled';
-    
+    request.state = 'canceled';
+
     // add request from canceled 
     firebase.database().ref('requests/Canceled/' + cuurentRequest.key).set(request, function (error) {
         if (error) {

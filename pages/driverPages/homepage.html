@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recycle | New orders</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../style/DriverStyle/newOrdersStyle.css">
     <link rel="stylesheet" href="../../style/DriverStyle/main.css">
+    <link rel="stylesheet" href="../../style/DriverStyle/driverHome.css">
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
@@ -45,45 +45,35 @@
         </div>
 
         <!-- orders section -->
-        <div class="orders">
-            <div class="order">
-                <div class="top-container">
-                    <div class="icon">
-                        <img class="user" src="../../image/user.png">
+        <div class="orders" id="orders" data-bind="foreach: requestList">
+            <div class="order" data-bind="class: checkActive">
+                <div class="details" data-bind="click: $root.toggle">
+                    <div class="top-container">
+                        <div class="icon">
+                            <img class="user" src="../../image/user.png">
+                        </div>
+                        <div class="text">
+                            <p class="name" data-bind="text: customerName"></p>
+                            <p class="orderNo">Order No: <span data-bind="text: id"></span></p>
+                        </div>
                     </div>
-                    <div class="text">
-                        <p class="name">Faisal Mohammed</p>
-                        <p class="orderNo">Order No: 112545</p>
+                    <!-- <div class="mid-container">
+                        <p class="city">City : Jeddah </p>
+                        <p class="Dis">District : Al-Samar</p>
+                    </div> -->
+                    <div class="bottom-container">
+                        <i class="fa fa-arrow-left"></i>
+                        <p class="swip"> Click here to accept</p>
                     </div>
                 </div>
-                <div class="mid-container">
-                    <p class="city">City : Jeddah </p>
-                    <p class="Dis">District : Al-Samar</p>
-                </div>
-                <div class="bottom-container">
-                    <i class="fa fa-arrow-left"></i>
-                    <p class="swip"> swip left to accept</p>
+                <div class="btn-container" data-bind="click: $root.accept">
+                    <button class="acceptBtn">Accept</button>
                 </div>
             </div>
-            <div class="order">
-                <div class="top-container">
-                    <div class="icon">
-                        <img class="user" src="../../image/user.png">
-                    </div>
-                    <div class="text">
-                        <p class="name">Faisal Mohammed</p>
-                        <p class="orderNo">Order No: 112545</p>
-                    </div>
-                </div>
-                <div class="mid-container">
-                    <p class="city">City : Jeddah </p>
-                    <p class="Dis">District : Al-Samar</p>
-                </div>
-                <div class="bottom-container">
-                    <i class="fa fa-arrow-left"></i>
-                    <p class="swip"> swip left to accept</p>
-                </div>
-            </div>
+        </div>
+
+        <div class="loader-container" id="loader">
+            <div class="loader" ></div>
         </div>
 
         <!-- footer -->
@@ -91,8 +81,8 @@
             <p class="copyright">Recycle@Copyright 2021 All Right Reserved.</p>
         </div>
     </div>
-
     <script src="../../scripts/firbaseConfig.js"></script>
+    <script src="../../scripts/libs/knockout-3.5.1.js"></script>
     <script src="../../scripts/driver/homepage.js"></script>
 </body>
 

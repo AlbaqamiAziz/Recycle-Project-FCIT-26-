@@ -30,11 +30,11 @@ function getRequestData() {
         var location = request.val().location;
         var customerID = request.val().customer_id;
 
-        setRequestData(date, time, id, location, customerID);
+        setRequestData(date, time, id, location, customerID, state);
     });
 }
 
-function setRequestData(date, time, id, location, customerID) {
+function setRequestData(date, time, id, location, customerID, state) {
     // set request details
     document.getElementById("date").innerText = date;
     document.getElementById('id').innerText = id;
@@ -52,6 +52,14 @@ function setRequestData(date, time, id, location, customerID) {
     document.getElementById('locationBtn').onclick = function () {
         window.open(location);
     };
+
+    if (state == 'Canceled' || state == 'Previous') {
+        var callBtn = document.getElementById('callBtn');
+        if (callBtn) {
+            removeElement(callBtn);
+        }
+        removeElement(document.getElementById('locationBtn'));
+    }
 }
 // -------------------------------------------------------
 

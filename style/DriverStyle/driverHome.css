@@ -1,5 +1,17 @@
 /* orders section */
+.orders{
+    display: none;
+}
+
 .order {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.details {
     background-color: white;
     border-radius: 35px;
     width: 95%;
@@ -11,8 +23,35 @@
     color: #707c97;
     padding: 15px;
     margin: 20px auto;
+    transition: all 0.3s ease;
 }
 
+.btn-container {
+    position: absolute;
+    right: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+}
+
+.acceptBtn {
+    transform: rotate(270deg);
+    padding: 20px;
+    border-radius: 5px;
+    background: linear-gradient(97deg, #C4D9B0 0%, #458C3A 46%);
+    font-size: 18px;
+    color: #f2f2f2;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.toggle .details {
+    transform: translateX(-30%);
+}
+
+.toggle .btn-container {
+    transform: translateX(20px);
+}
 
 /* devide the order into 3 parts */
 
@@ -21,7 +60,6 @@
 .bottom-container {
     flex: 1;
 }
-
 
 /* first part */
 
@@ -38,7 +76,6 @@
     margin-right: 10px;
 }
 
-
 /* second & third part */
 
 .mid-container {
@@ -54,11 +91,10 @@
     margin: 0 15px;
 }
 
-
 /* responsive */
 
 @media screen and (min-width: 768px) {
-    .order {
+    .details {
         width: 52%;
         padding: 15px;
     }
@@ -71,7 +107,7 @@
 }
 
 @media screen and (min-width: 1024px) {
-    .order {
+    .details {
         width: 30%;
         padding: 15px;
     }
