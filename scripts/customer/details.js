@@ -55,9 +55,12 @@ function setRequestData(date, time, id, driverID, state) {
         removeElement(document.getElementById('callBtn'));
         document.getElementById('driver').innerText = 'Request is not accepted yet';
     } else {
-        firebase.database().ref('users/' + driverID).once('value', (driver) => {
+        firebase.database().ref('users/drivers/' + driverID).once('value', (driver) => {
             var driverName = driver.val().name;
+            var driverPhone = driver.val().phone;
             document.getElementById('driver').innerText = driverName;
+            document.getElementById('callBtn').href = 'tel:' + driverPhone;
+
         });
     }
 

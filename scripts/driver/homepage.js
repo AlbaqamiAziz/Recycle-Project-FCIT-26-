@@ -71,7 +71,7 @@ function getRequests(requestList) {
         var time = request.val().time;
         var customerId = request.val().customer_id;
 
-        firebase.database().ref("users/" + customerId).on("value", function (customer) {
+        firebase.database().ref("users/customers/" + customerId).on("value", function (customer) {
             var customerName = customer.val().name;
             requestList.push(new Request(requestID, id, state, date, time, customerName));
         });

@@ -83,3 +83,21 @@ tr:nth-child(even):hover {
 tr:nth-child(even) {
     background: #e7e7e7;
 }
+.message{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 20%;
+    width: 100%;
+    display: none;
+}
+
+.fa-warning{
+    font-size: 35px;
+    color: rgb(182, 0, 0);
+}
+
+.message-text{
+    font-size: 18px;
+}

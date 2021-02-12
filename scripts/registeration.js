@@ -54,16 +54,28 @@ function createUser(user, name, phone) {
     var newUser = {
         name: name,
         phone: phone,
-        type: 'customer',
         location: '',
         current_points: 0,
         total_points: 0
     };
-    writeUserData(newUser, user.uid);
+    writeUserType(newUser, user.uid);
 }
 
+function writeUserType(newUser, uid) {
+    firebase.database().ref('user_type/' + uid).set({
+        type: 'customer'
+    }, function (error) {
+        if (error) {
+            var errorMessage = error.message;
+            // TODO: Add a an error message container
+            alert(errorMessage);
+        } else {
+            writeUserData(newUser, uid);
+        }
+    });
+}
 function writeUserData(newUser, uid) {
-    firebase.database().ref('users/' + uid).set(newUser, function (error) {
+    firebase.database().ref('users/customers/' + uid).set(newUser, function (error) {
         if (error) {
             var errorMessage = error.message;
             // TODO: Add a an error message container

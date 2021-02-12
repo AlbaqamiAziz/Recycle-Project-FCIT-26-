@@ -75,14 +75,14 @@ function createChat(subject, type) {
 
     //add the chat referance to the second users' chats list
     //open chat with the admin
-    userChat = firebase.database().ref("userChats/P5XHkjrmNgYxYuNLW67aPLBF5NW2").push();
+    userChat = firebase.database().ref("userChats/9dw5V2qAYdauGQzUBYtFzNu1C1G3").push();
     userChat.set({ chatID: newChatRef.key });
 
     //create new chat refrance
     newChatRef.set({
         members: {
             firstUser: currentUser.uid,
-            secondUser: 'P5XHkjrmNgYxYuNLW67aPLBF5NW2'
+            secondUser: '9dw5V2qAYdauGQzUBYtFzNu1C1G3'
         },
         lastMessage: "",
         subject: subject,

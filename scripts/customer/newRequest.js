@@ -52,7 +52,7 @@ function isTimeSelected(timeInput) {
 }
 
 function checkLocation() {
-    firebase.database().ref('/users/' + currentUser.uid).once('value').then(function (snapshot) {
+    firebase.database().ref('users/customers/' + currentUser.uid).once('value').then(function (snapshot) {
         // if customer has registered location
         if (snapshot.val().location) {
             savedLocation = snapshot.val().location;
@@ -138,7 +138,7 @@ function appendRequestToCustomer(newRequestRefKey) {
 }
 
 function updateUserLocation(selectedLocation) {
-    firebase.database().ref('users/' + currentUser.uid).update({
+    firebase.database().ref('users/customers/' + currentUser.uid).update({
         location: selectedLocation
     }, function (error) {
         if (error) {

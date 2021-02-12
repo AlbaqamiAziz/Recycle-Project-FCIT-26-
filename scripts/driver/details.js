@@ -40,9 +40,11 @@ function setRequestData(date, time, id, location, customerID, state) {
     document.getElementById('id').innerText = id;
     document.getElementById('time').innerText = time;
 
-    firebase.database().ref('users/' + customerID).once('value', (customer) => {
+    firebase.database().ref('users/customers/' + customerID).once('value', (customer) => {
         var customerName = customer.val().name;
+        var customerPhone = customer.val().phone;
         document.getElementById('customer').innerText = customerName;
+        document.getElementById('callBtn').href = 'tel:' + customerPhone;
 
         // remove loader
         removeElement(document.getElementById('loader'));

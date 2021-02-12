@@ -27,6 +27,20 @@ function signup(name, phone, email, password) {
 function google_signup() {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithRedirect(provider);
+
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            //check if the customer record is found in the database
+            firebase.database().ref('/users/customers/' + user.uid).once('value').then(function (snapshot) {
+                // if registerd
+                if (snapshot.val()) {
+                    window.location.href = "customerPages/homepage.html";
+                } else {
+                    window.location.href = "googleSignup.html";
+                }
+            });
+        }
+    });
 }
 // ---------------------------------------------------------------
 
@@ -42,19 +56,6 @@ function validateForm() {
     }
 }
 
-firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-        //check if the customer record is found in the database
-        firebase.database().ref('/users/customer' + user.uid).once('value').then(function (snapshot) {
-            // if registerd
-            if (snapshot.val()) {
-                window.location.href = "customerPages/homepage.html";
-            } else {
-                window.location.href = "googleSignup.html";
-            }
-        });
-    }
-});
 
 
 

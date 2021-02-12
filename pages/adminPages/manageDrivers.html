@@ -8,9 +8,39 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../style/adminStyle/main.css">
     <link rel="stylesheet" href="../../style/adminStyle/manageDrivers.css">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+
+    <!-- Authentication SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+
+    <!-- Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 </head>
 
 <body>
+    <!-- Add form -->
+    <div class="overlay" id="myOverlay">
+        <span class="closebtn" id="closeBtn" title="Close Overlay">x</span>
+        <div class="overlay-content">
+            <div class="modal">
+                <h2>Add new Driver</h2>
+                <form class="form" id="addForm">
+                    <div class="input-container">
+                        <input type="text" id="name" placeholder="Name">
+                        <input type="email" id="email" placeholder="Email">
+                        <input type="tel" id="phone" placeholder="Phone">
+                        <input type="password" id="password" placeholder="Password">
+                    </div>
+                    <div class="btn-container">
+                        <button type="submit" class="btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <!-- top navbar which has two sections one in both sides (left, right) -->
         <nav>
@@ -18,18 +48,15 @@
                 <div class="left">
                     <img src="../../image/logo1.png" alt="">
                 </div>
-
                 <div class="right">
                     <div class="user-info">
-                        <h5 class="name">
-                            Sohaib Albakri
+                        <h5 class="name" id="adminName">
                         </h5>
                         <h6 class="role">
                             Admin
                         </h6>
                     </div>
                     <div class="buttons">
-                        <button class="icon-btn"><i class="fa fa-bell" aria-hidden="true"></i></button>
                         <button class="icon-btn" id="logout"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
                     </div>
                 </div>
@@ -68,152 +95,45 @@
                         <p class="description">Manage drivers</p>
                     </div>
                     <div class="page-buttons">
-                        <button><i class="fa fa-plus"></i> Add new driver</button>
+                        <button id="openBtn"><i class="fa fa-plus"></i> Add new driver</button>
                     </div>
                 </div>
+
                 <div class="mid-container">
                     <div class="table">
                         <div class="title-container">
                             <h2>Drivers</h2>
                             <div class="form-container">
                                 <form class="search">
-                                    <input type="text" placeholder="Search.." name="search2">
-                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                    <input type="text" placeholder="Search.." id="search">
                                 </form>
                             </div>
                         </div>
 
                         <div class="body-container">
-                            <table class="top-drivers">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Phone</th>
-                                    <th>Email</th>
-                                    <th>Total requests</th>
-                                    <th>Action</th>
-                                </tr>
-                                <tr>
-                                    <td>#336</td>
-                                    <td>Sohaib Bakr</td>
-                                    <td>0581100456</td>
-                                    <td>sohaib202@hotmail.com</td>
-                                    <td>525</td>
-                                    <td>
-                                        <button><i class="fa fa-edit"></i></button>
-                                        <button><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#214</td>
-                                    <td>Aziz Saad</td>
-                                    <td>0581100123</td>
-                                    <td>aziz202@hotmail.com</td>
-                                    <td>354</td>
-                                    <td>
-                                        <button><i class="fa fa-edit"></i></button>
-                                        <button><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#222</td>
-                                    <td>Ahmed Adel</td>
-                                    <td>0581100581</td>
-                                    <td>ahmed202@hotmail.com</td>
-                                    <td>224</td>
-                                    <td>
-                                        <button><i class="fa fa-edit"></i></button>
-                                        <button><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#123</td>
-                                    <td>Ali Albishi</td>
-                                    <td>0581100489</td>
-                                    <td>ali202@hotmail.com</td>
-                                    <td>100</td>
-                                    <td>
-                                        <button><i class="fa fa-edit"></i></button>
-                                        <button><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#895</td>
-                                    <td>Ahmed Bakr</td>
-                                    <td>0582255782</td>
-                                    <td>ab202@hotmail.com</td>
-                                    <td>85</td>
-                                    <td>
-                                        <button><i class="fa fa-edit"></i></button>
-                                        <button><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#895</td>
-                                    <td>Ahmed Bakr</td>
-                                    <td>0582255782</td>
-                                    <td>ab202@hotmail.com</td>
-                                    <td>85</td>
-                                    <td>
-                                        <button><i class="fa fa-edit"></i></button>
-                                        <button><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#895</td>
-                                    <td>Ahmed Bakr</td>
-                                    <td>0582255782</td>
-                                    <td>ab202@hotmail.com</td>
-                                    <td>85</td>
-                                    <td>
-                                        <button><i class="fa fa-edit"></i></button>
-                                        <button><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#895</td>
-                                    <td>Ahmed Bakr</td>
-                                    <td>0582255782</td>
-                                    <td>ab202@hotmail.com</td>
-                                    <td>85</td>
-                                    <td>
-                                        <button><i class="fa fa-edit"></i></button>
-                                        <button><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#895</td>
-                                    <td>Ahmed Bakr</td>
-                                    <td>0582255782</td>
-                                    <td>ab202@hotmail.com</td>
-                                    <td>85</td>
-                                    <td>
-                                        <button><i class="fa fa-edit"></i></button>
-                                        <button><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#895</td>
-                                    <td>Ahmed Bakr</td>
-                                    <td>0582255782</td>
-                                    <td>ab202@hotmail.com</td>
-                                    <td>85</td>
-                                    <td>
-                                        <button><i class="fa fa-edit"></i></button>
-                                        <button><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>#895</td>
-                                    <td>Ahmed Bakr</td>
-                                    <td>0582255782</td>
-                                    <td>ab202@hotmail.com</td>
-                                    <td>85</td>
-                                    <td>
-                                        <button><i class="fa fa-edit"></i></button>
-                                        <button><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
+                            <table class="top-drivers" id="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Total requests</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="foreach: driverList">
+                                    <tr>
+                                        <td data-bind="text: name"></td>
+                                        <td data-bind="text: phone"></td>
+                                        <td data-bind="text: email"></td>
+                                        <td data-bind="text: totalRequests"></td>
+                                        <td>
+                                            <button data-bind="click: $parent.edit"><i class="fa fa-edit"></i></button>
+                                            <button data-bind="click: $parent.delete"><i
+                                                    class="fa fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -221,6 +141,12 @@
             </div>
         </main>
     </div>
+
+    <script src="../../scripts/firbaseConfig.js"></script>
+    <script src="../../scripts/libs/knockout-3.5.1.js"></script>
+    <script src="../../scripts/registeration.js"></script>
+    <script src="../../scripts/admin/main.js"></script>
+    <script src="../../scripts/admin/manageDrivers.js"></script>
 </body>
 
 </html>

@@ -79,7 +79,6 @@ function app() {
             messageRef.set({
                 sender: currentUser.uid,
                 content: newMessage,
-                timestamp: Date.now()
             });
 
             firebase.database().ref('chats/' + self.currentChat().chatID()).update({
@@ -104,7 +103,7 @@ function app() {
                 //get the other members' id 
                 var senderID = members.firstUser == currentUser.uid ? members.secondUser : members.firstUser;
 
-                firebase.database().ref("users/" + senderID).once("value", function (user) {
+                firebase.database().ref("users/admins/" + senderID).once("value", function (user) {
                     currentChat(new Chat(user.val().name, chat.val().lastMessage, chat.key));
                     getMessages(currentChat);
 

@@ -33,7 +33,7 @@ function google_signup() {
 function validateForm() {
     var emailInput = document.getElementById('email');
     var passwordInput = document.getElementById('password');
-    var isValid =  isValidEmail(emailInput) && isValidPassword(passwordInput);
+    var isValid = isValidEmail(emailInput) && isValidPassword(passwordInput);
     if (isValid) {
         signin(emailInput, passwordInput);
     }
@@ -41,13 +41,11 @@ function validateForm() {
 
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-        firebase.database().ref('/users/' + user.uid).once('value').then(function (snapshot) {
+        firebase.database().ref('user_type/' + user.uid).once('value').then(function (type) {
             //check if the customer record is found in the database
-            if (snapshot.val()) {
-                if (snapshot.val().type == 'customer') {
+            if (type.val()) {
+                if (type.val().type == 'customer') {
                     window.location.href = "customerPages/homepage.html";
-                } else if (snapshot.val().type == 'driver') {
-                    window.location.href = "driverPages/homepage.html";
                 } else {
                     window.location.href = "adminPages/overview.html";
                 }

@@ -8,15 +8,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../style/adminStyle/main.css">
     <link rel="stylesheet" href="../../style/adminStyle/mailboxStyle.css">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+
+    <!-- Authentication SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+
+    <!-- Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 </head>
 
 <body>
     <div id="myOverlay" class="overlay">
-        <span class="closebtn" title="Close">×</span>
+        <span id="closeBtn" class="closebtn" title="Close">×</span>
         <div class="overlay-content">
             <input type="text" placeholder="Search..." id="search">
             <div class="card" id="card">
-                <img alt="Person" class="card-image" id="card-img">
                 <p class="card-name" id="card-name"></p>
             </div>
         </div>
@@ -32,15 +40,13 @@
 
                 <div class="right">
                     <div class="user-info">
-                        <h5 class="name">
-                            Sohaib Albakri
+                        <h5 class="name" id="adminName">
                         </h5>
                         <h6 class="role">
                             Admin
                         </h6>
                     </div>
                     <div class="buttons">
-                        <button class="icon-btn"><i class="fa fa-bell" aria-hidden="true"></i></button>
                         <button class="icon-btn" id="logout"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
                     </div>
                 </div>
@@ -72,7 +78,7 @@
                 </ul>
             </div>
 
-            <div class="main-content">
+            <div class="main-content" id="main-content">
                 <!-- change the class -->
                 <div class="top-container">
                     <div class="page-infos">
@@ -81,7 +87,7 @@
                             <p class="description">Mailbox</p>
                         </div>
                         <div class="page-buttons">
-                            <button><i class="fa fa-plus"></i> Create new chat</button>
+                            <button id="openSearchBtn"><i class="fa fa-plus"></i> Create new chat</button>
                         </div>
                     </div>
 
@@ -89,8 +95,8 @@
                         <ul class="list" data-bind="foreach: chatList">
                             <!-- add a li -->
                             <li data-bind="click: $parent.displayChat" class="chat active">
-                                <h3 data-bind="text: member">Majed Ahmed</h3>
-                                <p data-bind="text: lastMessage">Hello world</p>
+                                <h3 data-bind="text: member"></h3>
+                                <p data-bind="text: lastMessage"></p>
                             </li>
                         </ul>
                     </div>
@@ -100,13 +106,18 @@
                     <!-- Displayed chat -->
                     <div class="display" data-bind="with: currentChat">
                         <nav class="chat-nav">
-                            <h4 data-bind="text: member">Majed Ahmed</h4>
-                            <button class="circle-btn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                            <h4 data-bind="text: member"></h4>
+                            <button data-bind="click: $parent.openSideMenu" class="circle-btn" id="openBtn"><i
+                                    class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                            <div id="myDropdown" class="dropdown-content">
+                                <a data-bind="click: $parent.deleteMessages" href="#" id="deleteBtn">Delete messages</a>
+                                <a data-bind="click: $parent.endChat" href="#" id="endBtn">End Chat</a>
+                            </div>
                         </nav>
                         <ul class="messages" data-bind="foreach: messageList">
                             <div class="message-cont">
                                 <div data-bind="class: checkSender">
-                                    <li class="message" data-bind="text: content, class: checkSender">Hello world</li>
+                                    <li class="message" data-bind="text: content, class: checkSender"></li>
                                 </div>
                             </div>
                         </ul>
@@ -123,5 +134,10 @@
             </div>
         </main>
     </div>
+    <script src="../../scripts/firbaseConfig.js"></script>
+    <script src="../../scripts/libs/knockout-3.5.1.js"></script>
+    <script src="../../scripts/admin/main.js"></script>
+    <script src="../../scripts/admin/mailbox.js"></script>
 </body>
+
 </html>

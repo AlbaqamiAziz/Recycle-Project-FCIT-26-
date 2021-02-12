@@ -69,6 +69,7 @@ function app() {
     }
 
     function getRequests(currentCategory) {
+        document.getElementById('message').style.display = 'none';
         //clear current requests
         currentCategory().list.removeAll();
 
@@ -77,9 +78,12 @@ function app() {
             firebase.database().ref("requests/" + currentCategory().name() + '/' + requestID).on("value", function (request) {
                 if (request.val()) {
                     currentCategory().list.push(new Request(request.key, request.val().id, request.val().state, request.val().date, request.val().time));
+                } else {
+                    if (currentCategory().list().length == 0) {
+                        document.getElementById('message').style.display = 'flex';
+                    }
                 }
             });
         });
-        // TODO remove request
     }
 }

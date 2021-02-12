@@ -71,8 +71,11 @@
 table {
     table-layout: fixed;
 }
-.body-container img {
-    width: 100%;
+.body-container {
+    height: 30vh;
+}
+.body-container div{
+    height: 100%;
 }
 
 .chart {

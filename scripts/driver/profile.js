@@ -38,7 +38,7 @@ function validateForm() {
 
 // -----------------{Get data from firebase}----------------
 function getUserData() {
-    firebase.database().ref('users/' + currentUser.uid).once('value', (snapshot) => {
+    firebase.database().ref('users/drivers/' + currentUser.uid).once('value', (snapshot) => {
         var name = snapshot.val().name;
         var phone = snapshot.val().phone;
         var email = currentUser.email;
@@ -70,7 +70,7 @@ function updateUserEmail(name, phone, email) {
 }
 
 function updateUserData(name, phone) {
-    firebase.database().ref('users/' + currentUser.uid).update({
+    firebase.database().ref('users/drivers/' + currentUser.uid).update({
         name: name,
         phone: phone,
     }, function (error) {

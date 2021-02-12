@@ -8,6 +8,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../style/adminStyle/main.css">
     <link rel="stylesheet" href="../../style/adminStyle/overviewStyle.css">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+
+    <!-- Authentication SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+
+    <!-- Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+
+    <!-- Google Charts -->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
 <body>
@@ -21,15 +33,13 @@
 
                 <div class="right">
                     <div class="user-info">
-                        <h5 class="name">
-                            Sohaib Albakri
+                        <h5 class="name" id="adminName">
                         </h5>
                         <h6 class="role">
                             Admin
                         </h6>
                     </div>
                     <div class="buttons">
-                        <button class="icon-btn"><i class="fa fa-bell" aria-hidden="true"></i></button>
                         <button class="icon-btn" id="logout"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
                     </div>
                 </div>
@@ -74,7 +84,6 @@
                             </span>
                             <div class="description-container">
                                 <h2 class="title" id="active-requests">
-                                    352
                                 </h2>
                                 <p class="description">Active Requests</p>
                             </div>
@@ -85,8 +94,7 @@
                                 <i class="fa fa-user"></i>
                             </span>
                             <div class="description-container">
-                                <h2 class="title" id="total-customer">
-                                    352
+                                <h2 class="title" id="total-customers">
                                 </h2>
                                 <p class="description">Total Customers</p>
                             </div>
@@ -98,7 +106,6 @@
                             </span>
                             <div class="description-container">
                                 <h2 class="title" id="total-drivers">
-                                    352
                                 </h2>
                                 <p class="description">Total Drivers</p>
                             </div>
@@ -111,7 +118,10 @@
                             <h2>Number of requests per month</h2>
                         </div>
                         <div class="body-container">
-                            <img src="../../image/bar.png" alt="bar chart">
+                            <!--bar chart section-->
+                            <div class="process-chart">
+                                <div id="columnchart_values" style="width: 100%; height: 100%;"></div>
+                            </div>
                         </div>
                     </div>
 
@@ -121,36 +131,18 @@
                         </div>
                         <div class="body-container">
                             <table class="top-drivers">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Total requests</th>
-                                </tr>
-                                <tr>
-                                    <td>#336</td>
-                                    <td>Sohaib Bakr</td>
-                                    <td>525</td>
-                                </tr>
-                                <tr>
-                                    <td>#214</td>
-                                    <td>Aziz Saad</td>
-                                    <td>354</td>
-                                </tr>
-                                <tr>
-                                    <td>#222</td>
-                                    <td>Ahmed Adel</td>
-                                    <td>224</td>
-                                </tr>
-                                <tr>
-                                    <td>#123</td>
-                                    <td>Ali Albishi</td>
-                                    <td>100</td>
-                                </tr>
-                                <tr>
-                                    <td>#895</td>
-                                    <td>Ahmed Bakr</td>
-                                    <td>85</td>
-                                </tr>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Total requests</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="foreach: driverList">
+                                    <tr>
+                                        <td data-bind="text: name"></td>
+                                        <td data-bind="text: totalRequests"></td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -158,6 +150,10 @@
             </div>
         </main>
     </div>
+    <script src="../../scripts/firbaseConfig.js"></script>
+    <script src="../../scripts/libs/knockout-3.5.1.js"></script>
+    <script src="../../scripts/admin/main.js"></script>
+    <script src="../../scripts/admin/overview.js"></script>
 </body>
 
 </html>

@@ -30,7 +30,7 @@ document.getElementById('newRequestbtn').onclick = function () {
 
 // -----------------{Get data from firebase}----------------
 function getUserData() {
-    firebase.database().ref('users/' + currentUser.uid).on('value', (snapshot) => {
+    firebase.database().ref('users/customers/' + currentUser.uid).on('value', (snapshot) => {
         var points = snapshot.val().current_points;
         var name = snapshot.val().name;
 
