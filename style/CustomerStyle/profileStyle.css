@@ -2,109 +2,152 @@
 .mid-container,
 .input,
 .bottom-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .input {
-    align-items: unset;
+  -webkit-box-align: unset;
+      -ms-flex-align: unset;
+          align-items: unset;
 }
 
 .form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
 .form {
-    flex: 1;
-    justify-content: space-evenly;
-    width: 100%;
-    margin: 20px 0;
-    display: none;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  width: 100%;
+  margin: 20px 0;
+  display: none;
 }
 
 /* top section */
 .fa-user-o {
-    font-size: 55px;
-    color: #707c97;
+  font-size: 55px;
+  color: #707c97;
 }
 
 /* mid section */
 .mid-container {
-    justify-content: space-evenly;
-    flex: 2;
-    width: 80%;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+  width: 80%;
 }
+
 .input {
-    align-items: unset;
-    width: 100%;
+  -webkit-box-align: unset;
+      -ms-flex-align: unset;
+          align-items: unset;
+  width: 100%;
 }
 
 .input input {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    border-bottom: 2px solid #2d3748;
-    font-size: 16px;
-    padding: 10px 0px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #2d3748;
+  font-size: 16px;
+  padding: 10px 0px;
 }
 
 .input input:focus {
-    border-bottom: 2px solid #5a9851;
+  border-bottom: 2px solid #5a9851;
 }
 
 /* bottom section */
 .bottom-container {
-    justify-content: space-evenly;
-    width: 70%;
-    flex: 1;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  width: 70%;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
 .bottom-container button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 45px;
-    background: linear-gradient(97deg, #c4d9b0 0%, #458c3a 100%);
-    font-size: 18px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  height: 45px;
+  background: linear-gradient(97deg, #c4d9b0 0%, #458c3a 100%);
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
 }
 
 .bottom-container button:hover {
-    background: linear-gradient(97deg, #458c3a 0%, #c4d9b0 100%);
+  background: linear-gradient(97deg, #458c3a 0%, #c4d9b0 100%);
 }
 
 .bottom-container .cancel {
-    background: #2d3748;
-    opacity: 0.9;
+  background: #2d3748;
+  opacity: 0.9;
 }
 
 .bottom-container .cancel:hover {
-    background: #2d3748;
-    opacity: 1;
+  background: #2d3748;
+  opacity: 1;
 }
 
 .bottom-container button .fa {
-    margin-right: 15px;
+  margin-right: 15px;
 }
 
 /* responsive */
 @media screen and (min-width: 768px) {
-    .form {
-        width: 50%;
-        height: 70vh;
-    }
+  .form {
+    width: 50%;
+    height: 70vh;
+  }
 }
+
 @media screen and (min-width: 1024px) {
-    .form {
-        width: 30%;
-    }
+  .form {
+    width: 30%;
+  }
 }
+/*# sourceMappingURL=profileStyle.css.map */

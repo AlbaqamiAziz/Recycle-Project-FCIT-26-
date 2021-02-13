@@ -10,3 +10,13 @@ document.getElementById("logout").onclick = function () {
         window.location.href = "../../index.html";
     })
 };
+
+function removeLoader(){
+    document.getElementById('main-content').style.display = 'flex';
+    removeElement(document.getElementById('loader'));
+}
+
+function removeElement(element) {
+    var parent = element.parentNode;
+    parent.removeChild(element);
+}

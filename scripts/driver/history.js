@@ -13,6 +13,7 @@ document.getElementById('backBtn').onclick = function () {
 
 function app() {
     var categories = ['Active', 'Previous', 'Canceled'];
+
     document.getElementById('table').style.display = 'table';
 
     // the category is the top bar item that contains a list of requests
@@ -53,6 +54,8 @@ function app() {
             getRequests(self.currentCategory);
         };
 
+        displayCategory(this.categoryList()[0]);
+
         this.showRequest = function (clickedRequest) {
             localStorage.setItem('requestID', clickedRequest.requestID());
             localStorage.setItem('state', self.currentCategory().name());
@@ -67,18 +70,19 @@ function app() {
         });
     }
 
-    function getRequests(currentCategory) { 
+    function getRequests(currentCategory) {
+        document.getElementById('message').style.display = 'flex';
         //clear current requests
         currentCategory().list.removeAll();
-
+        
         firebase.database().ref("user-requests/" + currentUser.uid).on("child_added", function (snapshot) {
             var requestID = snapshot.val().request_id;
             firebase.database().ref("requests/" + currentCategory().name() + '/' + requestID).on("value", function (request) {
                 if (request.val()) {
                     currentCategory().list.push(new Request(request.key, request.val().id, request.val().state, request.val().date, request.val().time));
+                    document.getElementById('message').style.display = 'none';
                 }
             });
         });
-        // TODO remove request
     }
 }

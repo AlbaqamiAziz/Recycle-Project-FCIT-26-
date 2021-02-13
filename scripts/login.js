@@ -4,9 +4,10 @@ document.getElementById('form').onsubmit = function (e) {
     validateForm();
 }
 
-document.getElementById('google-btn').onclick = function (e) {
+document.getElementById('google-btn').onclick = function () {
     google_signup();
 }
+
 // --------------------------------------------------------------
 
 // -----------------{Firebase Authntication}----------------
@@ -46,6 +47,8 @@ firebase.auth().onAuthStateChanged(function (user) {
             if (type.val()) {
                 if (type.val().type == 'customer') {
                     window.location.href = "customerPages/homepage.html";
+                } else if (type.val().type == 'driver') {
+                    window.location.href = "driverPages/homepage.html"
                 } else {
                     window.location.href = "adminPages/overview.html";
                 }

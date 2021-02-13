@@ -36,19 +36,21 @@ function getRequestData() {
         var time = request.val().time;
         var id = request.val().id;
         var driverID = request.val().driver_id;
+        var requestState = request.val().state;
 
-        setRequestData(date, time, id, driverID, state);
+        setRequestData(date, time, id, driverID, state, requestState);
 
         removeElement(document.getElementById('loader'));
         document.getElementById('order').style.display = 'flex';
     });
 }
 
-function setRequestData(date, time, id, driverID, state) {
+function setRequestData(date, time, id, driverID, state,requestState) {
     // set request details
     document.getElementById("date").innerText = date;
     document.getElementById('id').innerText = id;
     document.getElementById('time').innerText = time;
+    document.getElementById('state').innerText = requestState;
 
     // check if request is accepted by driver
     if (driverID == '') {

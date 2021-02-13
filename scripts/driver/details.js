@@ -29,16 +29,18 @@ function getRequestData() {
         var id = request.val().id;
         var location = request.val().location;
         var customerID = request.val().customer_id;
+        var requestState = request.val().state;
 
-        setRequestData(date, time, id, location, customerID, state);
+        setRequestData(date, time, id, location, customerID, state,requestState);
     });
 }
 
-function setRequestData(date, time, id, location, customerID, state) {
+function setRequestData(date, time, id, location, customerID, state,requestState) {
     // set request details
     document.getElementById("date").innerText = date;
     document.getElementById('id').innerText = id;
     document.getElementById('time').innerText = time;
+    document.getElementById('state').innerText = requestState;
 
     firebase.database().ref('users/customers/' + customerID).once('value', (customer) => {
         var customerName = customer.val().name;

@@ -88,7 +88,7 @@ function createRequest(date, time, selectedLocation) {
             time: time,
             customer_id: currentUser.uid,
             driver_id: "",
-            state: 'new',
+            state: 'New',
             location: selectedLocation
         };
         updateCount(newId, newRequest, selectedLocation);

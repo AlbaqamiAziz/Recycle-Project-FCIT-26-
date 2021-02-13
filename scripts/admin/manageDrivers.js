@@ -50,8 +50,21 @@ function app() {
         var passwordInput = document.getElementById('password');
         var isValid = isValidName(nameInput) && isValidEmail(emailInput) && isValidPhone(phoneInput) && isValidPassword(passwordInput);
         if (isValid) {
-            createDriver(nameInput.value, phoneInput.value, emailInput.value, passwordInput.value);
+            isPhoneExists(nameInput, phoneInput, emailInput, passwordInput);
         }
+    }
+
+    function isPhoneExists(nameInput, phoneInput, emailInput, passwordInput) {
+        firebase.database().ref('users/drivers').orderByChild('phone').equalTo(phoneInput.value).limitToFirst(1).once('value').then(function (snapshot) {
+            if (snapshot.val()) {
+                phoneInput.style.borderBottom = '1px solid red';
+                // TODO: Add a an error message container   
+                alert('Phone number is already used by another driver');
+            } else {
+                phoneInput.style.borderBottom = '1px solid #31842c'
+                createDriver(nameInput.value, phoneInput.value, emailInput.value, passwordInput.value);
+            }
+        });
     }
 
     function createDriver(name, phone, email, password) {
@@ -73,6 +86,7 @@ function app() {
                 alert(errorMessage);
             } else {
                 alert('Driver has been Created');
+                document.getElementById('addForm').reset();
                 document.getElementById("myOverlay").style.display = "none";
             }
         });
@@ -109,6 +123,9 @@ function app() {
 
         firebase.database().ref("users/drivers").on("child_added", function (snapshot) {
             driverList.push(new Driver(snapshot.key, snapshot.val().name, snapshot.val().phone, snapshot.val().email, snapshot.val().total_requests));
+            if (driverList.length == 0) {
+                removeLoader();
+            }
         });
     }
 }

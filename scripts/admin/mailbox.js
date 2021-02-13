@@ -49,8 +49,6 @@ function app() {
         this.chatList = ko.observableArray();
 
         getChats(self.chatList);
-        document.getElementById("main-content").style.display = "flex";
-
 
         this.displayChat = function (clickedChat) {
             self.currentChat(clickedChat);
@@ -175,6 +173,9 @@ function app() {
         //get the other member"s name
         firebase.database().ref("users/customers/" + senderID).once("value", function (user) {
             chatList.push(new Chat(user.val().name, chat.val().lastMessage, chat.key));
+            if (chatList.length == 0) {
+                removeLoader();
+            }
         });
     }
     // -----------------------------------------------------

@@ -86,7 +86,7 @@ function getRequests(requestList) {
 function updateRequest(requestList, clickedRequest) {
     //get new requests from firebase
     firebase.database().ref("requests/Active/" + clickedRequest.requestID()).update({
-        state: 'accepted',
+        state: 'Accepted',
         driver_id: currentUser.uid
     }, function (error) {
         if (error) {

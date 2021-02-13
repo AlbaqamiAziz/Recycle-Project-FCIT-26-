@@ -7,12 +7,15 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 function app() {
+    MVC();
     getAdminName();
     getNumOfRequests();
     getNumOf("customers");
     getNumOf("drivers");
     getChart();
+}
 
+function MVC() {
     var Driver = function (name, totalRequests) {
         this.name = ko.observable(name);
         this.totalRequests = ko.observable(totalRequests);
@@ -57,25 +60,36 @@ function getNumOf(type) {
     });
 }
 function getChart() {
-    // var array = ["Month", "Process", { role: "style" }];
-    // getRequestsPerMonth(array);
+    var reqPerMonth = [
+        ["Month", "Process", { role: "style" }],
+        ["Jan", 0, "#48722c"],
+        ["Feb", 0, "#517f32"],
+        ["Mar", 0, "#598b38"],
+        ["June", 0, "#679f41"],
+        ["July", 0, "#6da845"],
+        ["Aug", 0, "#7eb25d"],
+        ["Sep", 0, "#94bd7f"],
+        ["Oct", 0, "#a6c796"],
+        ["Nov", 0, "#b7d0ab"],
+        ["Dec", 0, "#d4e2ce"],
+    ];
 
+    // TODO make it with previous requests only
+    var ref = firebase.database().ref("requests/Active");
+    ref.once("value").then(function (snapshot) {
+        snapshot.forEach(request => {
+            var date = new Date(request.val().date);
+            reqPerMonth[date.getMonth() + 1][1] += 1;
+        });
+        startDraw(reqPerMonth);
+    });
+}
+function startDraw(reqPerMonth) {
+    removeLoader();
     google.charts.load("current", { packages: ["corechart"] });
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ["Month", "Process", { role: "style" }],
-            ["Jan", 8, "#48722c"],
-            ["Feb", 10, "#517f32"],
-            ["Mar", 19, "#598b38"],
-            ["June", 17, "#679f41"],
-            ["July", 10, "#6da845"],
-            ["Aug", 23, "#7eb25d"],
-            ["Sep", 6, "#94bd7f"],
-            ["Oct", 5, "#a6c796"],
-            ["Nov", 4, "#b7d0ab"],
-            ["Dec", 7, "#d4e2ce"],
-        ]);
+        var data = google.visualization.arrayToDataTable(reqPerMonth);
 
         var view = new google.visualization.DataView(data);
         view.setColumns([0, 1,
@@ -94,18 +108,4 @@ function getChart() {
         var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
         chart.draw(view, options);
     }
-
-    // function getRequestsPerMonth(array) {
-    //     const monthNames = ["January", "February", "March", "April", "May", "June",
-    //         "July", "August", "September", "October", "November", "December"
-    //     ];
-
-    //     var ref = firebase.database().ref("requests/Active");
-    //     ref.once("value").then(function (snapshot) {
-    //         snapshot.forEach(element => {
-    //             var date = new Date(element.val().date);
-    //             console.log(monthNames[date.getMonth()]);
-    //         });
-    //     });
-    // }
 }
