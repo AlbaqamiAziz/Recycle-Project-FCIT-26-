@@ -54,7 +54,7 @@ function app() {
             getRequests(self.currentCategory);
         };
 
-        displayCategory(this.categoryList()[0]);
+        this.displayCategory(this.categoryList()[0]);
 
         this.showRequest = function (clickedRequest) {
             localStorage.setItem('requestID', clickedRequest.requestID());

@@ -83,7 +83,6 @@ function writeUserType(newUser, uid) {
 
 function writeUserData(newUser, uid) {
     firebase.database().ref('users/drivers/' + uid).set(newUser, function (error) {
-        alert(error);
         if (error) {
             var errorMessage = error.message;
             // TODO: Add a an error message container

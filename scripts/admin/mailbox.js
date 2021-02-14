@@ -26,8 +26,9 @@ function app() {
     getAdminName();
 
     // MVC
-    var Chat = function (member, lastMessage, chatID) {
-        this.member = ko.observable(member);
+    var Chat = function (name, id, lastMessage, chatID) {
+        this.name = ko.observable(name);
+        this.id = ko.observable(id);
         this.lastMessage = ko.observable(lastMessage);
         this.chatID = ko.observable(chatID);
         this.messageList = ko.observableArray();
@@ -66,13 +67,12 @@ function app() {
                 self.currentChat(null);
             });
 
-            //remove chat from user chats
-            removeRef(firebase.database().ref("userChats/P5XHkjrmNgYxYuNLW67aPLBF5NW2"));
             //remove all chat messages
-            removeRef(firebase.database().ref("chatMessages/" + self.currentChat().chatID()));
+            firebase.database().ref("chatMessages/" + self.currentChat().chatID()).remove();
             //remove chat 
-            removeRef(firebase.database().ref("chats/" + self.currentChat().chatID()));
-            removeRef(firebase.database().ref("userChats/" + currentUser.uid));
+            firebase.database().ref("chats/" + self.currentChat().chatID()).remove();
+            firebase.database().ref("userChats/" + self.currentChat().id() + "/" + self.currentChat().chatID()).remove();
+            firebase.database().ref("userChats/" + currentUser.uid + "/" + self.currentChat().chatID()).remove();
         }
 
         this.openSideMenu = function () {
@@ -81,17 +81,19 @@ function app() {
 
         this.sendMessage = function () {
             var newMessage = document.getElementById("newMessage").value;
-            var messageRef = firebase.database().ref("chatMessages/" + self.currentChat().chatID()).push();
-            messageRef.set({
-                sender: currentUser.uid,
-                content: newMessage,
-            });
+            if (newMessage.length > 0) {
+                var messageRef = firebase.database().ref("chatMessages/" + self.currentChat().chatID()).push();
+                messageRef.set({
+                    sender: currentUser.uid,
+                    content: newMessage,
+                });
 
-            firebase.database().ref("chats/" + self.currentChat().chatID()).update({
-                lastMessage: newMessage
-            });
+                firebase.database().ref("chats/" + self.currentChat().chatID()).update({
+                    lastMessage: newMessage
+                });
 
-            document.getElementById("newMessage").value = "";
+                document.getElementById("newMessage").value = "";
+            }
         }
     };
     ko.applyBindings(new myViewModel);
@@ -119,15 +121,13 @@ function app() {
     document.getElementById("card").onclick = (function () {
         var newChatRef = firebase.database().ref("chats").push();
 
-        //add the chat referance to the users" chats list
-        var userChat = firebase.database().ref("userChats/" + currentUser.uid).push();
-        userChat.set({
+        //add the chat referance to the users' chats list
+        firebase.database().ref("userChats/" + currentUser.uid + "/" + newChatRef.key).set({
             chatID: newChatRef.key
         });
 
-        //add the chat referance to the second users" chats list
-        userChat = firebase.database().ref("userChats/" + foundUserID).push();
-        userChat.set({
+        //add the chat referance to the second users' chats list
+        firebase.database().ref("userChats/" + foundUserID + "/" + newChatRef.key).set({
             chatID: newChatRef.key
         });
 
@@ -144,6 +144,7 @@ function app() {
                 alert(errorMessage);
             } else {
                 document.getElementById("myOverlay").style.display = "none";
+                document.getElementById("card").style.display = "none";
             }
         });
     });
@@ -172,8 +173,8 @@ function app() {
     function createChat(chatList, senderID, chat) {
         //get the other member"s name
         firebase.database().ref("users/customers/" + senderID).once("value", function (user) {
-            chatList.push(new Chat(user.val().name, chat.val().lastMessage, chat.key));
-            if (chatList.length == 0) {
+            chatList.push(new Chat(user.val().name, senderID, chat.val().lastMessage, chat.key));
+            if (chatList().length == 1) {
                 removeLoader();
             }
         });
@@ -192,10 +193,15 @@ function app() {
 
     function getChats(chatList) {
         chatList.removeAll();
+        firebase.database().ref("userChats/" + currentUser.uid).once("value", function (snapshot) {
+            if (snapshot.numChildren() == 0) {
+                removeLoader();
+            }
+        });
+
 
         //get chats from firebase
         firebase.database().ref("userChats/" + currentUser.uid).on("child_added", function (snapshot) {
-
             var chatID = snapshot.val().chatID;
 
             firebase.database().ref("chats/" + chatID).once("value", function (chat) {
@@ -230,18 +236,6 @@ function app() {
     function messagesRemoved(currentChat) {
         firebase.database().ref("chatMessages/" + currentChat().chatID()).on("child_removed", function () {
             currentChat().messageList.removeAll();
-        });
-    }
-
-    function removeRef(ref) {
-        ref.set({
-            data: null
-        }, (error) => {
-            if (error) {
-                // The write failed...
-            } else {
-                return;
-            }
         });
     }
     // -----------------------------------------------------

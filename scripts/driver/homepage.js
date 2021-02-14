@@ -63,7 +63,7 @@ ko.applyBindings(new myViewModel);
 
 function getRequests(requestList) {
     //get new requests from firebase
-    firebase.database().ref("requests/Active").orderByChild('state').equalTo('new').on("child_added", function (request) {
+    firebase.database().ref("requests/Active").orderByChild('state').equalTo('New').on("child_added", function (request) {
         var requestID = request.key;
         var id = request.val().id;
         var state = request.val().state;
@@ -75,6 +75,7 @@ function getRequests(requestList) {
             var customerName = customer.val().name;
             requestList.push(new Request(requestID, id, state, date, time, customerName));
         });
+        
         var loader = document.getElementById('loader');
         if (loader) {
             removeElement(loader);

@@ -11,9 +11,12 @@ document.getElementById("logout").onclick = function () {
     })
 };
 
-function removeLoader(){
+function removeLoader() {
     document.getElementById('main-content').style.display = 'flex';
-    removeElement(document.getElementById('loader'));
+    var loader = document.getElementById('loader');
+    if (loader) {
+        removeElement(loader);
+    }
 }
 
 function removeElement(element) {

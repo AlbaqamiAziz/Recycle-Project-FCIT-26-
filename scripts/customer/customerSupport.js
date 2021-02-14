@@ -70,13 +70,14 @@ function createChat(subject, type) {
     var newChatRef = firebase.database().ref("chats").push();
 
     //add the chat referance to the users' chats list
-    var userChat = firebase.database().ref("userChats/" + currentUser.uid).push();
-    userChat.set({ chatID: newChatRef.key });
+    firebase.database().ref("userChats/" + currentUser.uid + "/" + newChatRef.key).set({
+        chatID: newChatRef.key
+    });
 
     //add the chat referance to the second users' chats list
-    //open chat with the admin
-    userChat = firebase.database().ref("userChats/9dw5V2qAYdauGQzUBYtFzNu1C1G3").push();
-    userChat.set({ chatID: newChatRef.key });
+    firebase.database().ref("userChats/9dw5V2qAYdauGQzUBYtFzNu1C1G3/" + newChatRef.key).set({
+        chatID: newChatRef.key
+    });
 
     //create new chat refrance
     newChatRef.set({

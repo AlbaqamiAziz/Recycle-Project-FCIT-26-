@@ -95,7 +95,7 @@
                         <ul class="list" data-bind="foreach: chatList">
                             <!-- add a li -->
                             <li data-bind="click: $parent.displayChat" class="chat active">
-                                <h3 data-bind="text: member"></h3>
+                                <h3 data-bind="text: name"></h3>
                                 <p data-bind="text: lastMessage"></p>
                             </li>
                         </ul>
@@ -106,7 +106,7 @@
                     <!-- Displayed chat -->
                     <div class="display" data-bind="with: currentChat">
                         <nav class="chat-nav">
-                            <h4 data-bind="text: member"></h4>
+                            <h4 data-bind="text: name"></h4>
                             <button data-bind="click: $parent.openSideMenu" class="circle-btn" id="openBtn"><i
                                     class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                             <div id="myDropdown" class="dropdown-content">

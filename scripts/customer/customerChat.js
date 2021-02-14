@@ -59,14 +59,12 @@ function app() {
             firebase.database().ref("userChats/" + currentUser.uid).on("child_removed", function () {
                 window.location.href = 'homepage.html';
             });
-
-            //remove chat from user chats
-            removeRef(firebase.database().ref("userChats/" + currentUser.uid));
-            removeRef(firebase.database().ref("userChats/P5XHkjrmNgYxYuNLW67aPLBF5NW2"));
             //remove all chat messages
-            removeRef(firebase.database().ref("chatMessages/" + self.currentChat().chatID()));
+            firebase.database().ref("chatMessages/" + self.currentChat().chatID()).remove();
             //remove chat 
-            removeRef(firebase.database().ref("chats/" + self.currentChat().chatID()));
+            firebase.database().ref("chats/" + self.currentChat().chatID()).remove();
+            firebase.database().ref("userChats/9dw5V2qAYdauGQzUBYtFzNu1C1G3/" + self.currentChat().chatID()).remove();
+            firebase.database().ref("userChats/" + currentUser.uid + "/" + self.currentChat().chatID()).remove();
         }
 
         this.openSideMenu = function () {
@@ -75,17 +73,19 @@ function app() {
 
         this.sendMessage = function () {
             var newMessage = document.getElementById('newMessage').value;
-            var messageRef = firebase.database().ref("chatMessages/" + self.currentChat().chatID()).push();
-            messageRef.set({
-                sender: currentUser.uid,
-                content: newMessage,
-            });
+            if (newMessage.length > 0) {
+                var messageRef = firebase.database().ref("chatMessages/" + self.currentChat().chatID()).push();
+                messageRef.set({
+                    sender: currentUser.uid,
+                    content: newMessage,
+                });
 
-            firebase.database().ref('chats/' + self.currentChat().chatID()).update({
-                lastMessage: newMessage
-            });
+                firebase.database().ref('chats/' + self.currentChat().chatID()).update({
+                    lastMessage: newMessage
+                });
 
-            document.getElementById('newMessage').value = '';
+                document.getElementById('newMessage').value = '';
+            }
         }
     };
 
@@ -128,18 +128,6 @@ function app() {
     function messagesRemoved(currentChat) {
         firebase.database().ref("chatMessages/" + currentChat().chatID()).on("child_removed", function () {
             currentChat().messageList.removeAll();
-        });
-    }
-
-    function removeRef(ref) {
-        ref.set({
-            data: null
-        }, (error) => {
-            if (error) {
-                // The write failed...
-            } else {
-                return;
-            }
         });
     }
     ko.applyBindings(new myViewModel);
