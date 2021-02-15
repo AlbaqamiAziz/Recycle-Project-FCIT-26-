@@ -1,3 +1,6 @@
+.container{
+  justify-content: space-between;
+}
 .nav {
   width: 100%;
   background: #c4d9b0;

@@ -43,6 +43,9 @@ function app() {
 
         // get all category 
         getCategory(this.categoryList);
+        this.categoryList().forEach((category) => {
+            getRequests(category);
+        });
 
         // an event listiner that will be triggered when a category is clicked
         this.displayCategory = function (clickedCategory) {
@@ -51,7 +54,16 @@ function app() {
             }
             clickedCategory.active(true);
             self.currentCategory(clickedCategory);
-            getRequests(self.currentCategory);
+
+            firebase.database().ref("requests/" + clickedCategory.name()).orderByChild('customer_id').equalTo(currentUser.uid).on("value", function (request) {
+                if (!request.val()) {
+                    document.getElementById("message").style.display = 'flex';
+                    document.getElementById('orders').style.display = 'none';
+                }else {
+                    document.getElementById("message").style.display = 'none';
+                    document.getElementById('orders').style.display = 'flex';
+                }
+            });
         };
 
         this.displayCategory(this.categoryList()[0]);
@@ -71,16 +83,17 @@ function app() {
     }
 
     function getRequests(currentCategory) {
-        document.getElementById('message').style.display = 'flex';
         //clear current requests
-        currentCategory().list.removeAll();
+        currentCategory.list.removeAll();
 
-        firebase.database().ref("user-requests/" + currentUser.uid).on("child_added", function (snapshot) {
-            var requestID = snapshot.val().request_id;
-            firebase.database().ref("requests/" + currentCategory().name() + '/' + requestID).on("value", function (request) {
-                if (request.val()) {
-                    currentCategory().list.push(new Request(request.key, request.val().id, request.val().state, request.val().date, request.val().time));
-                    document.getElementById('message').style.display = 'none';
+        firebase.database().ref("requests/" + currentCategory.name()).orderByChild('customer_id').equalTo(currentUser.uid).on("child_added", function (request) {
+            currentCategory.list.push(new Request(request.key, request.val().id, request.val().state, request.val().date, request.val().time));
+        });
+
+        firebase.database().ref("requests/" + currentCategory.name()).orderByChild('customer_id').equalTo(currentUser.uid).on("child_removed", function (removedRequest) {
+            currentCategory.list().forEach(request => {
+                if (request.requestID() == removedRequest.key) {
+                    currentCategory.list.remove(request);
                 }
             });
         });

@@ -36,11 +36,9 @@ function getUserData() {
 
         var index = name.indexOf(" ");
         name = (index > -1) ? name.substring(0, index) : name;
-
-        firebase.database().ref("user-requests/" + currentUser.uid).once("value").then(function (requests) {
-            var numOfRequests = requests.numChildren();
-            setUserData(name, points, numOfRequests);
-        });
+        
+        var numOfRequests = snapshot.val().total_requests;
+        setUserData(name, points, numOfRequests);
     });
 }
 

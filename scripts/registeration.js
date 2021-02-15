@@ -56,7 +56,8 @@ function createUser(user, name, phone) {
         phone: phone,
         location: '',
         current_points: 0,
-        total_points: 0
+        total_points: 0,
+        total_requests: 0
     };
     writeUserType(newUser, user.uid);
 }

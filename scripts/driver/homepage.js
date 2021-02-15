@@ -63,6 +63,17 @@ ko.applyBindings(new myViewModel);
 
 function getRequests(requestList) {
     //get new requests from firebase
+    firebase.database().ref("requests/Active").orderByChild('state').equalTo('New').on("value", function (snapsot) {
+        if (!snapsot.val()) {
+            document.getElementById("message").style.display = 'flex';
+            document.getElementById('orders').style.display = 'none';
+        }else{
+            document.getElementById("message").style.display = 'none';
+            document.getElementById('orders').style.display = 'block';
+        }
+        removeLoader();
+    });
+
     firebase.database().ref("requests/Active").orderByChild('state').equalTo('New').on("child_added", function (request) {
         var requestID = request.key;
         var id = request.val().id;
@@ -75,12 +86,9 @@ function getRequests(requestList) {
             var customerName = customer.val().name;
             requestList.push(new Request(requestID, id, state, date, time, customerName));
         });
-        
-        var loader = document.getElementById('loader');
-        if (loader) {
-            removeElement(loader);
-            document.getElementById('orders').style.display = 'block';
-        }
+        // removeLoader();
+        // document.getElementById('orders').style.display = 'block';
+        // document.getElementById("message").style.display = 'none';
     });
 }
 
@@ -115,8 +123,11 @@ function appendRequestToDriver(requestList, clickedRequest) {
     });
 }
 
-function removeElement(element) {
-    var parent = element.parentNode;
-    parent.removeChild(element);
+function removeLoader() {
+    var loader = document.getElementById('loader');
+    if (loader) {
+        var parent = loader.parentNode;
+        parent.removeChild(loader);
+    }
 }
 // --------------------------------------------------------------

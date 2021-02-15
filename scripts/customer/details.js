@@ -45,7 +45,7 @@ function getRequestData() {
     });
 }
 
-function setRequestData(date, time, id, driverID, state,requestState) {
+function setRequestData(date, time, id, driverID, state, requestState) {
     // set request details
     document.getElementById("date").innerText = date;
     document.getElementById('id').innerText = id;
@@ -61,16 +61,14 @@ function setRequestData(date, time, id, driverID, state,requestState) {
             var driverName = driver.val().name;
             var driverPhone = driver.val().phone;
             document.getElementById('driver').innerText = driverName;
-            document.getElementById('callBtn').href = 'tel:' + driverPhone;
-
+            if (state == 'Active') {
+                document.getElementById('callBtn').href = 'tel:' + driverPhone;
+            }
         });
     }
 
     if (state == 'Canceled' || state == 'Previous') {
-        var callBtn = document.getElementById('callBtn');
-        if (callBtn) {
-            removeElement(callBtn);
-        }
+        removeElement(document.getElementById('callBtn'));
         removeElement(document.getElementById('cancelBtn'));
     }
 }
@@ -79,7 +77,7 @@ function setRequestData(date, time, id, driverID, state,requestState) {
 // ----------------{Cancel request}---------------
 function cancelRequest() {
     // Remove request from active 
-    firebase.database().ref('requests/' + cuurentRequest.val().state + '/' + cuurentRequest.key).remove();
+    firebase.database().ref('requests/' + localStorage.getItem('state') + '/' + cuurentRequest.key).remove();
 
     // copy request data to a new request
     var request = cuurentRequest.val();
