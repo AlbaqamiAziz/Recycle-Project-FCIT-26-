@@ -32,6 +32,11 @@ function app() {
         this.lastMessage = ko.observable(lastMessage);
         this.chatID = ko.observable(chatID);
         this.messageList = ko.observableArray();
+        this.active = ko.observable(false);
+
+        this.checkActive = ko.computed(function () {
+            return this.active() == true ? 'active' : '';
+        }, this);
     }
 
     var Message = function (content, sender, timestamp, messageID) {
@@ -52,7 +57,11 @@ function app() {
         getChats(self.chatList);
 
         this.displayChat = function (clickedChat) {
+            if (self.currentChat()) {
+                self.currentChat().active(false);
+            }
             self.currentChat(clickedChat);
+            self.currentChat().active(true);
             getMessages(self.currentChat);
         }
 
@@ -61,12 +70,6 @@ function app() {
         }
 
         this.endChat = function () {
-            // listen for chat removed
-            firebase.database().ref("userChats/" + currentUser.uid).on("child_removed", function () {
-                getChats(self.chatList);
-                self.currentChat(null);
-            });
-
             //remove all chat messages
             firebase.database().ref("chatMessages/" + self.currentChat().chatID()).remove();
             //remove chat 
@@ -74,6 +77,19 @@ function app() {
             firebase.database().ref("userChats/" + self.currentChat().id() + "/" + self.currentChat().chatID()).remove();
             firebase.database().ref("userChats/" + currentUser.uid + "/" + self.currentChat().chatID()).remove();
         }
+
+
+        firebase.database().ref("userChats/" + currentUser.uid).on("child_removed", function (snapshot) {
+            self.chatList().forEach(chat => {
+                if (chat.chatID() == snapshot.key) {
+                    self.chatList.remove(chat);
+                    if (self.currentChat().chatID() == chat.chatID()) {
+                        self.currentChat(null);
+                    }
+                    alert("Your chat with " + chat.name() + " has been deleted");
+                }
+            });
+        });
 
         this.openSideMenu = function () {
             document.getElementById("myDropdown").classList.add("show");
@@ -93,7 +109,10 @@ function app() {
                 });
 
                 document.getElementById("newMessage").value = "";
+                var elem = document.getElementById('messages');
+                elem.scrollTop = elem.scrollHeight;
             }
+
         }
     };
     ko.applyBindings(new myViewModel);
@@ -192,16 +211,16 @@ function app() {
     }
 
     function getChats(chatList) {
-        chatList.removeAll();
+
         firebase.database().ref("userChats/" + currentUser.uid).once("value", function (snapshot) {
             if (snapshot.numChildren() == 0) {
                 removeLoader();
             }
         });
 
-
         //get chats from firebase
         firebase.database().ref("userChats/" + currentUser.uid).on("child_added", function (snapshot) {
+
             var chatID = snapshot.val().chatID;
 
             firebase.database().ref("chats/" + chatID).once("value", function (chat) {
@@ -227,15 +246,16 @@ function app() {
         //get chats from firebase
         firebase.database().ref("chatMessages/" + currentChat().chatID()).on("child_added", function (chatMessage) {
             currentChat().messageList.push(new Message(chatMessage.val().content, chatMessage.val().sender, chatMessage.val().timestamp, chatMessage.key));
+            var elem = document.getElementById('messages');
+            elem.scrollTop = elem.scrollHeight;
         });
 
         // listen for messages removed
-        messagesRemoved(currentChat);
-    }
-
-    function messagesRemoved(currentChat) {
         firebase.database().ref("chatMessages/" + currentChat().chatID()).on("child_removed", function () {
             currentChat().messageList.removeAll();
+            firebase.database().ref("chatMessages/" + currentChat().chatID()).on("child_removed", function () {
+                currentChat().messageList.removeAll();
+            });
         });
     }
     // -----------------------------------------------------

@@ -23,8 +23,8 @@ window.onclick = function (event) {
 // -----------------------------------------------------
 
 function app() {
-    // MVC
-    var Chat = function (member, lastMessage, chatID) {
+    // -----------------------------{MVC}----------------------------
+    var Chat = function (member, chatID) {
         this.member = ko.observable(member);
         this.chatID = ko.observable(chatID);
         this.messageList = ko.observableArray();
@@ -55,10 +55,6 @@ function app() {
         }
 
         this.endChat = function () {
-            // listen for chat removed
-            firebase.database().ref("userChats/" + currentUser.uid).on("child_removed", function () {
-                window.location.href = 'homepage.html';
-            });
             //remove all chat messages
             firebase.database().ref("chatMessages/" + self.currentChat().chatID()).remove();
             //remove chat 
@@ -67,12 +63,18 @@ function app() {
             firebase.database().ref("userChats/" + currentUser.uid + "/" + self.currentChat().chatID()).remove();
         }
 
+
+        firebase.database().ref("userChats/" + currentUser.uid).on("child_removed", function () {
+            alert("Your chat with " + self.currentChat().member() + " has been deleted");
+            window.location.href = 'homepage.html';
+        });
+
         this.openSideMenu = function () {
             document.getElementById("myDropdown").classList.add("show");
         }
 
         this.sendMessage = function () {
-            var newMessage = document.getElementById('newMessage').value;
+            var newMessage = document.getElementById("newMessage").value;
             if (newMessage.length > 0) {
                 var messageRef = firebase.database().ref("chatMessages/" + self.currentChat().chatID()).push();
                 messageRef.set({
@@ -80,14 +82,17 @@ function app() {
                     content: newMessage,
                 });
 
-                firebase.database().ref('chats/' + self.currentChat().chatID()).update({
+                firebase.database().ref("chats/" + self.currentChat().chatID()).update({
                     lastMessage: newMessage
                 });
 
-                document.getElementById('newMessage').value = '';
+                document.getElementById("newMessage").value = "";
+                var elem = document.getElementById('messages');
+                elem.scrollTop = elem.scrollHeight;
             }
         }
     };
+    // ---------------------------------------------------------------
 
     function removeElement(element) {
         var parent = element.parentNode;
@@ -104,7 +109,7 @@ function app() {
                 var senderID = members.firstUser == currentUser.uid ? members.secondUser : members.firstUser;
 
                 firebase.database().ref("users/admins/" + senderID).once("value", function (user) {
-                    currentChat(new Chat(user.val().name, chat.val().lastMessage, chat.key));
+                    currentChat(new Chat(user.val().name, chat.key));
                     getMessages(currentChat);
 
                     // remove the loader
@@ -119,15 +124,15 @@ function app() {
         //get chats from firebase
         firebase.database().ref("chatMessages/" + currentChat().chatID()).on("child_added", function (chatMessage) {
             currentChat().messageList.push(new Message(chatMessage.val().content, chatMessage.val().sender, chatMessage.val().timestamp, chatMessage.key));
+            var elem = document.getElementById('messages');
+            elem.scrollTop = elem.scrollHeight;
         });
 
         // listen for messages removed
-        messagesRemoved(currentChat);
-    }
-
-    function messagesRemoved(currentChat) {
         firebase.database().ref("chatMessages/" + currentChat().chatID()).on("child_removed", function () {
             currentChat().messageList.removeAll();
+            var elem = document.getElementById('messages');
+            elem.scrollTop = elem.scrollHeight;
         });
     }
     ko.applyBindings(new myViewModel);

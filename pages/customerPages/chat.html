@@ -35,7 +35,7 @@
                         <a data-bind="click: $parent.endChat" href="#" id="endBtn">End Chat</a>
                     </div>
                 </nav>
-                <ul class="messages" data-bind="foreach: messageList">
+                <ul class="messages" data-bind="foreach: messageList" id="messages">
                     <div class="message-cont">
                         <div data-bind="class: checkSender">
                             <li class="message" data-bind="text: content, class: checkSender"></li>

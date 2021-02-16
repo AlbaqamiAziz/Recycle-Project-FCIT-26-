@@ -5,6 +5,8 @@
 .form {
   height: 65vh;
   display: none;
+  min-height: 500px;
+  max-height: 600px;
 }
 
 /* top section */
@@ -16,17 +18,17 @@
 /* mid section */
 .mid-container {
   -ms-flex-pack: distribute;
-      justify-content: space-around;
+  justify-content: space-around;
   -webkit-box-flex: 2;
-      -ms-flex: 2;
-          flex: 2;
+  -ms-flex: 2;
+  flex: 2;
   width: 80%;
 }
 
 .input {
   -webkit-box-align: unset;
-      -ms-flex-align: unset;
-          align-items: unset;
+  -ms-flex-align: unset;
+  align-items: unset;
   width: 100%;
 }
 

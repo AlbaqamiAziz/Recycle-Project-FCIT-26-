@@ -6,6 +6,10 @@
   font-family: sans-serif;
 }
 
+html{
+  height: 100%;
+}
+
 body {
   background-color: #f2f2f2;
 }

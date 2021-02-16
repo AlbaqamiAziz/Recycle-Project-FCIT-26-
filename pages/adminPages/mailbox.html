@@ -94,7 +94,7 @@
                     <div class="contacts-cont">
                         <ul class="list" data-bind="foreach: chatList">
                             <!-- add a li -->
-                            <li data-bind="click: $parent.displayChat" class="chat active">
+                            <li data-bind="click: $parent.displayChat, class: checkActive" class="chat">
                                 <h3 data-bind="text: name"></h3>
                                 <p data-bind="text: lastMessage"></p>
                             </li>

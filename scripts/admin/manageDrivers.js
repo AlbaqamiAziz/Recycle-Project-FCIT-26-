@@ -22,8 +22,6 @@ function app() {
         validateForm();
     }
 
-
-
     document.getElementById('search').onkeyup = function () {
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("search");
@@ -72,7 +70,7 @@ function app() {
             name: name,
             phone: phone,
             email: email,
-            password: password
+            password: getRandomPassword()
         };
         writeDriverData(newDriver);
     }

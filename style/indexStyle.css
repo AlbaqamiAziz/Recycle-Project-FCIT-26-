@@ -102,7 +102,7 @@
 
 /* Slide show*/
 .pics-cont {
-  max-width: 1000px;
+  width: 100%;
   position: relative;
 }
 
@@ -257,7 +257,7 @@
 .icon {
   width: 150px;
   height: 150px;
-  border-radius: 50%;
+  border-radius: 75px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

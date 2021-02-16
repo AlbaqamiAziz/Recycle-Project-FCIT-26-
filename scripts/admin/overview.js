@@ -1,5 +1,6 @@
 var currentUser;
 firebase.auth().onAuthStateChanged(function (user) {
+    console.log(getASecureRandomPassword());
     if (user) {
         currentUser = user;
         app();
@@ -9,9 +10,9 @@ firebase.auth().onAuthStateChanged(function (user) {
 function app() {
     MVC();
     getAdminName();
-    getNumOfRequests();
-    getNumOf("customers");
-    getNumOf("drivers");
+    getNumOf("requests/Active", "active-requests");
+    getNumOf("users/customers", "total-customers");
+    getNumOf("users/drivers", "total-drivers");
     getChart();
 }
 
@@ -22,43 +23,31 @@ function MVC() {
     };
 
     var myViewModel = function () {
-        var self = this;
         this.driverList = ko.observableArray();
 
         // get all drivers
         getDrivers(this.driverList);
-
-        this.edit = function (clickedDriver) {
-            console.log('edit');
-        };
-
-        this.delete = function (clickedDriver) {
-            console.log('delete');
-        };
     };
     ko.applyBindings(new myViewModel);
 
     function getDrivers(driverList) {
         driverList.removeAll();
 
-        firebase.database().ref("users/drivers").orderByChild('total-requests').limitToFirst(5).once("value", function (snapshot) {
+        firebase.database().ref("users/drivers").orderByChild('total_requests').limitToLast(5).once("value", function (snapshot) {
             snapshot.forEach(driver => {
+                console.log(driver.val());
                 driverList.push(new Driver(driver.val().name, driver.val().total_requests));
             });
         });
     }
 }
-function getNumOfRequests() {
-    var ref = firebase.database().ref("requests/Active");
-    ref.once("value").then(function (snapshot) {
-        document.getElementById("active-requests").innerText = snapshot.numChildren();
+
+function getNumOf(ref,elementId) {
+    firebase.database().ref(ref).once("value").then(function (snapshot) {
+        document.getElementById(elementId).innerText = snapshot.numChildren();
     });
 }
-function getNumOf(type) {
-    firebase.database().ref("users/" + type).once("value").then(function (snapshot) {
-        document.getElementById("total-" + type).innerText = snapshot.numChildren();
-    });
-}
+
 function getChart() {
     var reqPerMonth = [
         ["Month", "Process", { role: "style" }],
@@ -75,7 +64,7 @@ function getChart() {
     ];
 
     // TODO make it with previous requests only
-    var ref = firebase.database().ref("requests/Active");
+    var ref = firebase.database().ref("requests/Previous");
     ref.once("value").then(function (snapshot) {
         snapshot.forEach(request => {
             var date = new Date(request.val().date);
@@ -84,6 +73,7 @@ function getChart() {
         startDraw(reqPerMonth);
     });
 }
+
 function startDraw(reqPerMonth) {
     removeLoader();
     google.charts.load("current", { packages: ["corechart"] });

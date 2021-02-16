@@ -4,6 +4,7 @@
 
 .mid-container {
   height: 55vh;
+  min-height: 350px;
 }
 
 .top-container {
@@ -33,9 +34,6 @@
   color: #455a64;
 }
 
-.fa-send {
-  direction: un;
-}
 
 .bottom-container .btn {
   display: -webkit-box;
@@ -117,6 +115,7 @@
   width: 100%;
   padding: 10px 20px 0px;
   height: 30vh;
+  min-height: 250px;
 }
 
 .content {
@@ -138,7 +137,6 @@
 }
 
 .sec h3 {
-  margin-left: 55px;
   font-weight: 600;
   font-size: 18px;
   color: #458c3a;
