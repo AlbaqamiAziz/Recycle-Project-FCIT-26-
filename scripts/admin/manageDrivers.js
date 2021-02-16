@@ -45,14 +45,13 @@ function app() {
         var nameInput = document.getElementById('name');
         var phoneInput = document.getElementById('phone');
         var emailInput = document.getElementById('email');
-        var passwordInput = document.getElementById('password');
-        var isValid = isValidName(nameInput) && isValidEmail(emailInput) && isValidPhone(phoneInput) && isValidPassword(passwordInput);
+        var isValid = isValidName(nameInput) && isValidEmail(emailInput) && isValidPhone(phoneInput);
         if (isValid) {
-            isPhoneExists(nameInput, phoneInput, emailInput, passwordInput);
+            isPhoneExists(nameInput, phoneInput, emailInput);
         }
     }
 
-    function isPhoneExists(nameInput, phoneInput, emailInput, passwordInput) {
+    function isPhoneExists(nameInput, phoneInput, emailInput) {
         firebase.database().ref('users/drivers').orderByChild('phone').equalTo(phoneInput.value).limitToFirst(1).once('value').then(function (snapshot) {
             if (snapshot.val()) {
                 phoneInput.style.borderBottom = '1px solid red';
@@ -60,19 +59,34 @@ function app() {
                 alert('Phone number is already used by another driver');
             } else {
                 phoneInput.style.borderBottom = '1px solid #31842c'
-                createDriver(nameInput.value, phoneInput.value, emailInput.value, passwordInput.value);
+                createDriver(nameInput.value, phoneInput.value, emailInput.value);
             }
         });
     }
 
-    function createDriver(name, phone, email, password) {
+    function createDriver(name, phone, email) {
         var newDriver = {
             name: name,
             phone: phone,
             email: email,
-            password: getRandomPassword()
+            password: generatePassword()
         };
         writeDriverData(newDriver);
+    }
+
+    function generatePassword() {
+        var pass = '';
+        var str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+            'abcdefghijklmnopqrstuvwxyz0123456789@#$';
+
+        for (i = 1; i <= 8; i++) {
+            var char = Math.floor(Math.random()
+                * str.length + 1);
+
+            pass += str.charAt(char)
+        }
+
+        return pass;
     }
 
     function writeDriverData(newDriver) {
@@ -86,6 +100,15 @@ function app() {
                 alert('Driver has been Created');
                 document.getElementById('addForm').reset();
                 document.getElementById("myOverlay").style.display = "none";
+
+                var subject = "Account information for your Recycle account"
+                var body = "Hello, welcome to our Recycle team. We are looking forward to working with you " + newDriver.name + ".%0D%0A%0D%0A" +
+                    "Use the following information to login to your account:%0D%0A%0D%0A" +
+                    "Email: " + newDriver.email + "%0D%0APassword: " + newDriver.password + "%0D%0A%0D%0A" +
+                    "Follow this link to activate your account: link will be here soon"+
+                    "𝐃𝐨 𝐧𝐨𝐭 𝐟𝐨𝐫𝐠𝐞𝐭 𝐭𝐨 𝐜𝐡𝐚𝐧𝐠𝐞 𝐲𝐨𝐮𝐫 𝐩𝐚𝐬𝐬𝐰𝐨𝐫𝐝";
+
+                window.open('mailto:' + newDriver.email + '?subject=' + subject + '&body=' + body);
             }
         });
     }
