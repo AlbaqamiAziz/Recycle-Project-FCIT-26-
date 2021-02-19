@@ -26,8 +26,11 @@ function signin(emailInput, passwordInput) {
     }).catch((error) => {
         var errorCode = error.code;
         var errorMessage = error.message;
+        console.log(errorMessage);
         if (errorCode == "auth/user-not-found") {
             searchInNewDrivers(emailInput, errorMessage);
+        } else {
+            alert(errorMessage);
         }
     });
 }
@@ -56,7 +59,7 @@ function checkType(uid) {
             if (type.val().type == "customer") {
                 window.location.href = "customerPages/homepage.html";
             } else if (type.val().type == "driver") {
-                window.location.href = "driverPages/homepage.html"
+                checkDriverState(uid);
             } else {
                 window.location.href = "adminPages/overview.html";
             }
@@ -69,20 +72,32 @@ function checkType(uid) {
 function searchInNewDrivers(emailInput, errorMessage) {
     // if driver is not registered search in new drivers
     firebase.database().ref("new_drivers/").orderByChild("email").equalTo(emailInput.value).once("value").then(function (snapshot) {
-        snapshot.forEach(driver => {
-            if (driver.val()) {
+        if (snapshot.val()) {
+            snapshot.forEach(driver => {
                 // remove driver from new drivers
                 removeNewDriver(driver.key);
                 // create new user for driver
                 singupDriver(driver.val());
-            } else {
-                alert(errorMessage);
-            }
-        });
+            });
+        } else {
+            alert(errorMessage);
+        }
     });
 }
 
 function removeNewDriver(key) {
     firebase.database().ref("new_drivers/" + key).remove();
+
+
+}
+
+function checkDriverState(uid) {
+    firebase.database().ref("users/drivers/" + uid).once("value").then(function (snapshot) {
+        if (snapshot.val().state == 'enabled') {
+            window.location.href = "driverPages/homepage.html"
+        } else {
+            alert('Sorry, your account is disabled!')
+        }
+    });
 }
 

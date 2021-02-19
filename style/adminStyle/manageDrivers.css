@@ -204,13 +204,11 @@ form.search::after {
   font-size: 24px;
 }
 
-.fa-edit {
+.fa-check {
   color: #458c3a;
-  margin: 0 5px;
 }
 
-.fa-trash {
+.fa-times, .fa-trash {
   color: #ff4c61;
-  margin: 0 5px;
 }
 /*# sourceMappingURL=manageDrivers.css.map */

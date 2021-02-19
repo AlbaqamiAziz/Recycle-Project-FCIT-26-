@@ -68,7 +68,8 @@ function createDriver(user, name, phone) {
         name: name,
         phone: phone,
         total_requests: 0,
-        email: user.email
+        email: user.email,
+        state: active
     };
     writeUserType(newUser, user.uid, "driver");
 }

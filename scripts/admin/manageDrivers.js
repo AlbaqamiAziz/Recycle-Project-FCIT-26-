@@ -105,7 +105,7 @@ function app() {
                 var body = "Hello, welcome to our Recycle team. We are looking forward to working with you " + newDriver.name + ".%0D%0A%0D%0A" +
                     "Use the following information to login to your account:%0D%0A%0D%0A" +
                     "Email: " + newDriver.email + "%0D%0APassword: " + newDriver.password + "%0D%0A%0D%0A" +
-                    "Follow this link to activate your account: link will be here soon"+
+                    "Follow this link to activate your account: link will be here soon%0D%0A" +
                     "𝐃𝐨 𝐧𝐨𝐭 𝐟𝐨𝐫𝐠𝐞𝐭 𝐭𝐨 𝐜𝐡𝐚𝐧𝐠𝐞 𝐲𝐨𝐮𝐫 𝐩𝐚𝐬𝐬𝐰𝐨𝐫𝐝";
 
                 window.open('mailto:' + newDriver.email + '?subject=' + subject + '&body=' + body);
@@ -113,28 +113,33 @@ function app() {
         });
     }
 
-    var Driver = function (id, name, phone, email, totalRequests) {
+    var Driver = function (id, name, phone, email, totalRequests, state) {
         this.id = ko.observable(id);
         this.name = ko.observable(name);
         this.phone = ko.observable(phone);
         this.email = ko.observable(email);
         this.totalRequests = ko.observable(totalRequests);
+        this.state = ko.observable(state);
+
+        this.active = ko.computed(function () {
+            return this.state() == 'enabled';
+        }, this);
     };
 
     var myViewModel = function () {
-        var self = this;
         this.driverList = ko.observableArray();
-        this.currentDriver = ko.observable();
 
         // get all drivers
         getDrivers(this.driverList);
 
-        this.edit = function (clickedDriver) {
-            console.log('edit');
+        this.disable = function (clickedDriver) {
+            var state = "disabled";
+            updateDriver(clickedDriver, state);
         };
-
-        this.delete = function (clickedDriver) {
-            console.log('delete');
+        
+        this.enable = function (clickedDriver) {
+            var state = "enabled";
+            updateDriver(clickedDriver, state);
         };
     };
     ko.applyBindings(new myViewModel);
@@ -143,10 +148,18 @@ function app() {
         driverList.removeAll();
 
         firebase.database().ref("users/drivers").on("child_added", function (snapshot) {
-            driverList.push(new Driver(snapshot.key, snapshot.val().name, snapshot.val().phone, snapshot.val().email, snapshot.val().total_requests));
+            driverList.push(new Driver(snapshot.key, snapshot.val().name, snapshot.val().phone, snapshot.val().email, snapshot.val().total_requests, snapshot.val().state));
             if (driverList.length == 0) {
                 removeLoader();
             }
         });
+    }
+
+    function updateDriver(clickedDriver, state){
+        firebase.database().ref("users/drivers/"+clickedDriver.id()).update({
+            state: state
+        });
+        clickedDriver.state(state);
+        alert("Driver: "+ clickedDriver.name() + " has been "+ state);
     }
 }

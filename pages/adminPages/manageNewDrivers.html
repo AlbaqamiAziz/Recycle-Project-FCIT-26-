@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recycle | Overview Dashboard</title>
+    <title>Recycle | Manage new Drivers Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../style/adminStyle/main.css">
-    <link rel="stylesheet" href="../../style/adminStyle/overviewStyle.css">
+    <link rel="stylesheet" href="../../style/adminStyle/manageDrivers.css">
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
@@ -17,9 +17,6 @@
 
     <!-- Realtime Database SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
-
-    <!-- Google Charts -->
-    <script src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
 <body>
@@ -30,7 +27,6 @@
                 <div class="left">
                     <img src="../../image/logo1.png" alt="">
                 </div>
-
                 <div class="right">
                     <div class="user-info">
                         <h5 class="name" id="adminName">
@@ -52,7 +48,7 @@
                 <ul class="nav-items">
                     <li class="nav-item">
                         <a href="overview.html">
-                            <i class="fa fa-bar-chart active" aria-hidden="true"></i>
+                            <i class="fa fa-bar-chart" aria-hidden="true"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
@@ -64,7 +60,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="manageNewDrivers.html">
-                            <i class="fa fa-users" aria-hidden="true"></i>
+                            <i class="fa fa-users active" aria-hidden="true"></i>
                             <p>New drivers</p>
                         </a>
                     </li>
@@ -79,74 +75,41 @@
 
             <div class="main-content" id="main-content">
                 <div class="top-container">
-                    <h2 class="title">Dashboard</h2>
-                    <p class="description">Overview</p>
+                    <div class="page-title">
+                        <h2 class="title">Dashboard</h2>
+                        <p class="description">Manage new drivers</p>
+                    </div>
                 </div>
+
                 <div class="mid-container">
-                    <div class="cards">
-                        <div class="card">
-                            <span class="circle-span recycle-span">
-                                <i class="fa fa-recycle"></i>
-                            </span>
-                            <div class="description-container">
-                                <h2 class="title" id="active-requests">
-                                </h2>
-                                <p class="description">Active Requests</p>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <span class="circle-span user-span">
-                                <i class="fa fa-user"></i>
-                            </span>
-                            <div class="description-container">
-                                <h2 class="title" id="total-customers">
-                                </h2>
-                                <p class="description">Total Customers</p>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <span class="circle-span truck-span">
-                                <i class="fa fa-truck" aria-hidden="true"></i>
-                            </span>
-                            <div class="description-container">
-                                <h2 class="title" id="total-drivers">
-                                </h2>
-                                <p class="description">Total Drivers</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-container">
-                    <div class="chart">
-                        <div class="title-container">
-                            <h2>Number of requests per month</h2>
-                        </div>
-                        <div class="body-container">
-                            <!--bar chart section-->
-                            <div class="process-chart">
-                                <div id="columnchart_values" style="width: 100%; height: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="table">
                         <div class="title-container">
-                            <h2>Top five drivers</h2>
+                            <h2>New Drivers</h2>
+                            <div class="form-container">
+                                <form class="search">
+                                    <input type="text" placeholder="Search.." id="search">
+                                </form>
+                            </div>
                         </div>
+
                         <div class="body-container">
-                            <table class="top-drivers">
+                            <table class="top-drivers" id="table">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Total requests</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody data-bind="foreach: driverList">
                                     <tr>
                                         <td data-bind="text: name"></td>
-                                        <td data-bind="text: totalRequests"></td>
+                                        <td data-bind="text: phone"></td>
+                                        <td data-bind="text: email"></td>
+                                        <td>
+                                            <button data-bind="click: $parent.delete"><i class="fa fa-trash"></i></button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -157,10 +120,12 @@
             <div class="loader" id="loader"></div>
         </main>
     </div>
+
     <script src="../../scripts/firbaseConfig.js"></script>
     <script src="../../scripts/libs/knockout-3.5.1.js"></script>
+    <script src="../../scripts/registeration.js"></script>
     <script src="../../scripts/admin/main.js"></script>
-    <script src="../../scripts/admin/overview.js"></script>
+    <script src="../../scripts/admin/manageNewDrivers.js"></script>
 </body>
 
 </html>

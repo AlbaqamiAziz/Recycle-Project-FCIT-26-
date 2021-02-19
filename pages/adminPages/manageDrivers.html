@@ -78,6 +78,12 @@
                             <p>Manage drivers</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="manageNewDrivers.html">
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                            <p>New drivers</p>
+                        </a>
+                    </li>
                     <li class="nav-item ">
                         <a href="mailbox.html">
                             <i class="fa fa-envelope-o" aria-hidden="true"></i>
@@ -117,6 +123,7 @@
                                         <th>Phone</th>
                                         <th>Email</th>
                                         <th>Total requests</th>
+                                        <th>State</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -126,10 +133,12 @@
                                         <td data-bind="text: phone"></td>
                                         <td data-bind="text: email"></td>
                                         <td data-bind="text: totalRequests"></td>
+                                        <td data-bind="text: state"></td>
                                         <td>
-                                            <button data-bind="click: $parent.edit"><i class="fa fa-edit"></i></button>
-                                            <button data-bind="click: $parent.delete"><i
-                                                    class="fa fa-trash"></i></button>
+                                            <button data-bind="ifnot: active, click: $parent.enable"><i
+                                                    class="fa fa-check" title="Enable"></i></button>
+                                            <button data-bind="if: active,click: $parent.disable"><i
+                                                    class="fa fa-times" title="disable"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
