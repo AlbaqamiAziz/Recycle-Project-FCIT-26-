@@ -26,7 +26,6 @@ function signin(emailInput, passwordInput) {
     }).catch((error) => {
         var errorCode = error.code;
         var errorMessage = error.message;
-        console.log(errorMessage);
         if (errorCode == "auth/user-not-found") {
             searchInNewDrivers(emailInput, errorMessage);
         } else {

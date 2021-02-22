@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../style/CustomerStyle/certifecate.css">
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+
+    <!-- Authentication SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+
+    <!-- Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+    <title>Recycle | Certifecate</title>
+</head>
+
+<body>
+    <div class="continer">
+        <div class="inner-continer">
+            <header>
+                <div class="head">
+                    <span class="bold">Verified certificate</span><br>
+                    <span class="normal">for recycling</span>
+                </div>
+                <div class="logo">
+                    <img src="../../image/logo1.png" alt="logo">
+                </div>
+            </header>
+            <main>
+                <div class="info">
+                    <p id="name">
+                    </p>
+                    <p class="msg">
+                        Helped the environment by recycling
+                    </p>
+                    <p class="reason">
+                        and got <span id="points"></span> Reward points
+                    </p>
+                </div>
+            </main>
+            <footer>
+                <div class="left-sign">
+                    <img src="../../image/sign1.png" alt="Abdulaziz sign">
+                    <div class="sign-info">
+                        <p class="sign-name">
+                            Abdulaziz Saad
+                        </p>
+                        <p class="pos">
+                            Founder, Recycle
+                        </p>
+                    </div>
+                </div>
+                <div class="right-sign">
+                    <img src="../../image/sign2.png" alt="Sohaib sign">
+                    <div class="sign-info">
+                        <p class="sign-name">
+                            Sohaib Albakri
+                        </p>
+                        <p class="pos">
+                            Founder, Recycle
+                        </p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="../../scripts/firbaseConfig.js"></script>
+    <script>
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                currentUser = user;
+                firebase.database().ref('/users/customers/' + user.uid).once('value').then(function (snapshot) {
+                    var name = snapshot.val().name;
+                    document.getElementById("name").innerHTML = name;
+                    points = snapshot.val().points;
+                    document.getElementById("points").innerHTML = localStorage.getItem('points');
+                    localStorage.clear();
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

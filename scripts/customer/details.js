@@ -52,9 +52,12 @@ function setRequestData(date, time, id, driverID, state, requestState) {
     document.getElementById('time').innerText = time;
     document.getElementById('state').innerText = requestState;
 
+    var callBtn = document.getElementById('callBtn');
+    var cancelBtn = document.getElementById('cancelBtn');
+
     // check if request is accepted by driver
     if (driverID == '') {
-        removeElement(document.getElementById('callBtn'));
+        removeElement(callBtn);
         document.getElementById('driver').innerText = 'Request is not accepted yet';
     } else {
         firebase.database().ref('users/drivers/' + driverID).once('value', (driver) => {
@@ -62,14 +65,17 @@ function setRequestData(date, time, id, driverID, state, requestState) {
             var driverPhone = driver.val().phone;
             document.getElementById('driver').innerText = driverName;
             if (state == 'Active') {
-                document.getElementById('callBtn').href = 'tel:' + driverPhone;
+                cancelBtn.href = 'tel:' + driverPhone;
             }
         });
     }
 
     if (state == 'Canceled' || state == 'Previous') {
-        removeElement(document.getElementById('callBtn'));
-        removeElement(document.getElementById('cancelBtn'));
+        callBtn = document.getElementById('callBtn');
+        if (callBtn) {
+            removeElement(callBtn);
+        }
+        removeElement(cancelBtn);
     }
 }
 // -------------------------------------------------------

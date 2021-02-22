@@ -1,0 +1,122 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.continer {
+    margin: 50px auto;
+    width: 925px;
+    height: 605px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.inner-continer {
+    position: absolute;
+    width: 905px;
+    height: 585px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    padding: 50px;
+}
+
+header, footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bold {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 23px;
+    color: seagreen;
+}
+
+.normal {
+    font-size: 18px;
+    line-height: 21px;
+    color: #7F7F7F;
+}
+
+.logo {
+    text-align: right;
+}
+
+.logo img {
+    width: 120px;
+    height: 55px;
+}
+
+.info {
+    margin: 0px auto;
+    width: fit-content;
+    text-align: center;
+    margin-top: 100px;
+}
+
+#name {
+    font-size: 22px;
+    line-height: 26px;
+}
+
+.msg {
+    font-size: 20px;
+    line-height: 23px;
+    color: #7F7F7F;
+    padding: 5px 0px;
+    border-top: 2px solid seagreen;
+    border-bottom: 2px solid seagreen;
+    margin: 5px 0;
+}
+
+.reason {
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 26px;
+}
+
+#points {
+    color: seagreen;
+}
+
+footer {
+    margin-top: 100px;
+}
+
+.left-sign img {
+    width: 84px;
+}
+
+.right-sign img {
+    width: 84px;
+}
+
+.right-sign, .left-sign {
+    text-align: center;
+}
+
+.sign-name {
+    font-size: 16px;
+    line-height: 19px;
+    color: seagreen;
+}
+
+.pos {
+    font-size: 12px;
+    line-height: 14px;
+    color: seagreen;
+}
+
+footer hr {
+    width: 110px;
+}
+
+.sign-info {
+    border-top: 2px solid seagreen;
+    padding: 5px;
+}

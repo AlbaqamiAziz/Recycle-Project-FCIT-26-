@@ -44,7 +44,8 @@
   text-decoration: underline;
 }
 
-.orders {
+.orders,
+.certificates {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -67,7 +68,8 @@ table {
   display: none;
 }
 
-.order {
+.order,
+.certificate {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -94,16 +96,22 @@ table {
   font-size: 30px;
 }
 
-.order .fa-home {
+.order .fa-home,
+.certificate .fa-certificate {
   margin-right: 15px;
   color: #c4d9b0;
 }
 
-.order h3 {
+.certificate .certIcon {
+  width: 50px;
+  margin-right: 20px;
+}
+
+.order h3, .certificate h3 {
   font-size: 16px;
 }
 
-.order p {
+.order p , .certificate p {
   font-size: 14px;
   color: #458c3a;
 }

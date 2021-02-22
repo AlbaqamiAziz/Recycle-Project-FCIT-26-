@@ -46,7 +46,10 @@ function setRequestData(date, time, id, location, customerID, state,requestState
         var customerName = customer.val().name;
         var customerPhone = customer.val().phone;
         document.getElementById('customer').innerText = customerName;
-        document.getElementById('callBtn').href = 'tel:' + customerPhone;
+        var callBtn = document.getElementById('callBtn');
+        if(callBtn){
+            callBtn.href = 'tel:' + customerPhone;
+        }
 
         // remove loader
         removeElement(document.getElementById('loader'));

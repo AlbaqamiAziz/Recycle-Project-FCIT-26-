@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recycle | Requests History</title>
+    <title>Recycle | Certificates</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../style/DriverStyle/ordersHistoryStyle.css">
-    <link rel="stylesheet" href="../../style/DriverStyle/main.css">
+    <link rel="stylesheet" href="../../style/CustomerStyle/ordersHistoryStyle.css">
+    <link rel="stylesheet" href="../../style/CustomerStyle/main.css">
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
@@ -28,37 +28,27 @@
                     <i class="fa fa-angle-left"></i>
                 </div>
                 <div class="page-title">
-                    <h3>History</h3>
+                    <h3>Certificates</h3>
                 </div>
                 <div class="logo-container">
                     <img class="Logo" src="../../image/tree-Logo.png">
                 </div>
             </div>
-            <div class="nav">
-                <!-- bind the category list with the ul -->
-                <ul class="list" data-bind="foreach: categoryList">
-                    <li class="list-item" data-bind="click: $parent.displayCategory, class: checkActive">
-                        <span data-bind="text: name"></span>
-                    </li>
-                </ul>
-            </div>
         </nav>
 
         <!-- requests section -->
-        <div class="orders" id="orders">
-            <!-- bind the orders table with the current category -->
-            <table data-bind="with: currentCategory" id="table">
-                <!-- bind the table body with the orders list of the current category -->
-                <tbody data-bind="foreach: list">
-                    <tr data-bind="click: $root.showRequest">
-                        <td class="order">
+        <div class="certificates" id="certificates">
+            <table id="table">
+                <tbody data-bind="foreach: certificateList">
+                    <tr data-bind="click: $root.showCertifecate">
+                        <td class="certificate">
                             <div class="left">
                                 <div class="icon">
-                                    <i class="fa fa-home"></i>
+                                    <img src="../../image/certIcon.png" class="certIcon">
                                 </div>
                                 <div class="text">
-                                    <h3>Recycle Request NO.<span data-bind="text: id"></span></h3>
-                                    <p><span data-bind="text: date"></span> <span data-bind="time"></span></p>
+                                    <h3>Cetifecate of <span data-bind="text: points"> Points</span></h3>
+                                    <p><span data-bind="text: date"></span></p>
                                 </div>
                             </div>
                             <div class="btn">
@@ -66,7 +56,6 @@
                             </div>
                         </td>
                     </tr>
-                    <!-- TODO add the error div that will be shown if the current category has no orders -->
                 </tbody>
             </table>
         </div>
@@ -75,7 +64,7 @@
                 <i class="fa fa-warning"></i>
             </div>
             <div class="message-text">
-                <p>We couldn't find any requests</p>
+                <p>We couldn't find any certificates</p>
             </div>
         </div>
 
@@ -87,7 +76,7 @@
     </div>
     <script src="../../scripts/firbaseConfig.js"></script>
     <script src="../../scripts/libs/knockout-3.5.1.js"></script>
-    <script src="../../scripts/driver/history.js"></script>
+    <script src="../../scripts/customer/certificates.js"></script>
 </body>
 
 </html>

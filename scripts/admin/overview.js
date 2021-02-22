@@ -1,6 +1,5 @@
 var currentUser;
 firebase.auth().onAuthStateChanged(function (user) {
-    console.log(getASecureRandomPassword());
     if (user) {
         currentUser = user;
         app();
