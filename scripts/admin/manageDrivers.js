@@ -47,22 +47,10 @@ function app() {
         var emailInput = document.getElementById('email');
         var isValid = isValidName(nameInput) && isValidEmail(emailInput) && isValidPhone(phoneInput);
         if (isValid) {
-            isPhoneExists(nameInput, phoneInput, emailInput);
+            createDriver(nameInput.value, phoneInput.value, emailInput.value);
         }
     }
 
-    function isPhoneExists(nameInput, phoneInput, emailInput) {
-        firebase.database().ref('users/drivers').orderByChild('phone').equalTo(phoneInput.value).limitToFirst(1).once('value').then(function (snapshot) {
-            if (snapshot.val()) {
-                phoneInput.style.borderBottom = '1px solid red';
-                // TODO: Add a an error message container   
-                alert('Phone number is already used by another driver');
-            } else {
-                phoneInput.style.borderBottom = '1px solid #31842c'
-                createDriver(nameInput.value, phoneInput.value, emailInput.value);
-            }
-        });
-    }
 
     function createDriver(name, phone, email) {
         var newDriver = {

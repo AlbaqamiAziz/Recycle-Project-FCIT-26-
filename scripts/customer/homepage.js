@@ -44,16 +44,19 @@ function getUserData() {
 
         var numOfRequests = snapshot.val().total_requests;
         var numOfCertificates = totalPoints / 1000;
-        setUserData(name, points, numOfRequests, numOfCertificates);
+        setUserData(name, points, totalPoints, numOfRequests, numOfCertificates);
         checkCirteficates(numOfCertificates, totalPoints);
     });
 }
 
-function setUserData(name, points, numOfRequests,numOfCertificates) {
+function setUserData(name, points, totalPoints, numOfRequests,numOfCertificates) {
     document.getElementById("name").innerHTML = name;
     document.getElementById('points').innerText = points;
     document.getElementById('requests').innerText = numOfRequests;
     document.getElementById('certificates').innerText = numOfCertificates;
+    document.getElementById('totalPoints').innerText = totalPoints;
+    document.getElementById('usedPoints').innerText = totalPoints - points;
+    document.getElementById('totalRiyals').innerText = points / 20;
 }
 // ----------------------------------------------------------
 

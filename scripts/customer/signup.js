@@ -52,22 +52,11 @@ function validateForm() {
     var passwordInput = document.getElementById('password');
     var isValid = isValidName(nameInput) && isValidEmail(emailInput) && isValidPhone(phoneInput) && isValidPassword(passwordInput);
     if (isValid) {
-        isPhoneExists(nameInput, phoneInput, emailInput, passwordInput);
+        signup(nameInput.value, phoneInput.value, emailInput.value, passwordInput.value);
     }
 }
 
-function isPhoneExists(nameInput, phoneInput, emailInput, passwordInput) {
-    firebase.database().ref('users/customers').orderByChild('phone').equalTo(phoneInput.value).limitToFirst(1).once('value').then(function (snapshot) {
-        if (snapshot.val()) {
-            phoneInput.style.borderBottom = '1px solid red';
-            // TODO: Add a an error message container   
-            alert('Phone number is already used by another customer');
-        } else {
-            phoneInput.style.borderBottom = '1px solid #31842c'
-            signup(nameInput.value, phoneInput.value, emailInput.value, passwordInput.value);
-        }
-    });
-}
+
 
 
 

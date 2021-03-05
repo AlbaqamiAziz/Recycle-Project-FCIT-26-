@@ -65,7 +65,7 @@ function setRequestData(date, time, id, driverID, state, requestState) {
             var driverPhone = driver.val().phone;
             document.getElementById('driver').innerText = driverName;
             if (state == 'Active') {
-                cancelBtn.href = 'tel:' + driverPhone;
+                callBtn.href = 'tel:' + driverPhone;
             }
         });
     }
