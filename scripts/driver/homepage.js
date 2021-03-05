@@ -62,19 +62,23 @@ ko.applyBindings(new myViewModel);
 
 
 function getRequests(requestList) {
-    //get new requests from firebase
-    firebase.database().ref("requests/Active").orderByChild('state').equalTo('New').on("value", function (snapsot) {
-        if (!snapsot.val()) {
-            document.getElementById("message").style.display = 'flex';
-            document.getElementById('orders').style.display = 'none';
-        }else{
+    // check if there is requests to show or not
+    firebase.database().ref("requests/Active").orderByChild('state').equalTo('New').on("value", function (requests) {
+        if (requests.val()) {
             document.getElementById("message").style.display = 'none';
             document.getElementById('orders').style.display = 'block';
+            setRequestsData(requestList, requests);
+        } else {
+            document.getElementById("message").style.display = 'flex';
+            document.getElementById('orders').style.display = 'none';
         }
         removeLoader();
     });
+}
 
-    firebase.database().ref("requests/Active").orderByChild('state').equalTo('New').on("child_added", function (request) {
+function setRequestsData(requestList, requests) {
+    //get new requests from firebase
+    requests.forEach(request => {
         var requestID = request.key;
         var id = request.val().id;
         var state = request.val().state;
@@ -86,9 +90,6 @@ function getRequests(requestList) {
             var customerName = customer.val().name;
             requestList.push(new Request(requestID, id, state, date, time, customerName));
         });
-        // removeLoader();
-        // document.getElementById('orders').style.display = 'block';
-        // document.getElementById("message").style.display = 'none';
     });
 }
 
@@ -102,23 +103,6 @@ function updateRequest(requestList, clickedRequest) {
             var errorMessage = error.message;
             // TODO: Add a an error message container
             alert(errorMessage);
-        } else {
-            appendRequestToDriver(requestList, clickedRequest);
-        }
-    });
-}
-
-function appendRequestToDriver(requestList, clickedRequest) {
-    firebase.database().ref('user-requests/' + currentUser.uid + '/' + clickedRequest.requestID()).set({
-        request_id: clickedRequest.requestID()
-    }, function (error) {
-        if (error) {
-            var errorMessage = error.message;
-            // TODO: Add a an error message container
-            alert(errorMessage);
-        } else {
-            // remove the request from the list
-            requestList.remove(clickedRequest);
         }
     });
 }

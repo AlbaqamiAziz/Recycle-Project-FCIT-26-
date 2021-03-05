@@ -119,20 +119,7 @@ function writeRequestData(newRequest, selectedLocation) {
             // TODO: Add a an error message container
             alert(error.message);
         } else {
-            appendRequestToCustomer(newRequestRef.key);
             updateUserLocation(selectedLocation);
-        }
-    });
-}
-
-function appendRequestToCustomer(newRequestRefKey) {
-    firebase.database().ref('user-requests/' + currentUser.uid + '/' + newRequestRefKey).set({
-        request_id: newRequestRefKey
-    }, function (error) {
-        if (error) {
-            var errorMessage = error.message;
-            // TODO: Add a an error message container
-            alert(errorMessage);
         }
     });
 }

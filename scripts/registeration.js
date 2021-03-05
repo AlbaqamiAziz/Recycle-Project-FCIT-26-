@@ -19,6 +19,7 @@ function isValidPhone(phoneInput) {
         alert("Please enter a valid phone number");
     } else {
         phoneInput.style.borderBottom = "1px solid #31842c"
+        isValid = isPhoneExists(phoneInput);
     }
     return isValid;
 }
@@ -46,6 +47,20 @@ function isValidPassword(passwordInput) {
     }
     return isValid;
 }
+
+function isPhoneExists(phoneInput) {
+    firebase.database().ref('users/customers').orderByChild('phone').equalTo(phoneInput.value).limitToFirst(1).once('value').then(function (snapshot) {
+        if (snapshot.val()) {
+            phoneInput.style.borderBottom = '1px solid red';
+            // TODO: Add a an error message container   
+            alert('Phone number is already used by another customer');
+            return false;
+        } else {
+            phoneInput.style.borderBottom = '1px solid #31842c'
+            return true;
+        }
+    });
+}
 // -----------------------------------------------------------------
 
 
@@ -58,7 +73,7 @@ function createUser(user, name, phone) {
         current_points: 0,
         total_points: 0,
         total_requests: 0,
-        email: user.email   
+        email: user.email
     };
     writeUserType(newUser, user.uid, "customer");
 }
@@ -95,7 +110,6 @@ function writeUserData(newUser, uid, type) {
             // TODO: Add a an error message container
             alert(errorMessage);
         }
-        checkType(uid);
     });
 }
 // ------------------------------------------------------------------------
