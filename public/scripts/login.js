@@ -1,41 +1,19 @@
 // -----------------{Event listeners}---------------- 
 
-document.getElementById("form").onsubmit = function(e) {
-        e.preventDefault();
+document.getElementById("form").onsubmit = function (e) {
+    e.preventDefault();
 
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-        firebase.auth().signInWithEmailAndPassword(email, password).then(({ user }) => {
-                return user.getIdToken().then((idToken) => {
-                    return fetch("/sessionLogin", {
-                        method: "POST",
-                        headers: {
-                            Accept: "application/json",
-                            "Content-Type": "application/json",
-                            "CSRF-Token": Cookies.get("XSRF-TOKEN"),
-                        },
-                        body: JSON.stringify({ idToken }),
-                    });
-                });
-            })
-            // .then(() => {
-            //     return firebase.auth().signOut();
-            // })
-            .then(() => {
-                window.location.assign("/home");
-            })
-            .catch(err => {
-                alert(err.message)
-                console.log(err)
-            });
-
-        // validateForm();
-    }
-    // ------------------------------- //
+    firebase.auth().signInWithEmailAndPassword(email, password).then(({ user }) => {
+        checkType(user.uid);
+    });
+}
+// ------------------------------- //
 
 // ----------------------------------------- //
-document.getElementById("google-btn").onclick = function() {
+document.getElementById("google-btn").onclick = function () {
     google_signup();
 }
 
@@ -76,32 +54,10 @@ function singupDriver(driver) {
     });
 }
 
-function google_signup() {
-    var provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithRedirect(provider);
-}
-
 // ---------------------------------------------------------------
-function checkType(uid) {
-    firebase.database().ref("user_type/" + uid).once("value").then(function(type) {
-        //check if the customer record is found in the database
-        if (type.val()) {
-            if (type.val().type == "customer") {
-                window.location.href = "customerPages/homepage.html";
-            } else if (type.val().type == "driver") {
-                checkDriverState(uid);
-            } else {
-                window.location.href = "adminPages/overview.html";
-            }
-        } else {
-            window.location.href = "googleSignup.html";
-        }
-    });
-}
-
 function searchInNewDrivers(emailInput, errorMessage) {
     // if driver is not registered search in new drivers
-    firebase.database().ref("new_drivers/").orderByChild("email").equalTo(emailInput.value).once("value").then(function(snapshot) {
+    firebase.database().ref("new_drivers/").orderByChild("email").equalTo(emailInput.value).once("value").then(function (snapshot) {
         if (snapshot.val()) {
             snapshot.forEach(driver => {
                 // remove driver from new drivers
@@ -117,11 +73,10 @@ function searchInNewDrivers(emailInput, errorMessage) {
 
 function removeNewDriver(key) {
     firebase.database().ref("new_drivers/" + key).remove();
-
 }
 
 function checkDriverState(uid) {
-    firebase.database().ref("users/drivers/" + uid).once("value").then(function(snapshot) {
+    firebase.database().ref("users/drivers/" + uid).once("value").then(function (snapshot) {
         if (snapshot.val().state == 'enabled') {
             window.location.href = "driverPages/homepage.html"
         } else {

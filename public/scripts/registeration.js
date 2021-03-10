@@ -19,7 +19,6 @@ function isValidPhone(phoneInput) {
         alert("Please enter a valid phone number");
     } else {
         phoneInput.style.borderBottom = "1px solid #31842c"
-        isValid = isPhoneExists(phoneInput);
     }
     return isValid;
 }
@@ -47,22 +46,23 @@ function isValidPassword(passwordInput) {
     }
     return isValid;
 }
-
-function isPhoneExists(phoneInput) {
-    firebase.database().ref('users/customers').orderByChild('phone').equalTo(phoneInput.value).limitToFirst(1).once('value').then(function (snapshot) {
-        if (snapshot.val()) {
-            phoneInput.style.borderBottom = '1px solid red';
-            // TODO: Add a an error message container   
-            alert('Phone number is already used by another customer');
-            return false;
-        } else {
-            phoneInput.style.borderBottom = '1px solid #31842c'
-            return true;
-        }
-    });
-}
 // -----------------------------------------------------------------
 
+// Google Signup
+function google_signup() {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithRedirect(provider);
+}
+
+// After redirect from Google signup
+firebase.auth().getRedirectResult().then(function (result) {
+    if (result.credential) {
+        var user = result.user;
+        checkType(user.uid);
+    }
+}).catch(function (error) {
+    alert(error.message);
+});
 
 // -----------------------------{Create user}------------------------------
 function createUser(user, name, phone) {
@@ -109,7 +109,25 @@ function writeUserData(newUser, uid, type) {
             var errorMessage = error.message;
             // TODO: Add a an error message container
             alert(errorMessage);
+        } else {
+            checkType(uid);
         }
     });
 }
 // ------------------------------------------------------------------------
+function checkType(uid) {
+    firebase.database().ref("user_type/" + uid).once("value").then(function (type) {
+        //check if the customer record is found in the database
+        if (type.val()) {
+            if (type.val().type == "customer") {
+                window.location.href = "customerPages/homepage.html";
+            } else if (type.val().type == "driver") {
+                checkDriverState(uid);
+            } else {
+                window.location.href = "adminPages/overview.html";
+            }
+        } else {
+            window.location.href = "googleSignup.html";
+        }
+    });
+}

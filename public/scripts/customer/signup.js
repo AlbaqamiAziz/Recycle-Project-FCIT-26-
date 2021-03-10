@@ -22,28 +22,7 @@ function signup(name, phone, email, password) {
         alert(errorMessage);
     });
 }
-
-// Google Signup
-function google_signup() {
-    var provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithRedirect(provider);
-
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            //check if the customer record is found in the database
-            firebase.database().ref('/users/customers/' + user.uid).once('value').then(function (snapshot) {
-                // if registerd
-                if (snapshot.val()) {
-                    window.location.href = "customerPages/homepage.html";
-                } else {
-                    window.location.href = "googleSignup.html";
-                }
-            });
-        }
-    });
-}
 // ---------------------------------------------------------------
-
 
 function validateForm() {
     var nameInput = document.getElementById('name');
@@ -52,8 +31,21 @@ function validateForm() {
     var passwordInput = document.getElementById('password');
     var isValid = isValidName(nameInput) && isValidEmail(emailInput) && isValidPhone(phoneInput) && isValidPassword(passwordInput);
     if (isValid) {
-        signup(nameInput.value, phoneInput.value, emailInput.value, passwordInput.value);
+        isPhoneExists(nameInput, phoneInput, emailInput, passwordInput);
     }
+}
+
+function isPhoneExists(nameInput, phoneInput, emailInput, passwordInput) {
+    firebase.database().ref('users/customers').orderByChild('phone').equalTo(phoneInput.value).limitToFirst(1).once('value').then(function (snapshot) {
+        if (snapshot.val()) {
+            phoneInput.style.borderBottom = '1px solid red';
+            // TODO: Add a an error message container   
+            alert('Phone number is already used by another customer');
+        } else {
+            phoneInput.style.borderBottom = '1px solid #31842c'
+            signup(nameInput.value, phoneInput.value, emailInput.value, passwordInput.value);
+        }
+    });
 }
 
 

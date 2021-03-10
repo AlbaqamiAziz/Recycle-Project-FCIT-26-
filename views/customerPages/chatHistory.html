@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recycle | Chats History</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../style/CustomerStyle/ordersHistoryStyle.css">
+    <link rel="stylesheet" href="../../style/CustomerStyle/main.css">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+
+    <!-- Authentication SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+
+    <!-- Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- nav bar -->
+        <nav>
+            <div class="top-bar">
+                <div class="bars" id="backBtn">
+                    <i class="fa fa-angle-left"></i>
+                </div>
+                <div class="page-title">
+                    <h3>Chats</h3>
+                </div>
+                <div class="logo-container">
+                    <img class="Logo" src="../../image/tree-Logo.png">
+                </div>
+            </div>
+            <div class="nav">
+                <!-- bind the category list with the ul -->
+                <ul class="list" data-bind="foreach: categoryList">
+                    <li class="list-item" data-bind="click: $parent.displayCategory, class: checkActive">
+                        <span data-bind="text: name"></span>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- chats section -->
+        <div class="orders" id="orders">
+            <!-- bind the chats table with the current category -->
+            <table data-bind="with: currentCategory" id="table">
+                <!-- bind the table body with the chats list of the current category -->
+                <tbody data-bind="foreach: list">
+                    <tr data-bind="click: $root.showChat">
+                        <td class="order">
+                            <div class="left">
+                                <div class="icon">
+                                    <i class="fa fa-comments"></i>
+                                </div>
+                                <div class="text">
+                                    <h3 data-bind="text: name"></h3>
+                                    <p data-bind="text: lastMessage"></p>
+                                </div>
+                            </div>
+                            <div class="btn">
+                                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="message" id="message">
+            <div class="icon">
+                <i class="fa fa-warning"></i>
+            </div>
+            <div class="message-text">
+                <p>We couldn't find any chats</p>
+            </div>
+
+            <button class="plus-btn" id="createChatBtn">
+                <i class="fa fa-plus"></i>
+                Create a new chat
+            </button>
+
+        </div>
+
+
+        <!-- footer -->
+        <div class="footer">
+            <p class="copyright">Recycle@Copyright 2021 All Right Reserved.</p>
+        </div>
+    </div>
+    <script src="../../scripts/firbaseConfig.js"></script>
+    <script src="../../scripts/libs/knockout-3.5.1.js"></script>
+    <script src="../../scripts/customer/chatHistory.js"></script>
+</body>
+
+</html>

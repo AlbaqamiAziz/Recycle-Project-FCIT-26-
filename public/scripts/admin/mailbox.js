@@ -73,22 +73,30 @@ function app() {
             //remove all chat messages
             firebase.database().ref("chatMessages/" + self.currentChat().chatID()).remove();
             //remove chat 
-            firebase.database().ref("chats/" + self.currentChat().chatID()).remove();
-            firebase.database().ref("userChats/" + self.currentChat().id() + "/" + self.currentChat().chatID()).remove();
-            firebase.database().ref("userChats/" + currentUser.uid + "/" + self.currentChat().chatID()).remove();
+            var chatRef = firebase.database().ref("chats/Active/" + self.currentChat().chatID());
+
+            chatRef.once("value", (snapshot) => {
+                firebase.database().ref("chats/" + "Closed" + "/" + self.currentChat().chatID()).set(snapshot.val(), (error) => {
+                    if (!error) {
+                        chatRef.remove();
+                    }
+                });
+            });
         }
 
 
-        firebase.database().ref("userChats/" + currentUser.uid).on("child_removed", function (snapshot) {
-            self.chatList().forEach(chat => {
-                if (chat.chatID() == snapshot.key) {
-                    self.chatList.remove(chat);
-                    if (self.currentChat().chatID() == chat.chatID()) {
-                        self.currentChat(null);
+        firebase.database().ref("chats/Active/").on("child_removed", function (snapshot) {
+            if (snapshot.val().admin_id == currentUser.uid) {
+                self.chatList().forEach(chat => {
+                    if (chat.chatID() == snapshot.key) {
+                        self.chatList.remove(chat);
+                        if (self.currentChat() && self.currentChat().chatID() == chat.chatID()) {
+                            self.currentChat(null);
+                        }
+                        alert("Your chat with " + chat.name() + " has been deleted");
                     }
-                    alert("Your chat with " + chat.name() + " has been deleted");
-                }
-            });
+                });
+            }
         });
 
         this.openSideMenu = function () {
@@ -104,7 +112,7 @@ function app() {
                     content: newMessage,
                 });
 
-                firebase.database().ref("chats/" + self.currentChat().chatID()).update({
+                firebase.database().ref("chats/Active/" + self.currentChat().chatID()).update({
                     lastMessage: newMessage
                 });
 
@@ -138,24 +146,12 @@ function app() {
     };
 
     document.getElementById("card").onclick = (function () {
-        var newChatRef = firebase.database().ref("chats").push();
-
-        //add the chat referance to the users' chats list
-        firebase.database().ref("userChats/" + currentUser.uid + "/" + newChatRef.key).set({
-            chatID: newChatRef.key
-        });
-
-        //add the chat referance to the second users' chats list
-        firebase.database().ref("userChats/" + foundUserID + "/" + newChatRef.key).set({
-            chatID: newChatRef.key
-        });
+        var newChatRef = firebase.database().ref("chats/Active").push();
 
         //create new chat refrance
         newChatRef.set({
-            members: {
-                firstUser: currentUser.uid,
-                secondUser: foundUserID
-            },
+            customer_id: foundUserID,
+            admin_id: currentUser.uid,
             lastMessage: ""
         }, function (error) {
             if (error) {
@@ -212,31 +208,24 @@ function app() {
 
     function getChats(chatList) {
 
-        firebase.database().ref("userChats/" + currentUser.uid).once("value", function (snapshot) {
+        firebase.database().ref("chats/Active/").orderByChild("admin_id").equalTo(currentUser.uid).once("value", function (snapshot) {
             if (snapshot.numChildren() == 0) {
                 removeLoader();
             }
         });
 
         //get chats from firebase
-        firebase.database().ref("userChats/" + currentUser.uid).on("child_added", function (snapshot) {
+        firebase.database().ref("chats/Active/").orderByChild("admin_id").equalTo(currentUser.uid).on("child_added", function (chat) {
+            //get the other members" id 
+            var senderID = chat.val().customer_id;
+            createChat(chatList, senderID, chat);
 
-            var chatID = snapshot.val().chatID;
-
-            firebase.database().ref("chats/" + chatID).once("value", function (chat) {
-                var members = chat.val().members;
-                //check if current user is one of the chat members
-                if (members.firstUser == currentUser.uid || members.secondUser == currentUser.uid) {
-                    //get the other members" id 
-                    var senderID = members.firstUser == currentUser.uid ? members.secondUser : members.firstUser;
-                    createChat(chatList, senderID, chat);
-                }
-            });
-
-            firebase.database().ref("chats/" + chatID).on("child_changed", function (message) {
-                updateChat(chatList, message.val(), chatID);
+            firebase.database().ref("chats/Active/" + chat.key).on("child_changed", function (message) {
+                updateChat(chatList, message.val(), chat.key);
             });
         });
+
+
     }
 
     function getMessages(currentChat) {

@@ -97,7 +97,7 @@ table {
 }
 
 .order .fa-home,
-.certificate .fa-certificate {
+.certificate .fa-certificate,.fa-comments {
   margin-right: 15px;
   color: #c4d9b0;
 }
@@ -151,5 +151,22 @@ tr:nth-child(even) {
 
 .message-text {
   font-size: 18px;
+}
+
+.plus-btn {
+  margin-top: 20px;
+  width: 200px;
+  height: 40px;
+  background: #458c3a;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.fa-plus {
+  margin-right: 10px;
 }
 /*# sourceMappingURL=ordersHistoryStyle.css.map */

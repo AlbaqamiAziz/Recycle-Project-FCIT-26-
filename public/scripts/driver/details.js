@@ -11,9 +11,6 @@ document.getElementById('backBtn').onclick = function () {
     window.location.href = "history.html";
 };
 
-document.getElementById('callBtn').onclick = function () {
-    console.log('call');
-};
 // -------------------------------------------------------
 
 // ----------------{Get data from firebase}---------------

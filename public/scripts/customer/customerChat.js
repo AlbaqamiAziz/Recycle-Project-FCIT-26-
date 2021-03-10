@@ -1,5 +1,8 @@
 // ------------------{Event listeners}-------------------
 var currentUser;
+var chatID = localStorage.getItem('chatID');
+var state = localStorage.getItem('state');
+
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         currentUser = user;
@@ -24,8 +27,8 @@ window.onclick = function (event) {
 
 function app() {
     // -----------------------------{MVC}----------------------------
-    var Chat = function (member, chatID) {
-        this.member = ko.observable(member);
+    var Chat = function (admin, chatID) {
+        this.admin = ko.observable(admin);
         this.chatID = ko.observable(chatID);
         this.messageList = ko.observableArray();
     }
@@ -47,7 +50,7 @@ function app() {
         getChats(this.currentChat);
 
         this.goBack = function () {
-            window.location.href = 'homepage.html';
+            window.location.href = 'chatHistory.html';
         }
 
         this.deleteMessages = function () {
@@ -58,15 +61,22 @@ function app() {
             //remove all chat messages
             firebase.database().ref("chatMessages/" + self.currentChat().chatID()).remove();
             //remove chat 
-            firebase.database().ref("chats/" + self.currentChat().chatID()).remove();
-            firebase.database().ref("userChats/9dw5V2qAYdauGQzUBYtFzNu1C1G3/" + self.currentChat().chatID()).remove();
-            firebase.database().ref("userChats/" + currentUser.uid + "/" + self.currentChat().chatID()).remove();
+            var chatRef = firebase.database().ref("chats/" + state + "/" + self.currentChat().chatID());
+
+            chatRef.once("value", (snapshot) => {
+                firebase.database().ref("chats/" + "Closed" + "/" + self.currentChat().chatID()).set(snapshot.val(), (error) => {
+                    if (!error) {
+                        chatRef.remove();
+                    }
+                });
+            });
         }
 
-
-        firebase.database().ref("userChats/" + currentUser.uid).on("child_removed", function () {
-            alert("Your chat with " + self.currentChat().member() + " has been deleted");
-            window.location.href = 'homepage.html';
+        firebase.database().ref("chats/Active/").on("child_removed", function (snapshot) {
+            if (snapshot.val().customer_id == currentUser.uid) {
+                alert("Your chat with " + self.currentChat().admin() + " has been deleted");
+                window.location.href = 'homepage.html';
+            }
         });
 
         this.openSideMenu = function () {
@@ -82,7 +92,7 @@ function app() {
                     content: newMessage,
                 });
 
-                firebase.database().ref("chats/" + self.currentChat().chatID()).update({
+                firebase.database().ref("chats/" + state + "/" + self.currentChat().chatID()).update({
                     lastMessage: newMessage
                 });
 
@@ -100,22 +110,36 @@ function app() {
     }
 
     function getChats(currentChat) {
+        if (state == "Closed") {
+            removeElement(document.getElementById('form'));
+            removeElement(document.getElementById('myDropdown'));
+            removeElement(document.getElementById('openBtn'));
+        }
+
         //get chats from firebase
-        firebase.database().ref("userChats/" + currentUser.uid).on("child_added", function (snapshot) {
-            var chatID = snapshot.val().chatID;
-            firebase.database().ref("chats/" + chatID).once("value", function (chat) {
-                var members = chat.val().members;
-                //get the other members' id 
-                var senderID = members.firstUser == currentUser.uid ? members.secondUser : members.firstUser;
+        firebase.database().ref("chats/" + state + "/" + chatID).once("value", function (chat) {
+            var senderID = chat.val().admin_id;
 
-                firebase.database().ref("users/admins/" + senderID).once("value", function (user) {
-                    currentChat(new Chat(user.val().name, chat.key));
-                    getMessages(currentChat);
+            firebase.database().ref("users/admins/" + senderID).once("value", function (user) {
+                currentChat(new Chat(user.val().name, chat.key));
+                getMessages(currentChat);
 
-                    // remove the loader
-                    removeElement(document.getElementById('loader'));
-                    document.getElementById('display').style.display = 'block';
-                });
+                // remove the loader
+                removeElement(document.getElementById('loader'));
+                document.getElementById('display').style.display = 'block';
+            });
+        });
+
+        firebase.database().ref("chats/" + state + "/").on("child_removed", function (chat) {
+            var senderID = chat.val().admin_id;
+
+            firebase.database().ref("users/admins/" + senderID).once("value", function (user) {
+                currentChat(new Chat(user.val().name, chat.key));
+                getMessages(currentChat);
+
+                // remove the loader
+                removeElement(document.getElementById('loader'));
+                document.getElementById('display').style.display = 'block';
             });
         });
     }
