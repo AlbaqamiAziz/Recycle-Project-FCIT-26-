@@ -17,6 +17,9 @@
 
     <!-- Realtime Database SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+    <!-- Server cookie -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
+
 </head>
 
 <body>
@@ -24,9 +27,9 @@
     <div id="side_menu" class="side_menu">
         <a class="closebtn" id="closeBtn">&times;</a>
         <div class="side_menu-content">
-            <a href="profile.html"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
-            <a href="chatHistory.html"><i class="fa fa-wrench" aria-hidden="true"></i> Support</a>
-            <a href="history.html"><i class="fa fa-clock-o" aria-hidden="true"></i> History</a>
+            <a id="profile-btn"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
+            <a id="chatHistory-btn"><i class="fa fa-wrench" aria-hidden="true"></i> Support</a>
+            <a id="history-btn"><i class="fa fa-clock-o" aria-hidden="true"></i> History</a>
             <a id="logoutBtn"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</a>
         </div>
     </div>
@@ -56,21 +59,20 @@
                         <span class="tooltiptext">Total points: <span id="totalPoints"></span><br>Used points: <span
                                 id="usedPoints"></span><br>Saudi Riyal: <span id="totalRiyals"></span>SR</span>
                     </button>
-                    <a href="history.html">
-                        <button class="mid-btn">
+                    <!-- edited here -->
+                    <button class="mid-btn" id="mid-btn">
                             <span id="requests"></span>
                             <h4>Recycling Process</h4>
-                        </button>
-                    </a>
-                    <a href="certificates.html">
-                        <button>
+                    </button>
+
+                    <!-- edited here -->
+                    <button id="certificates-btn">
                             <h4>Cirteficate</h4>
                             <span id="certificates"></span>
                         </button>
-                    </a>
                 </div>
             </div>
-
+            <!-- done here -->
             <div class="bottom-container">
                 <button class="btn" id="newRequestbtn">
                     <i class="fa fa-send"></i>

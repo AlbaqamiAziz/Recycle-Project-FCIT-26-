@@ -20,20 +20,20 @@ router.get('/', (req, res) => {
 
 // Shared routes
 router.get("/home", verify /*use veify middleware*/ , function(req, res) {
-    admin.database().ref('users/' + req.user).once("value", function(snapshot) {
+    admin.database().ref('user_type/' + req.user).once("value", function(snapshot) {
         // render to the home page according the user role
-        var type = snapshot.val().role;
+        var type = snapshot.val().type;
 
-        res.render(type + "/homepage.html");
+        res.render(type + "Pages/homepage.html");
     });
 });
 
 router.get("/profile", verify /*use veify middleware*/ , function(req, res) {
-    admin.database().ref('users/' + req.user).once("value", function(snapshot) {
+    admin.database().ref('user_type/' + req.user).once("value", function(snapshot) {
         // profile page is for customer & driver only
-        var type = snapshot.val().role;
+        var type = snapshot.val().type;
         if (type == 'customer' || type == 'driver') {
-            res.render(type + "/profile.html", { user: snapshot.val() });
+            res.render(type + "Pages/profile.html");
         } else {
             res.redirect('/home');
         }

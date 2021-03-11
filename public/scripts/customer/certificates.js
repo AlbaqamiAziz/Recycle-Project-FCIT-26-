@@ -1,33 +1,33 @@
 // ------------------{Event listeners}-------------------
-firebase.auth().onAuthStateChanged(function (user) {
+firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         currentUser = user;
         app();
     }
 });
 
-document.getElementById('backBtn').onclick = function () {
-    window.location.href = "homepage.html";
-}
-// ------------------------------------------------------
+document.getElementById('backBtn').onclick = function() {
+        window.location.href = "homepage.html";
+    }
+    // ------------------------------------------------------
 
 function app() {
     document.getElementById('table').style.display = 'table';
 
-    var Certifecate = function (id, date, points) {
+    var Certifecate = function(id, date, points) {
         this.id = ko.observable(id);
         this.date = ko.observable(date);
         this.points = ko.observable(points);
     };
 
-    var myViewModel = function () {
+    var myViewModel = function() {
         var self = this;
         this.certificateList = ko.observableArray();
 
         // get all certificates 
         getCertifecates(this.certificateList);
 
-        this.showCertifecate = function (clickedCertifecate) {
+        this.showCertifecate = function(clickedCertifecate) {
             localStorage.setItem('points', clickedCertifecate.points());
             window.location.href = "certificate.html";
         };
@@ -35,7 +35,7 @@ function app() {
     ko.applyBindings(new myViewModel);
 
     function getCertifecates(certificateList) {
-        firebase.database().ref("certificates/").orderByChild('customer_id').equalTo(currentUser.uid).once("value").then(function (certificate) {
+        firebase.database().ref("certificates/").orderByChild('customer_id').equalTo(currentUser.uid).once("value").then(function(certificate) {
             if (!certificate.val()) {
                 document.getElementById("message").style.display = 'flex';
                 document.getElementById('certificates').style.display = 'none';
@@ -45,7 +45,7 @@ function app() {
             }
         });
 
-        firebase.database().ref("certificates/").orderByChild('customer_id').equalTo(currentUser.uid).on("child_added", function (certificate) {
+        firebase.database().ref("certificates/").orderByChild('customer_id').equalTo(currentUser.uid).on("child_added", function(certificate) {
             certificateList.push(new Certifecate(certificate.key, certificate.val().date, certificate.val().points));
         });
     }
