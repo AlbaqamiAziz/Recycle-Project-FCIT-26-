@@ -1,10 +1,10 @@
 // -----------------{Event listeners}---------------- 
-document.getElementById("form").onsubmit = function(e) {
+document.getElementById("form").onsubmit = function (e) {
     e.preventDefault();
     validateForm();
 }
 
-document.getElementById("google-btn").onclick = function() {
+document.getElementById("google-btn").onclick = function () {
     google_signup();
 }
 
@@ -16,36 +16,14 @@ function validateForm() {
     if (isValid) {
         signin(emailInput, passwordInput);
     }
-
-
 }
 
 // -----------------{Firebase Authntication}----------------
 function signin(emailInput, passwordInput) {
 
     firebase.auth().signInWithEmailAndPassword(emailInput.value, passwordInput.value).then(({ user }) => {
-            return user.getIdToken().then((idToken) => {
-                return fetch("/sessionLogin", {
-                    method: "POST",
-                    headers: {
-                        Accept: "application/json",
-                        "Content-Type": "application/json",
-                        "CSRF-Token": Cookies.get("XSRF-TOKEN"),
-                    },
-                    body: JSON.stringify({ idToken }),
-                });
-            });
-        })
-        .then(() => {
-            return firebase.auth().signOut();
-        })
-        .then(() => {
-            window.location.assign("/home");
-        })
-        .catch(err => {
-            alert(err.message)
-            console.log(err)
-        });
+        startSession(uid);
+    });
 }
 
 function singupDriver(driver) {
@@ -83,7 +61,7 @@ function singupDriver(driver) {
 // --------- driver ---------
 function searchInNewDrivers(emailInput, errorMessage) {
     // if driver is not registered search in new drivers
-    firebase.database().ref("new_drivers/").orderByChild("email").equalTo(emailInput.value).once("value").then(function(snapshot) {
+    firebase.database().ref("new_drivers/").orderByChild("email").equalTo(emailInput.value).once("value").then(function (snapshot) {
         if (snapshot.val()) {
             snapshot.forEach(driver => {
                 // remove driver from new drivers

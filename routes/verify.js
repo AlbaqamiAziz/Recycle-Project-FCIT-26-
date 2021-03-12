@@ -1,6 +1,6 @@
 const admin = require('firebase-admin');
 
-var serviceAccount = require("C:/Users/Albaq/OneDrive/Documents/GitHub/Recycle-Project-FCIT-26-/recycle-9c0e0-firebase-adminsdk-lt79u-6fa21fe1c6.json");
+var serviceAccount = require("../recycle-9c0e0-firebase-adminsdk-lt79u-6fa21fe1c6.json");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),

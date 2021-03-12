@@ -19,9 +19,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.engine("html", ejs.renderFile);
 var router = require('./routers/router');
 var customerRouter = require('./routers/customerRouter');
+var adminRouter = require('./routers/adminRouter');
 //------
 app.use('/', router);
 app.use('/', customerRouter);
+app.use('/', adminRouter);
 //-----
 
 app.listen(PORT, () => {

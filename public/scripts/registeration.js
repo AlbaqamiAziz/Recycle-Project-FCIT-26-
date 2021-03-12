@@ -55,14 +55,24 @@ function google_signup() {
 }
 
 // After redirect from Google signup
-firebase.auth().getRedirectResult().then(function (result) {
+firebase.auth().getRedirectResult().then((result) => {
     if (result.credential) {
         var user = result.user;
-        checkType(user.uid);
+        getUserData(user);
     }
 }).catch(function (error) {
     alert(error.message);
 });
+
+function getUserData(user) {
+    firebase.database().ref("user_type/" + user.uid).once("value", (snapshot) => {
+        if (snapshot.val()) {
+            startSession(user);
+        } else {
+            window.location.href = "googleSignup.html";
+        }
+    });
+}
 
 // -----------------------------{Create user}------------------------------
 function createUser(user, name, phone) {
@@ -75,7 +85,7 @@ function createUser(user, name, phone) {
         total_requests: 0,
         email: user.email
     };
-    writeUserType(newUser, user.uid, "customer");
+    writeUserType(newUser, user, "customer");
 }
 
 function createDriver(user, name, phone) {
@@ -86,11 +96,11 @@ function createDriver(user, name, phone) {
         email: user.email,
         state: active
     };
-    writeUserType(newUser, user.uid, "driver");
+    writeUserType(newUser, user, "driver");
 }
 
-function writeUserType(newUser, uid, type) {
-    firebase.database().ref("user_type/" + uid).set({
+function writeUserType(newUser, user, type) {
+    firebase.database().ref("user_type/" + user.uid).set({
         type: type
     }, function (error) {
         if (error) {
@@ -98,36 +108,37 @@ function writeUserType(newUser, uid, type) {
             // TODO: Add a an error message container
             alert(errorMessage);
         } else {
-            writeUserData(newUser, uid, type);
+            writeUserData(newUser, user, type);
         }
     });
 }
 
-function writeUserData(newUser, uid, type) {
-    firebase.database().ref("users/" + type + "s/" + uid).set(newUser, function (error) {
+function writeUserData(newUser, user, type) {
+    firebase.database().ref("users/" + type + "s/" + user.uid).set(newUser, function (error) {
         if (error) {
             var errorMessage = error.message;
             // TODO: Add a an error message container
             alert(errorMessage);
         } else {
-            checkType(uid);
+            startSession(user);
         }
     });
 }
 // ------------------------------------------------------------------------
-function checkType(uid) {
-    firebase.database().ref("user_type/" + uid).once("value").then(function (type) {
-        //check if the customer record is found in the database
-        if (type.val()) {
-            if (type.val().type == "customer") {
-                window.location.href = "customerPages/homepage.html";
-            } else if (type.val().type == "driver") {
-                checkDriverState(uid);
-            } else {
-                window.location.href = "adminPages/overview.html";
-            }
-        } else {
-            window.location.href = "googleSignup.html";
-        }
+function startSession(user) {
+    return user.getIdToken().then((idToken) => {
+        return fetch("/sessionLogin", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+            },
+            body: JSON.stringify({ idToken }),
+        });
+    }).then(() => {
+        window.location.assign("/home");
+    }).catch(err => {
+        alert(err.message);
     });
 }
