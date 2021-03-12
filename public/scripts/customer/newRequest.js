@@ -1,6 +1,6 @@
 // -----------------{Event listeners}---------------- 
 var currentUser, savedLocation, newLocation;
-firebase.auth().onAuthStateChanged(function (user) {
+firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         currentUser = user;
         checkLocation();
@@ -8,12 +8,12 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
 });
 
-document.getElementById('form').onsubmit = function (e) {
+document.getElementById('form').onsubmit = function(e) {
     e.preventDefault();
     validateForm();
 }
 
-document.getElementById('location').onchange = function () {
+document.getElementById('location').onchange = function() {
     var option = document.getElementById("location").value;
     if (option == "change") {
         document.getElementById('map').style.display = 'block';
@@ -22,10 +22,10 @@ document.getElementById('location').onchange = function () {
     }
 }
 
-document.getElementById('backBtn').onclick = function () {
-    window.location.href = "homepage.html";
-}
-// --------------------------------------------------
+document.getElementById('backBtn').onclick = function() {
+        window.location.assign("/home");
+    }
+    // --------------------------------------------------
 
 // -----------------{Form validation}--------------------
 function validateForm() {
@@ -52,7 +52,7 @@ function isTimeSelected(timeInput) {
 }
 
 function checkLocation() {
-    firebase.database().ref('users/customers/' + currentUser.uid).once('value').then(function (snapshot) {
+    firebase.database().ref('users/customers/' + currentUser.uid).once('value').then(function(snapshot) {
         // if customer has registered location
         if (snapshot.val().location) {
             savedLocation = snapshot.val().location;
@@ -80,7 +80,7 @@ function getSelectedLocation(option) {
 // -----------------{Create request & update customers' location}---------------------
 function createRequest(date, time, selectedLocation) {
     // get request id
-    firebase.database().ref("requests/count").once("value").then(function (snapshot) {
+    firebase.database().ref("requests/count").once("value").then(function(snapshot) {
         var newId = snapshot.val() + 1;
         var newRequest = {
             id: newId,
@@ -98,7 +98,7 @@ function createRequest(date, time, selectedLocation) {
 function updateCount(newId, newRequest, selectedLocation) {
     firebase.database().ref('requests').update({
         count: newId
-    }, function (error) {
+    }, function(error) {
         if (error) {
             var errorMessage = error.message;
             // TODO: Add a an error message container
@@ -113,7 +113,7 @@ function updateCount(newId, newRequest, selectedLocation) {
 function writeRequestData(newRequest, selectedLocation) {
     var requestsRef = firebase.database().ref('requests/Active');
     var newRequestRef = requestsRef.push();
-    newRequestRef.set(newRequest, function (error) {
+    newRequestRef.set(newRequest, function(error) {
         if (error) {
             var errorMessage = error.message;
             // TODO: Add a an error message container
@@ -127,13 +127,13 @@ function writeRequestData(newRequest, selectedLocation) {
 function updateUserLocation(selectedLocation) {
     firebase.database().ref('users/customers/' + currentUser.uid).update({
         location: selectedLocation
-    }, function (error) {
+    }, function(error) {
         if (error) {
             var errorMessage = error.message;
             // TODO: Add a an error message container
             alert(errorMessage);
         } else {
-            window.location.href = "homepage.html";
+            window.location.assign("/home");
         }
     });
 }
@@ -220,8 +220,8 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
     infoWindow.setContent(
         browserHasGeolocation ?
-            "Error: The Geolocation service failed." :
-            "Error: Your browser doesn't support geolocation."
+        "Error: The Geolocation service failed." :
+        "Error: Your browser doesn't support geolocation."
     );
     infoWindow.open(map);
 }

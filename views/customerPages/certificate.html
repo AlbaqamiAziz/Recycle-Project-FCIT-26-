@@ -14,6 +14,8 @@
 
     <!-- Realtime Database SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+    <!-- Server cookie -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
     <title>Recycle | Certifecate</title>
 </head>
 
@@ -69,10 +71,10 @@
     </div>
     <script src="../../scripts/firbaseConfig.js"></script>
     <script>
-        firebase.auth().onAuthStateChanged(function (user) {
+        firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 currentUser = user;
-                firebase.database().ref('/users/customers/' + user.uid).once('value').then(function (snapshot) {
+                firebase.database().ref('/users/customers/' + user.uid).once('value').then(function(snapshot) {
                     var name = snapshot.val().name;
                     document.getElementById("name").innerHTML = name;
                     points = snapshot.val().points;

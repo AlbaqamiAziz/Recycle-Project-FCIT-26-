@@ -1,25 +1,25 @@
 // -----------------{Event listeners}---------------- 
 var currentUser, cuurentRequest;
-firebase.auth().onAuthStateChanged(function (user) {
+firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         currentUser = user;
         getRequestData();
     }
 });
 
-document.getElementById('backBtn').onclick = function () {
-    window.location.href = "history.html";
+document.getElementById('backBtn').onclick = function() {
+    window.location.assign("/History");
 };
 
-document.getElementById('cancelBtn').onclick = function () {
+document.getElementById('cancelBtn').onclick = function() {
     document.getElementById('overlay').style.display = 'flex';
 };
 
-document.getElementById('yesBtn').onclick = function () {
+document.getElementById('yesBtn').onclick = function() {
     cancelRequest();
 };
 
-document.getElementById('noBtn').onclick = function () {
+document.getElementById('noBtn').onclick = function() {
     document.getElementById('overlay').style.display = 'none';
 };
 // -------------------------------------------------------
@@ -90,14 +90,14 @@ function cancelRequest() {
     request.state = 'canceled';
 
     // add request from canceled 
-    firebase.database().ref('requests/Canceled/' + cuurentRequest.key).set(request, function (error) {
+    firebase.database().ref('requests/Canceled/' + cuurentRequest.key).set(request, function(error) {
         if (error) {
             var errorMessage = error.message;
             // TODO: Add a an error message container
             alert(error.message);
         } else {
             localStorage.clear();
-            window.location.href = "history.html";
+            window.location.assign("/history");
         }
     });
 }

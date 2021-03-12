@@ -3,7 +3,7 @@ var currentUser;
 var chatID = localStorage.getItem('chatID');
 var state = localStorage.getItem('state');
 
-firebase.auth().onAuthStateChanged(function (user) {
+firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         currentUser = user;
         app();
@@ -11,53 +11,53 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 // Close the dropdown menu if the user clicks outside of it
-window.onclick = function (event) {
-    if (!event.target.matches('#openBtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
+window.onclick = function(event) {
+        if (!event.target.matches('#openBtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
             }
         }
     }
-}
-// -----------------------------------------------------
+    // -----------------------------------------------------
 
 function app() {
     // -----------------------------{MVC}----------------------------
-    var Chat = function (admin, chatID) {
+    var Chat = function(admin, chatID) {
         this.admin = ko.observable(admin);
         this.chatID = ko.observable(chatID);
         this.messageList = ko.observableArray();
     }
 
-    var Message = function (content, sender, timestamp, messageID) {
+    var Message = function(content, sender, timestamp, messageID) {
         this.content = ko.observable(content);
         this.sender = ko.observable(sender);
         this.timestamp = ko.observable(timestamp);
         this.chatID = ko.observable(messageID);
-        this.checkSender = ko.computed(function () {
+        this.checkSender = ko.computed(function() {
             return currentUser.uid == this.sender() ? 'me' : 'other';
         }, this);
     }
 
-    var myViewModel = function () {
+    var myViewModel = function() {
         var self = this;
         this.currentChat = ko.observable();
 
         getChats(this.currentChat);
 
-        this.goBack = function () {
-            window.location.href = 'chatHistory.html';
+        this.goBack = function() {
+            window.location.assign("/chatHistory");
         }
 
-        this.deleteMessages = function () {
+        this.deleteMessages = function() {
             firebase.database().ref("chatMessages/" + self.currentChat().chatID()).remove();
         }
 
-        this.endChat = function () {
+        this.endChat = function() {
             //remove all chat messages
             firebase.database().ref("chatMessages/" + self.currentChat().chatID()).remove();
             //remove chat 
@@ -72,18 +72,18 @@ function app() {
             });
         }
 
-        firebase.database().ref("chats/Active/").on("child_removed", function (snapshot) {
+        firebase.database().ref("chats/Active/").on("child_removed", function(snapshot) {
             if (snapshot.val().customer_id == currentUser.uid) {
                 alert("Your chat with " + self.currentChat().admin() + " has been deleted");
-                window.location.href = 'homepage.html';
+                window.location.assign('/home');
             }
         });
 
-        this.openSideMenu = function () {
+        this.openSideMenu = function() {
             document.getElementById("myDropdown").classList.add("show");
         }
 
-        this.sendMessage = function () {
+        this.sendMessage = function() {
             var newMessage = document.getElementById("newMessage").value;
             if (newMessage.length > 0) {
                 var messageRef = firebase.database().ref("chatMessages/" + self.currentChat().chatID()).push();
@@ -117,10 +117,10 @@ function app() {
         }
 
         //get chats from firebase
-        firebase.database().ref("chats/" + state + "/" + chatID).once("value", function (chat) {
+        firebase.database().ref("chats/" + state + "/" + chatID).once("value", function(chat) {
             var senderID = chat.val().admin_id;
 
-            firebase.database().ref("users/admins/" + senderID).once("value", function (user) {
+            firebase.database().ref("users/admins/" + senderID).once("value", function(user) {
                 currentChat(new Chat(user.val().name, chat.key));
                 getMessages(currentChat);
 
@@ -130,10 +130,10 @@ function app() {
             });
         });
 
-        firebase.database().ref("chats/" + state + "/").on("child_removed", function (chat) {
+        firebase.database().ref("chats/" + state + "/").on("child_removed", function(chat) {
             var senderID = chat.val().admin_id;
 
-            firebase.database().ref("users/admins/" + senderID).once("value", function (user) {
+            firebase.database().ref("users/admins/" + senderID).once("value", function(user) {
                 currentChat(new Chat(user.val().name, chat.key));
                 getMessages(currentChat);
 
@@ -146,14 +146,14 @@ function app() {
 
     function getMessages(currentChat) {
         //get chats from firebase
-        firebase.database().ref("chatMessages/" + currentChat().chatID()).on("child_added", function (chatMessage) {
+        firebase.database().ref("chatMessages/" + currentChat().chatID()).on("child_added", function(chatMessage) {
             currentChat().messageList.push(new Message(chatMessage.val().content, chatMessage.val().sender, chatMessage.val().timestamp, chatMessage.key));
             var elem = document.getElementById('messages');
             elem.scrollTop = elem.scrollHeight;
         });
 
         // listen for messages removed
-        firebase.database().ref("chatMessages/" + currentChat().chatID()).on("child_removed", function () {
+        firebase.database().ref("chatMessages/" + currentChat().chatID()).on("child_removed", function() {
             currentChat().messageList.removeAll();
             var elem = document.getElementById('messages');
             elem.scrollTop = elem.scrollHeight;

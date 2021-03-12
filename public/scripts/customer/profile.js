@@ -1,6 +1,6 @@
 // -----------------{Event listeners}---------------- 
 var currentUser;
-firebase.auth().onAuthStateChanged(function (user) {
+firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         var providerId = user.providerData[0].providerId;
 
@@ -9,21 +9,21 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
 });
 
-document.getElementById('form').onsubmit = function (e) {
+document.getElementById('form').onsubmit = function(e) {
     e.preventDefault();
     validateForm();
 }
 
-document.getElementById('backBtn').onclick = function () {
+document.getElementById('backBtn').onclick = function() {
     window.location.href = "homepage.html";
 };
 
-document.getElementById('cancelBtn').onclick = function () {
-    if (confirm("Are you sure you want to cancel the changes?")) {
-        window.location.href = "homepage.html";
+document.getElementById('cancelBtn').onclick = function() {
+        if (confirm("Are you sure you want to cancel the changes?")) {
+            window.location.href = "homepage.html";
+        }
     }
-}
-// -------------------------------------------------------
+    // -------------------------------------------------------
 
 // -----------------{Form validation}-------------------
 function validateForm() {
@@ -47,6 +47,7 @@ function validateForm() {
 
 // -----------------{Get data from firebase}----------------
 var notGoogle = true;
+
 function getUserData(providerId) {
     firebase.database().ref('users/customers/' + currentUser.uid).once('value', (snapshot) => {
         var name = snapshot.val().name;
@@ -73,9 +74,9 @@ function getUserData(providerId) {
 // ------------------{Update user}--------------------
 function updateUserEmail(name, phone, email) {
     if (notGoogle && email != currentUser.email) {
-        currentUser.updateEmail(email).then(function () {
+        currentUser.updateEmail(email).then(function() {
             updateUserData(name, phone);
-        }).catch(function (error) {
+        }).catch(function(error) {
             var errorMessage = error.message;
             // TODO: Add a an error message container
             alert(errorMessage);
@@ -89,7 +90,7 @@ function updateUserData(name, phone) {
     firebase.database().ref('users/customers/' + currentUser.uid).update({
         name: name,
         phone: phone,
-    }, function (error) {
+    }, function(error) {
         if (error) {
             var errorMessage = error.message;
             // TODO: Add a an error message container

@@ -1,13 +1,13 @@
 // -----------------{Event listeners}---------------- 
-document.getElementById('form').onsubmit = function (e) {
+document.getElementById('form').onsubmit = function(e) {
     e.preventDefault();
     validateForm();
 }
 
-document.getElementById('google-btn').onclick = function (e) {
-    google_signup();
-}
-// --------------------------------------------------------------
+document.getElementById('google-btn').onclick = function(e) {
+        google_signup();
+    }
+    // --------------------------------------------------------------
 
 // -----------------{Firebase Authntication}----------------
 // Regular Signup
@@ -36,7 +36,7 @@ function validateForm() {
 }
 
 function isPhoneExists(nameInput, phoneInput, emailInput, passwordInput) {
-    firebase.database().ref('users/customers').orderByChild('phone').equalTo(phoneInput.value).limitToFirst(1).once('value').then(function (snapshot) {
+    firebase.database().ref('users/customers').orderByChild('phone').equalTo(phoneInput.value).limitToFirst(1).once('value').then(function(snapshot) {
         if (snapshot.val()) {
             phoneInput.style.borderBottom = '1px solid red';
             // TODO: Add a an error message container   
@@ -47,9 +47,3 @@ function isPhoneExists(nameInput, phoneInput, emailInput, passwordInput) {
         }
     });
 }
-
-
-
-
-
-

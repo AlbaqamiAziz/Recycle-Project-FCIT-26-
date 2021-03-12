@@ -1,10 +1,10 @@
 // -----------------{Event listeners}---------------- 
-document.getElementById("form").onsubmit = function (e) {
+document.getElementById("form").onsubmit = function(e) {
     e.preventDefault();
     validateForm();
 }
 
-document.getElementById("google-btn").onclick = function () {
+document.getElementById("google-btn").onclick = function() {
     google_signup();
 }
 
@@ -22,7 +22,7 @@ function validateForm() {
 function signin(emailInput, passwordInput) {
 
     firebase.auth().signInWithEmailAndPassword(emailInput.value, passwordInput.value).then(({ user }) => {
-        startSession(uid);
+        startSession(user);
     });
 }
 
@@ -61,7 +61,7 @@ function singupDriver(driver) {
 // --------- driver ---------
 function searchInNewDrivers(emailInput, errorMessage) {
     // if driver is not registered search in new drivers
-    firebase.database().ref("new_drivers/").orderByChild("email").equalTo(emailInput.value).once("value").then(function (snapshot) {
+    firebase.database().ref("new_drivers/").orderByChild("email").equalTo(emailInput.value).once("value").then(function(snapshot) {
         if (snapshot.val()) {
             snapshot.forEach(driver => {
                 // remove driver from new drivers

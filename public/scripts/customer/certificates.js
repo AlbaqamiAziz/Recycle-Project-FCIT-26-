@@ -7,7 +7,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 document.getElementById('backBtn').onclick = function() {
-        window.location.href = "homepage.html";
+        window.location.assign("/home");
     }
     // ------------------------------------------------------
 
@@ -29,7 +29,7 @@ function app() {
 
         this.showCertifecate = function(clickedCertifecate) {
             localStorage.setItem('points', clickedCertifecate.points());
-            window.location.href = "certificate.html";
+            window.location.assign("/certificate");
         };
     };
     ko.applyBindings(new myViewModel);
