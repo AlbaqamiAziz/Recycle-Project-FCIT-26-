@@ -7,7 +7,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 document.getElementById('backBtn').onclick = function () {
-    window.location.href = "homepage.html";
+    window.location.href = "/homepage";
 }
 // ------------------------------------------------------
 
@@ -71,7 +71,7 @@ function app() {
         this.showRequest = function (clickedRequest) {
             localStorage.setItem('requestID', clickedRequest.requestID());
             localStorage.setItem('state', self.currentCategory().name());
-            window.location.href = "details.html";
+            window.location.href = "/details";
         };
     };
     ko.applyBindings(new myViewModel);

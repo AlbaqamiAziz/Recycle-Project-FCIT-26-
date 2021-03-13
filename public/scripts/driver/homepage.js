@@ -17,7 +17,7 @@ document.getElementById('closeBtn').onclick = function () {
 
 document.getElementById('logoutBtn').onclick = function () {
     firebase.auth().signOut().then(() => {
-        window.location.href = "../login.html";
+        window.location.href = "/sessionLogout";
     }).catch((error) => {
         alert(error.message);
     });

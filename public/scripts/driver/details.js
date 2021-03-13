@@ -8,7 +8,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 document.getElementById('backBtn').onclick = function () {
-    window.location.href = "history.html";
+    window.location.href = "/history";
 };
 
 // -------------------------------------------------------

@@ -13,7 +13,7 @@ document.getElementById('form').onsubmit = function (e) {
 }
 
 document.getElementById('backBtn').onclick = function () {
-    window.location.href = "homepage.html";
+    window.location.href = "/homepage";
 };
 
 document.getElementById('cancelBtn').onclick = function () {
@@ -80,7 +80,7 @@ function updateUserData(name, phone) {
             alert(errorMessage);
         } else {
             alert('Profile has been updated');
-            window.location.href = "homepage.html";
+            window.location.href = "/homepage";
         }
     });
 }

@@ -24,6 +24,7 @@ var adminRouter = require('./routers/adminRouter');
 app.use('/', router);
 app.use('/', customerRouter);
 app.use('/', adminRouter);
+app.use('/', driverRouter);
 //-----
 
 app.listen(PORT, () => {
