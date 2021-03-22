@@ -70,8 +70,6 @@ function app() {
         }
 
         this.endChat = function () {
-            //remove all chat messages
-            firebase.database().ref("chatMessages/" + self.currentChat().chatID()).remove();
             //remove chat 
             var chatRef = firebase.database().ref("chats/Active/" + self.currentChat().chatID());
 
@@ -224,8 +222,6 @@ function app() {
                 updateChat(chatList, message.val(), chat.key);
             });
         });
-
-
     }
 
     function getMessages(currentChat) {
@@ -242,9 +238,6 @@ function app() {
         // listen for messages removed
         firebase.database().ref("chatMessages/" + currentChat().chatID()).on("child_removed", function () {
             currentChat().messageList.removeAll();
-            firebase.database().ref("chatMessages/" + currentChat().chatID()).on("child_removed", function () {
-                currentChat().messageList.removeAll();
-            });
         });
     }
     // -----------------------------------------------------

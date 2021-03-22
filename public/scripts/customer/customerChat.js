@@ -58,8 +58,6 @@ function app() {
         }
 
         this.endChat = function() {
-            //remove all chat messages
-            firebase.database().ref("chatMessages/" + self.currentChat().chatID()).remove();
             //remove chat 
             var chatRef = firebase.database().ref("chats/" + state + "/" + self.currentChat().chatID());
 
@@ -72,8 +70,8 @@ function app() {
             });
         }
 
-        firebase.database().ref("chats/Active/").on("child_removed", function(snapshot) {
-            if (snapshot.val().customer_id == currentUser.uid) {
+        firebase.database().ref("chats/" + state + "/").on("child_removed", function(snapshot) {
+            if (snapshot.key == self.currentChat().chatID()) {
                 alert("Your chat with " + self.currentChat().admin() + " has been deleted");
                 window.location.assign('/home');
             }
@@ -118,19 +116,6 @@ function app() {
 
         //get chats from firebase
         firebase.database().ref("chats/" + state + "/" + chatID).once("value", function(chat) {
-            var senderID = chat.val().admin_id;
-
-            firebase.database().ref("users/admins/" + senderID).once("value", function(user) {
-                currentChat(new Chat(user.val().name, chat.key));
-                getMessages(currentChat);
-
-                // remove the loader
-                removeElement(document.getElementById('loader'));
-                document.getElementById('display').style.display = 'block';
-            });
-        });
-
-        firebase.database().ref("chats/" + state + "/").on("child_removed", function(chat) {
             var senderID = chat.val().admin_id;
 
             firebase.database().ref("users/admins/" + senderID).once("value", function(user) {

@@ -73,6 +73,12 @@ function app() {
             clickedCategory.active(true);
             self.currentCategory(clickedCategory);
 
+            if(clickedCategory.name() == "Closed"){
+                document.getElementById("createChatBtn").style.display = 'none';
+            }else {
+                document.getElementById("createChatBtn").style.display = 'block';
+            }
+
             firebase.database().ref("chats/" + clickedCategory.name()).orderByChild('customer_id').equalTo(currentUser.uid).on("value", function(chat) {
                 if (!chat.val()) {
                     document.getElementById("message").style.display = 'flex';
@@ -83,9 +89,9 @@ function app() {
                 }
             });
         };
-
+        
         this.displayCategory(this.categoryList()[0]);
-
+        
         this.showChat = function(clickedChat) {
             localStorage.setItem('chatID', clickedChat.chatID());
             localStorage.setItem('state', self.currentCategory().name());
@@ -93,17 +99,17 @@ function app() {
         };
     };
     ko.applyBindings(new myViewModel);
-
+    
     function getCategory(categoryList) {
         categories.forEach(category => {
             categoryList.push(new Category(category));
         });
     }
-
+    
     function getChats(currentCategory) {
         //clear current chats
         currentCategory.list.removeAll();
-
+        
         firebase.database().ref("chats/" + currentCategory.name()).orderByChild('customer_id').equalTo(currentUser.uid).on("child_added", function(chat) {
 
             firebase.database().ref("users/admins/" + chat.val().admin_id).once("value", function(admin) {
