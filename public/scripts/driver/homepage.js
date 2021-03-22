@@ -3,7 +3,6 @@ var currentUser;
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         currentUser = user;
-        // getUserData();
     }
 });
 

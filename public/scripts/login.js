@@ -20,12 +20,21 @@ function validateForm() {
 
 // -----------------{Firebase Authntication}----------------
 function signin(emailInput, passwordInput) {
-
     firebase.auth().signInWithEmailAndPassword(emailInput.value, passwordInput.value).then(({ user }) => {
-        startSession(user);
-    });
+        getUserType(user);
+    }).catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if(errorCode == "auth/user-not-found"){
+            searchInNewDrivers(emailInput,passwordInput);
+        }else {
+            alert(errorMessage);
+        }
+    });;
 }
 
+
+// --------- driver ---------
 function singupDriver(driver) {
     firebase.auth().createUserWithEmailAndPassword(driver.email, driver.password).then((userCredential) => {
         var user = userCredential.user;
@@ -37,28 +46,6 @@ function singupDriver(driver) {
     });
 }
 
-// -------------------------     No need function for now  --------------------------------------
-
-//            
-// function checkType(uid) {
-//     firebase.database().ref("user_type/" + uid).once("value").then(function(type) {
-//         //check if the customer record is found in the database
-//         if (type.val()) {
-//             if (type.val().type == "customer") {
-//                 window.location.href = "customerPages/homepage.html";
-//             } else if (type.val().type == "driver") {
-//                 checkDriverState(uid);
-//             } else {
-//                 window.location.href = "adminPages/overview.html";
-//             }
-//         } else {
-//             window.location.href = "googleSignup.html";
-//         }
-//     });
-// }
-
-
-// --------- driver ---------
 function searchInNewDrivers(emailInput, errorMessage) {
     // if driver is not registered search in new drivers
     firebase.database().ref("new_drivers/").orderByChild("email").equalTo(emailInput.value).once("value").then(function(snapshot) {
@@ -78,13 +65,3 @@ function searchInNewDrivers(emailInput, errorMessage) {
 function removeNewDriver(key) {
     firebase.database().ref("new_drivers/" + key).remove();
 }
-// ------------------------No need function for now---------------
-// function checkDriverState(uid) { 
-//     firebase.database().ref("users/drivers/" + uid).once("value").then(function(snapshot) {
-//         if (snapshot.val().state == 'enabled') {
-//             window.location.href = "driverPages/homepage.html"
-//         } else {
-//             alert('Sorry, your account is disabled!')
-//         }
-//     });
-// }

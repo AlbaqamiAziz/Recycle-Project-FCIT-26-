@@ -15,17 +15,16 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(csrfMiddleware);
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.engine("html", ejs.renderFile);
+
+// ----------- Routers -----------
 var router = require('./routers/router');
 var customerRouter = require('./routers/customerRouter');
 var adminRouter = require('./routers/adminRouter');
-//------
 app.use('/', router);
 app.use('/', customerRouter);
 app.use('/', adminRouter);
-app.use('/', driverRouter);
-//-----
+//-------------------------------------------------
 
 app.listen(PORT, () => {
     console.log('App listen to port ' + PORT);

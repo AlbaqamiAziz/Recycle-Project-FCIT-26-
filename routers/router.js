@@ -3,7 +3,7 @@ var router = express.Router();
 const verifyModule = require('../routes/verify');
 const admin = verifyModule.admin;
 const verify = verifyModule.verify;
-
+const getType = verifyModule.getType;
 
 // ------- Pages routes ---------
 router.all("*", (req, res, next) => {
@@ -19,25 +19,41 @@ router.get('/', (req, res) => {
 // after verify the session token check type and render the page
 
 // Shared routes
-router.get("/home", verify /*use veify middleware*/ , function(req, res) {
-    admin.database().ref('user_type/' + req.user).once("value", function(snapshot) {
-        // render to the home page according the user role
-        var type = snapshot.val().type;
-
-        res.render(type + "Pages/homepage.html");
-    });
+router.get("/home", verify, getType /*use veify, getType middlewares*/, function (req, res) {
+    // render to the home page according the user type
+    var type = req.userType;
+    if (type == "driver") {
+        //Check state 
+    }
+    res.render(type + "Pages/homepage.html");
 });
 
-router.get("/profile", verify /*use veify middleware*/ , function(req, res) {
-    admin.database().ref('user_type/' + req.user).once("value", function(snapshot) {
-        // profile page is for customer & driver only
-        var type = snapshot.val().type;
-        if (type == 'customer' || type == 'driver') {
-            res.render(type + "Pages/profile.html");
-        } else {
-            res.redirect('/home');
-        }
-    });
+router.get("/profile", verify, getType /*use veify, getType middlewares*/, function (req, res) {
+    // profile page is for customer & driver only
+    var type = req.userType;
+    if (type == 'customer' || type == 'driver') {
+        res.render(type + "Pages/profile.html");
+    } else {
+        res.redirect('/home');
+    }
+});
+
+router.get("/history", verify, getType /*use veify, getType middlewares*/, function (req, res) {
+    // profile page is for customer & driver only
+    if (req.userType == 'customer' || req.userType == 'driver') {
+        res.render(req.userType + "Pages/history.html");
+    } else {
+        res.redirect('/home');
+    }
+});
+
+router.get("/details", verify, getType /*use veify, getType middlewares*/, function (req, res) {
+    // profile page is for customer & driver only
+    if (req.userType == 'customer' || req.userType == 'driver') {
+        res.render(req.userType + "Pages/details.html");
+    } else {
+        res.redirect('/home');
+    }
 });
 // -------------------------------------------------------------------
 

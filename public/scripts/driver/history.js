@@ -7,7 +7,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 document.getElementById('backBtn').onclick = function () {
-    window.location.href = "/homepage";
+    window.location.href = "/home";
 }
 // ------------------------------------------------------
 

@@ -19,7 +19,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
     <!-- Server cookie -->
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
-
 </head>
 
 <body>
@@ -27,9 +26,9 @@
     <div id="side_menu" class="side_menu">
         <a class="closebtn" id="closeBtn">&times;</a>
         <div class="side_menu-content">
-            <a id="profile-btn"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
-            <a id="chatHistory-btn"><i class="fa fa-wrench" aria-hidden="true"></i> Support</a>
-            <a id="history-btn"><i class="fa fa-clock-o" aria-hidden="true"></i> History</a>
+            <a href="/profile"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
+            <a href="/chatHistory"><i class="fa fa-wrench" aria-hidden="true"></i> Support</a>
+            <a href="/history"><i class="fa fa-clock-o" aria-hidden="true"></i> History</a>
             <a id="logoutBtn"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</a>
         </div>
     </div>
@@ -61,15 +60,15 @@
                     </button>
                     <!-- edited here -->
                     <button class="mid-btn" id="mid-btn">
-                            <span id="requests"></span>
-                            <h4>Recycling Process</h4>
+                        <span id="requests"></span>
+                        <h4>Recycling Process</h4>
                     </button>
 
                     <!-- edited here -->
                     <button id="certificates-btn">
-                            <h4>Cirteficate</h4>
-                            <span id="certificates"></span>
-                        </button>
+                        <h4>Cirteficate</h4>
+                        <span id="certificates"></span>
+                    </button>
                 </div>
             </div>
             <!-- done here -->

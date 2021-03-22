@@ -3,9 +3,8 @@ var currentUser;
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         var providerId = user.providerData[0].providerId;
-
         currentUser = user;
-        getUserData(providerId);
+        getUserDataToForm(providerId);
     }
 });
 
@@ -15,12 +14,12 @@ document.getElementById('form').onsubmit = function(e) {
 }
 
 document.getElementById('backBtn').onclick = function() {
-    window.location.href = "homepage.html";
+    window.location.assign("/home");
 };
 
 document.getElementById('cancelBtn').onclick = function() {
         if (confirm("Are you sure you want to cancel the changes?")) {
-            window.location.href = "homepage.html";
+            window.location.assign("/home");
         }
     }
     // -------------------------------------------------------
@@ -48,7 +47,7 @@ function validateForm() {
 // -----------------{Get data from firebase}----------------
 var notGoogle = true;
 
-function getUserData(providerId) {
+function getUserDataToForm(providerId) {
     firebase.database().ref('users/customers/' + currentUser.uid).once('value', (snapshot) => {
         var name = snapshot.val().name;
         var phone = snapshot.val().phone;
@@ -97,7 +96,7 @@ function updateUserData(name, phone) {
             alert(errorMessage);
         } else {
             alert('Profile has been updated');
-            window.location.href = "homepage.html";
+            window.location.assign("/home");
         }
     });
 }

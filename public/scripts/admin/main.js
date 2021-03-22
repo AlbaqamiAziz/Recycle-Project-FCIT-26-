@@ -7,8 +7,10 @@ function getAdminName() {
 
 document.getElementById("logout").onclick = function () {
     firebase.auth().signOut().then(() => {
-        window.location.href = "../../index.html";
-    })
+        window.location.assign("/sessionLogout");
+    }).catch((error) => {
+        alert(error.message);
+    });
 };
 
 function removeLoader() {

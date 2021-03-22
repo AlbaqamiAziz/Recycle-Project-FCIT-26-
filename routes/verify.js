@@ -21,5 +21,11 @@ module.exports = {
             res.redirect("/");
         });
     },
+    getType: (req, res, next) => {
+        admin.database().ref('user_type/' + req.user).once("value", function(snapshot) {
+           req.userType = snapshot.val().type;
+           next();
+        });
+    },
     admin: admin
 }

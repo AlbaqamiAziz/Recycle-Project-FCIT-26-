@@ -58,21 +58,11 @@ function google_signup() {
 firebase.auth().getRedirectResult().then((result) => {
     if (result.credential) {
         var user = result.user;
-        getUserData(user);
+        getUserType(user);
     }
 }).catch(function (error) {
     alert(error.message);
 });
-
-function getUserData(user) {
-    firebase.database().ref("user_type/" + user.uid).once("value", (snapshot) => {
-        if (snapshot.val()) {
-            startSession(user);
-        } else {
-            window.location.href = "googleSignup.html";
-        }
-    });
-}
 
 // -----------------------------{Create user}------------------------------
 function createUser(user, name, phone) {
@@ -94,7 +84,7 @@ function createDriver(user, name, phone) {
         phone: phone,
         total_requests: 0,
         email: user.email,
-        state: active
+        state: "enabled"
     };
     writeUserType(newUser, user, "driver");
 }
@@ -125,6 +115,29 @@ function writeUserData(newUser, user, type) {
     });
 }
 // ------------------------------------------------------------------------
+
+function getUserType(user) {
+    firebase.database().ref("user_type/" + user.uid).once("value", (snapshot) => {
+        if (snapshot.val().type == 'driver') {
+            checkDriverState(user);
+        } else if (snapshot.val().type == 'admin' || snapshot.val().type == 'customer') {
+            startSession(user);
+        } else {
+            window.location.href = "googleSignup.html";
+        }
+    });
+}
+
+function checkDriverState(user) {
+    firebase.database().ref("users/drivers/" + user.uid).once("value").then(function (snapshot) {
+        if (snapshot.val().state == 'enabled') {
+            startSession(user);
+        } else {
+            alert('Sorry, your account is disabled!')
+        }
+    });
+}
+
 function startSession(user) {
     return user.getIdToken().then((idToken) => {
         return fetch("/sessionLogin", {
