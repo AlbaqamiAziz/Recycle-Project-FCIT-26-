@@ -1,6 +1,6 @@
 // -----------------{Event listeners}---------------- 
-var currentUser, savedLocation, newLocation;
-firebase.auth().onAuthStateChanged(function(user) {
+var currentUser, savedLocation, newLocation, newCity, savedCity;
+firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         currentUser = user;
         checkLocation();
@@ -8,34 +8,57 @@ firebase.auth().onAuthStateChanged(function(user) {
     }
 });
 
-document.getElementById('form').onsubmit = function(e) {
+document.getElementById('form').onsubmit = function (e) {
     e.preventDefault();
     validateForm();
 }
 
-document.getElementById('location').onchange = function() {
+document.getElementById('location').onchange = function () {
     var option = document.getElementById("location").value;
     if (option == "change") {
         document.getElementById('map').style.display = 'block';
+        document.getElementById('city').style.display = 'block';
     } else {
+        document.getElementById('city').style.display = 'none';
         document.getElementById('map').style.display = 'none';
     }
 }
 
-document.getElementById('backBtn').onclick = function() {
-        window.location.assign("/home");
+var cites = {
+    Jeddah: {
+        lat: 21.543333, lng: 39.172779
+    },
+    Riyadh: {
+        lat: 24.774265, lng: 46.738586
+    },
+    Makkah: {
+        lat: 21.422510, lng: 39.826168
     }
-    // --------------------------------------------------
+}
+
+var cityiInput = document.getElementById('city');
+cityiInput.onchange = function () {
+    map.setCenter(cites[cityiInput.value]);
+    setMarker(cites[cityiInput.value].lat, cites[cityiInput.value].lng);
+    newCity = cityiInput.value;
+}
+
+document.getElementById('backBtn').onclick = function () {
+    window.location.assign("/home");
+}
+// --------------------------------------------------
 
 // -----------------{Form validation}--------------------
 function validateForm() {
     var dateInput = document.getElementById('date');
     var timeInput = document.getElementById('time');
-    var isValid = isTimeSelected(timeInput);
+    var cityInput = document.getElementById('city');
+    var isValid = isTimeSelected(timeInput) && isCitySelected(cityInput);
     if (isValid) {
         var option = document.getElementById("location").value;
         var selectedLocation = getSelectedLocation(option);
-        createRequest(dateInput.value, timeInput.value, selectedLocation);
+        var selectedCity = getSelectedCity(option);
+        createRequest(dateInput.value, timeInput.value, selectedLocation, selectedCity);
     }
 }
 
@@ -51,12 +74,27 @@ function isTimeSelected(timeInput) {
     return isValid;
 }
 
+function isCitySelected(cityInput) {
+    var isValid = cityInput.value != 'none';
+    if (!isValid) {
+        cityInput.style.borderBottom = '1px solid red';
+        // TODO: Add a an error message container
+        alert('Please select pickup city');
+    } else {
+        cityInput.style.borderBottom = '1px solid #31842c';
+    }
+    return isValid;
+}
+
 function checkLocation() {
-    firebase.database().ref('users/customers/' + currentUser.uid).once('value').then(function(snapshot) {
+    firebase.database().ref('users/customers/' + currentUser.uid).once('value').then(function (snapshot) {
         // if customer has registered location
         if (snapshot.val().location) {
             savedLocation = snapshot.val().location;
+            savedCity = snapshot.val().city;
             document.getElementById('map').style.display = 'none';
+            document.getElementById('city').style.display = 'none';
+            document.getElementById(snapshot.val().city).selected = true;
         } else {
             document.getElementById('location').style.display = 'none';
         }
@@ -67,7 +105,7 @@ function checkLocation() {
 }
 
 function getSelectedLocation(option) {
-    var selectedLocation
+    var selectedLocation;
     if (savedLocation) {
         selectedLocation = option == 'change' ? newLocation : savedLocation;
     } else {
@@ -75,12 +113,22 @@ function getSelectedLocation(option) {
     }
     return selectedLocation;
 }
+
+function getSelectedCity(option) {
+    var selectedCity;
+    if (savedLocation) {
+        selectedCity = option == 'change' ? newCity : savedCity;
+    } else {
+        selectedCity = newCity;
+    }
+    return selectedCity;
+}
 // ----------------------------------------------------------------------------------------------
 
 // -----------------{Create request & update customers' location}---------------------
-function createRequest(date, time, selectedLocation) {
+function createRequest(date, time, selectedLocation, selectedCity) {
     // get request id
-    firebase.database().ref("requests/count").once("value").then(function(snapshot) {
+    firebase.database().ref("requests/count").once("value").then(function (snapshot) {
         var newId = snapshot.val() + 1;
         var newRequest = {
             id: newId,
@@ -89,45 +137,47 @@ function createRequest(date, time, selectedLocation) {
             customer_id: currentUser.uid,
             driver_id: "",
             state: 'New',
-            location: selectedLocation
+            location: selectedLocation,
+            city: selectedCity
         };
-        updateCount(newId, newRequest, selectedLocation);
+        updateCount(newId, newRequest, selectedLocation, selectedCity);
     });
 }
 
-function updateCount(newId, newRequest, selectedLocation) {
+function updateCount(newId, newRequest, selectedLocation, selectedCity) {
     firebase.database().ref('requests').update({
         count: newId
-    }, function(error) {
+    }, function (error) {
         if (error) {
             var errorMessage = error.message;
             // TODO: Add a an error message container
             alert(errorMessage);
         } else {
             // write the new request to the database
-            writeRequestData(newRequest, selectedLocation);
+            writeRequestData(newRequest, selectedLocation, selectedCity);
         }
     });
 }
 
-function writeRequestData(newRequest, selectedLocation) {
+function writeRequestData(newRequest, selectedLocation, selectedCity) {
     var requestsRef = firebase.database().ref('requests/Active');
     var newRequestRef = requestsRef.push();
-    newRequestRef.set(newRequest, function(error) {
+    newRequestRef.set(newRequest, function (error) {
         if (error) {
             var errorMessage = error.message;
             // TODO: Add a an error message container
             alert(error.message);
         } else {
-            updateUserLocation(selectedLocation);
+            updateUserLocation(selectedLocation, selectedCity);
         }
     });
 }
 
-function updateUserLocation(selectedLocation) {
+function updateUserLocation(selectedLocation, selectedCity) {
     firebase.database().ref('users/customers/' + currentUser.uid).update({
-        location: selectedLocation
-    }, function(error) {
+        location: selectedLocation,
+        city: selectedCity
+    }, function (error) {
         if (error) {
             var errorMessage = error.message;
             // TODO: Add a an error message container
@@ -182,16 +232,23 @@ function initMap() {
 
     infoWindow = new google.maps.InfoWindow();
     map.addListener("click", (mapsMouseEvent) => {
-        if (marker) {
-            marker.setMap(null);
-        }
-        marker = new google.maps.Marker({
-            position: mapsMouseEvent.latLng
-        });
-        marker.setMap(map);
-        newLocation = "https://maps.google.com/?q=" + marker.getPosition().lat() + "," + marker.getPosition().lng();
+        var latLng = mapsMouseEvent.latLng.toJSON();
+        var lat = latLng["lat"];
+        var lng = latLng["lng"];
+        setMarker(lat, lng);
     });
     getLocation();
+}
+
+function setMarker(lat, lng) {
+    if (marker) {
+        marker.setMap(null);
+    }
+    marker = new google.maps.Marker({
+        position: { lat, lng }
+    });
+    marker.setMap(map);
+    newLocation = "https://maps.google.com/?q=" + marker.getPosition().lat() + "," + marker.getPosition().lng();
 }
 
 function getLocation() {
@@ -220,8 +277,8 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
     infoWindow.setContent(
         browserHasGeolocation ?
-        "Error: The Geolocation service failed." :
-        "Error: Your browser doesn't support geolocation."
+            "Error: The Geolocation service failed." :
+            "Error: Your browser doesn't support geolocation."
     );
     infoWindow.open(map);
 }

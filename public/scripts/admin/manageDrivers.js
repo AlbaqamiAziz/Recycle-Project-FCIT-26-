@@ -8,6 +8,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 function app() {
     getAdminName();
+    removeLoader();
 
     document.getElementById('openBtn').onclick = function () {
         document.getElementById("myOverlay").style.display = "block";
@@ -45,13 +46,14 @@ function app() {
         var nameInput = document.getElementById('name');
         var phoneInput = document.getElementById('phone');
         var emailInput = document.getElementById('email');
-        var isValid = isValidName(nameInput) && isValidEmail(emailInput) && isValidPhone(phoneInput);
+        var cityInput = document.getElementById('city');
+        var isValid = isValidName(nameInput) && isValidEmail(emailInput) && isValidPhone(phoneInput) && isCitySelected(cityInput);
         if (isValid) {
-            isPhoneExists(nameInput, phoneInput, emailInput);
+            isPhoneExists(nameInput, phoneInput, emailInput, cityInput);
         }
     }
 
-    function isPhoneExists(nameInput, phoneInput, emailInput) {
+    function isPhoneExists(nameInput, phoneInput, emailInput, cityInput) {
         firebase.database().ref('users/drivers').orderByChild('phone').equalTo(phoneInput.value).limitToFirst(1).once('value').then(function (snapshot) {
             if (snapshot.val()) {
                 phoneInput.style.borderBottom = '1px solid red';
@@ -59,18 +61,30 @@ function app() {
                 alert('Phone number is already used by another driver');
             } else {
                 phoneInput.style.borderBottom = '1px solid #31842c'
-                createDriver(nameInput.value, phoneInput.value, emailInput.value);
+                createDriver(nameInput.value, phoneInput.value, emailInput.value, cityInput.value);
             }
         });
     }
 
+    function isCitySelected(cityInput) {
+        var isValid = cityInput.value != 'none';
+        if (!isValid) {
+            cityInput.style.borderBottom = '1px solid red';
+            // TODO: Add a an error message container
+            alert('Please select pickup city');
+        } else {
+            cityInput.style.borderBottom = '1px solid #31842c';
+        }
+        return isValid;
+    }
 
-    function createDriver(name, phone, email) {
+    function createDriver(name, phone, email, city) {
         var newDriver = {
             name: name,
             phone: phone,
             email: email,
-            password: generatePassword()
+            password: generatePassword(),
+            city: city
         };
         writeDriverData(newDriver);
     }
@@ -114,11 +128,12 @@ function app() {
         });
     }
 
-    var Driver = function (id, name, phone, email, totalRequests, state) {
+    var Driver = function (id, name, phone, email, city, totalRequests, state) {
         this.id = ko.observable(id);
         this.name = ko.observable(name);
         this.phone = ko.observable(phone);
         this.email = ko.observable(email);
+        this.city = ko.observable(city);
         this.totalRequests = ko.observable(totalRequests);
         this.state = ko.observable(state);
 
@@ -137,7 +152,7 @@ function app() {
             var state = "disabled";
             updateDriver(clickedDriver, state);
         };
-        
+
         this.enable = function (clickedDriver) {
             var state = "enabled";
             updateDriver(clickedDriver, state);
@@ -147,20 +162,16 @@ function app() {
 
     function getDrivers(driverList) {
         driverList.removeAll();
-
         firebase.database().ref("users/drivers").on("child_added", function (snapshot) {
-            driverList.push(new Driver(snapshot.key, snapshot.val().name, snapshot.val().phone, snapshot.val().email, snapshot.val().total_requests, snapshot.val().state));
-            if (driverList.length == 0) {
-                removeLoader();
-            }
+            driverList.push(new Driver(snapshot.key, snapshot.val().name, snapshot.val().phone, snapshot.val().email, snapshot.val().city, snapshot.val().total_requests, snapshot.val().state));
         });
     }
 
-    function updateDriver(clickedDriver, state){
-        firebase.database().ref("users/drivers/"+clickedDriver.id()).update({
+    function updateDriver(clickedDriver, state) {
+        firebase.database().ref("users/drivers/" + clickedDriver.id()).update({
             state: state
         });
         clickedDriver.state(state);
-        alert("Driver: "+ clickedDriver.name() + " has been "+ state);
+        alert("Driver: " + clickedDriver.name() + " has been " + state);
     }
 }

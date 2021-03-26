@@ -67,7 +67,8 @@
   color: #ccc;
 }
 
-.input-container input {
+.input-container input,
+select {
   width: 100%;
   height: 30px;
   padding: 0 10px;
@@ -208,7 +209,8 @@ form.search::after {
   color: #458c3a;
 }
 
-.fa-times, .fa-trash {
+.fa-times,
+.fa-trash {
   color: #ff4c61;
 }
 /*# sourceMappingURL=manageDrivers.css.map */

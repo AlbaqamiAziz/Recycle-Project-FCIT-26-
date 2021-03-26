@@ -28,10 +28,11 @@ function validateForm() {
     var nameInput = document.getElementById('name');
     var phoneInput = document.getElementById('phone');
     var emailInput = document.getElementById('email');
-    var isValid = isValidName(nameInput) && isValidEmail(emailInput) && isValidPhone(phoneInput);
+    var cityInput = document.getElementById('city');
+    var isValid = isValidName(nameInput) && isValidEmail(emailInput) && isValidPhone(phoneInput) && isCitySelected(cityInput);
 
     if (isValid) {
-        updateUserEmail(nameInput.value, phoneInput.value, emailInput.value);
+        updateUserEmail(nameInput.value, phoneInput.value, emailInput.value, cityInput.value);
     }
 }
 // --------------------------------------------------------
@@ -42,11 +43,13 @@ function getUserDataToForm() {
         var name = snapshot.val().name;
         var phone = snapshot.val().phone;
         var email = currentUser.email;
-
+        var city = snapshot.val().city;
+        
         document.getElementById("name").value = name;
         document.getElementById('phone').value = phone;
         document.getElementById('email').value = email;
-
+        document.getElementById(city).selected = true;
+        
         // remove the loader after retriving customer's data
         removeElement(document.getElementById('loader'));
         document.getElementById('form').style.display = 'flex';
@@ -55,24 +58,25 @@ function getUserDataToForm() {
 // -------------------------------------------------------
 
 // ------------------{Update user}--------------------
-function updateUserEmail(name, phone, email) {
+function updateUserEmail(name, phone, email, city) {
     if (email != currentUser.email) {
         currentUser.updateEmail(email).then(function () {
-            updateUserData(name, phone);
+            updateUserData(name, phone, city);
         }).catch(function (error) {
             var errorMessage = error.message;
             // TODO: Add a an error message container
             alert(errorMessage);
         });
     } else {
-        updateUserData(name, phone);
+        updateUserData(name, phone, city);
     }
 }
 
-function updateUserData(name, phone) {
+function updateUserData(name, phone, city) {
     firebase.database().ref('users/drivers/' + currentUser.uid).update({
         name: name,
         phone: phone,
+        city: city
     }, function (error) {
         if (error) {
             var errorMessage = error.message;

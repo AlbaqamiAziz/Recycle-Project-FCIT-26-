@@ -38,7 +38,7 @@ function signin(emailInput, passwordInput) {
 function singupDriver(driver) {
     firebase.auth().createUserWithEmailAndPassword(driver.email, driver.password).then((userCredential) => {
         var user = userCredential.user;
-        createDriver(user, driver.name, driver.phone);
+        createDriver(user, driver.name, driver.phone,driver.city);
     }).catch((error) => {
         var errorCode = error.code;
         var errorMessage = error.message;

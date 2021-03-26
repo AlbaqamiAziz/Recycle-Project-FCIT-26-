@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../style/CustomerStyle/main.css">
     <link rel="stylesheet" href="../../style/CustomerStyle/newRequestStyle.css">
+
     <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5K-rEhowyN-DLAQ3eliQLIK1ego12Ff4&libraries=geometry,places&callback=initMap"></script>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -72,10 +73,16 @@
                             </option>
                         </select>
                     </div>
-                    <!-- TODO: add search box after apply billing on google maps api -->
-                    <!-- <div class="input">
-                        <input type="text" id="search" placeholder="Search location">
-                    </div> -->
+                    <div class="input">
+                        <select id="city">
+                            <option value="none" selected disabled hidden>
+                                Select city
+                            </option>
+                            <option value="Jeddah" id="Jeddah">Jeddah</option>
+                            <option value="Riyadh" id="Riyadh">Riyadh</option>
+                            <option value="Makkah" id="Makkah">Makkah</option>
+                        </select>
+                    </div>
                     <div id="map"></div>
                 </div>
                 <div class="bottom-container">

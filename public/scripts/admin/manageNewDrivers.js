@@ -28,11 +28,12 @@ function app() {
         }
     }
 
-    var Driver = function (id, name, phone, email) {
+    var Driver = function (id, name, phone, email, city) {
         this.id = ko.observable(id);
         this.name = ko.observable(name);
         this.phone = ko.observable(phone);
         this.email = ko.observable(email);
+        this.city = ko.observable(city);
     };
 
     var myViewModel = function () {
@@ -55,7 +56,7 @@ function app() {
         driverList.removeAll();
 
         firebase.database().ref("new_drivers").on("child_added", function (snapshot) {
-            driverList.push(new Driver(snapshot.key, snapshot.val().name, snapshot.val().phone, snapshot.val().email));
+            driverList.push(new Driver(snapshot.key, snapshot.val().name, snapshot.val().phone, snapshot.val().email, snapshot.val().city));
             if (driverList.length == 0) {
                 removeLoader();
             }

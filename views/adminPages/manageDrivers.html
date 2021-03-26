@@ -31,6 +31,14 @@
                         <input type="text" id="name" placeholder="Name">
                         <input type="email" id="email" placeholder="Email">
                         <input type="tel" id="phone" placeholder="Phone">
+                        <select id="city">
+                            <option value="none" selected disabled hidden>
+                                Select city
+                            </option>
+                            <option value="Jeddah" id="Jeddah">Jeddah</option>
+                            <option value="Riyadh" id="Riyadh">Riyadh</option>
+                            <option value="Makkah" id="Makkah">Makkah</option>
+                        </select>
                     </div>
                     <div class="btn-container">
                         <button type="submit" class="btn">Submit</button>
@@ -122,6 +130,7 @@
                                         <th>Name</th>
                                         <th>Phone</th>
                                         <th>Email</th>
+                                        <th>City</th>
                                         <th>Total requests</th>
                                         <th>State</th>
                                         <th>Action</th>
@@ -132,13 +141,14 @@
                                         <td data-bind="text: name"></td>
                                         <td data-bind="text: phone"></td>
                                         <td data-bind="text: email"></td>
+                                        <td data-bind="text: city"></td>
                                         <td data-bind="text: totalRequests"></td>
                                         <td data-bind="text: state"></td>
                                         <td>
                                             <button data-bind="ifnot: active, click: $parent.enable"><i
                                                     class="fa fa-check" title="Enable"></i></button>
-                                            <button data-bind="if: active,click: $parent.disable"><i
-                                                    class="fa fa-times" title="disable"></i></button>
+                                            <button data-bind="if: active,click: $parent.disable"><i class="fa fa-times"
+                                                    title="disable"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>

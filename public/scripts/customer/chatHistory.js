@@ -15,7 +15,7 @@ document.getElementById('createChatBtn').onclick = function() {
         //create new chat refrance
         newChatRef.set({
             customer_id: currentUser.uid,
-            admin_id: '9dw5V2qAYdauGQzUBYtFzNu1C1G3',
+            admin_id: '0WiE31F3LAhYtHnNsm6F4QyAla43',
             lastMessage: "",
         }, function(error) {
             if (error) {

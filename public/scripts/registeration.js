@@ -46,6 +46,18 @@ function isValidPassword(passwordInput) {
     }
     return isValid;
 }
+
+function isCitySelected(cityInput) {
+    var isValid = cityInput.value != 'none';
+    if (!isValid) {
+        cityInput.style.borderBottom = '1px solid red';
+        // TODO: Add a an error message container
+        alert('Please select pickup city');
+    } else {
+        cityInput.style.borderBottom = '1px solid #31842c';
+    }
+    return isValid;
+}
 // -----------------------------------------------------------------
 
 // Google Signup
@@ -78,13 +90,14 @@ function createUser(user, name, phone) {
     writeUserType(newUser, user, "customer");
 }
 
-function createDriver(user, name, phone) {
+function createDriver(user, name, phone, city) {
     var newUser = {
         name: name,
         phone: phone,
         total_requests: 0,
         email: user.email,
-        state: "enabled"
+        state: "enabled",
+        city: city
     };
     writeUserType(newUser, user, "driver");
 }
@@ -118,10 +131,12 @@ function writeUserData(newUser, user, type) {
 
 function getUserType(user) {
     firebase.database().ref("user_type/" + user.uid).once("value", (snapshot) => {
-        if (snapshot.val().type == 'driver') {
-            checkDriverState(user);
-        } else if (snapshot.val().type == 'admin' || snapshot.val().type == 'customer') {
-            startSession(user);
+        if (snapshot.val()) {
+            if (snapshot.val().type == 'driver') {
+                checkDriverState(user);
+            } else {
+                startSession(user);
+            }
         } else {
             window.location.href = "googleSignup.html";
         }
