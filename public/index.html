@@ -7,6 +7,10 @@
     <title>Recycle | Home Page</title>
     <link rel="stylesheet" type="text/css" href="style/indexStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+    <!-- Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 </head>
 
 <body>
@@ -38,13 +42,13 @@
             <!--Slideshow section-->
             <div class="pics-cont">
                 <div class="slides">
-                    <img src="../image/firstSlide-Imge2.jpg">
-                </div>
-                <div class="slides">
-                    <img src="../image/firstSlide-Imge1.jpg">
-                </div>
-                <div class="slides">
                     <img src="../image/firstSlide-Imge.jpg">
+                </div>
+                <div class="slides">
+                    <img src="../image/re1.jpg">
+                </div>
+                <div class="slides">
+                    <img src="../image/re2.jpg">
                 </div>
                 <!-- Next and previous buttons -->
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -56,7 +60,9 @@
                     <h3>About us</h3>
                     <br>
                     <p>
-                        We provide a recyclable waste pick-up service from your place. Awarding our customers for each process they complete by calculating points for them, which they can redeem at our cooperating companies.
+                        We provide a recyclable waste pick-up service from your place. Awarding our customers for each
+                        process they complete by calculating points for them, which they can redeem at our cooperating
+                        companies.
                     </p>
                 </div>
             </div>
@@ -77,7 +83,9 @@
                     <h3>Statistics</h3>
                     <br>
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, fuga. Atque facilis odio ab. Tempora doloribus odit enim, commodi esse, fugit minima praesentium aspernatur in, neque earum illum fugiat voluptas!
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, fuga. Atque facilis odio ab.
+                        Tempora doloribus odit enim, commodi esse, fugit minima praesentium aspernatur in, neque earum
+                        illum fugiat voluptas!
                     </p>
                 </div>
             </div>
@@ -85,7 +93,7 @@
             <div class="sec center static">
                 <div class="content process">
                     <div class="icon">
-                        <span id="num">300</span>
+                        <span id="num"></span>
                         <i class="fa fa-recycle" aria-hidden="true"></i>
                     </div>
                     <div class="text">
@@ -171,6 +179,8 @@
         }
     </script>
 
+    <script src="scripts/firbaseConfig.js"></script>
+    <script src="scripts/indexScript.js"></script>
 </body>
 
 </html>
