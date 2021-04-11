@@ -47,7 +47,7 @@ function getUserData() {
         name = (index > -1) ? name.substring(0, index) : name;
 
         var numOfRequests = snapshot.val().total_requests;
-        var numOfCertificates = totalPoints / 1000;
+        var numOfCertificates = parseInt(totalPoints / 1000);
         setUserData(name, points, totalPoints, numOfRequests, numOfCertificates);
         checkCirteficates(numOfCertificates, totalPoints);
     });

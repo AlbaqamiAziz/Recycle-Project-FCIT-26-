@@ -104,11 +104,6 @@ function app() {
         });
     }
 
-    function displayMessageAndReq(messageDisplay, reqDisplay) {
-        document.getElementById("message").style.display = messageDisplay;
-        document.getElementById('orders').style.display = reqDisplay;
-    }
-
     function updateRequest( clickedRequest) {
         //get new requests from firebase
         firebase.database().ref("requests/Active/" + clickedRequest.requestID()).update({
@@ -121,6 +116,11 @@ function app() {
                 alert(errorMessage);
             }
         });
+    }
+
+    function displayMessageAndReq(messageDisplay, reqDisplay) {
+        document.getElementById("message").style.display = messageDisplay;
+        document.getElementById('orders').style.display = reqDisplay;
     }
 
     function removeLoader() {

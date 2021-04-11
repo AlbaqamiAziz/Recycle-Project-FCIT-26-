@@ -24,25 +24,23 @@ window.onclick = function (event) {
 
 function app() {
     getAdminName();
-
-    // MVC
-    var Chat = function (name, id, lastMessage, chatID) {
+      
+    var Chat = function (name, customerID, lastMessage, chatID) {
         this.name = ko.observable(name);
-        this.id = ko.observable(id);
+        this.customerID = ko.observable(customerID);
         this.lastMessage = ko.observable(lastMessage);
         this.chatID = ko.observable(chatID);
-        this.messageList = ko.observableArray();
         this.active = ko.observable(false);
+        this.messageList = ko.observableArray();
 
         this.checkActive = ko.computed(function () {
             return this.active() == true ? 'active' : '';
         }, this);
     }
 
-    var Message = function (content, sender, timestamp, messageID) {
+    var Message = function (content, sender, messageID) {
         this.content = ko.observable(content);
         this.sender = ko.observable(sender);
-        this.timestamp = ko.observable(timestamp);
         this.chatID = ko.observable(messageID);
         this.checkSender = ko.computed(function () {
             return currentUser.uid == this.sender() ? "me" : "other";
@@ -82,25 +80,6 @@ function app() {
             });
         }
 
-
-        firebase.database().ref("chats/Active/").on("child_removed", function (snapshot) {
-            if (snapshot.val().admin_id == currentUser.uid) {
-                self.chatList().forEach(chat => {
-                    if (chat.chatID() == snapshot.key) {
-                        self.chatList.remove(chat);
-                        if (self.currentChat() && self.currentChat().chatID() == chat.chatID()) {
-                            self.currentChat(null);
-                        }
-                        alert("Your chat with " + chat.name() + " has been deleted");
-                    }
-                });
-            }
-        });
-
-        this.openSideMenu = function () {
-            document.getElementById("myDropdown").classList.add("show");
-        }
-
         this.sendMessage = function () {
             var newMessage = document.getElementById("newMessage").value;
             if (newMessage.length > 0) {
@@ -118,8 +97,26 @@ function app() {
                 var elem = document.getElementById('messages');
                 elem.scrollTop = elem.scrollHeight;
             }
-
+            
         }
+        
+        this.openSideMenu = function () {
+            document.getElementById("myDropdown").classList.add("show");
+        }
+
+        firebase.database().ref("chats/Active/").on("child_removed", function (snapshot) {
+            if (snapshot.val().admin_id == currentUser.uid) {
+                self.chatList().forEach(chat => {
+                    if (chat.chatID() == snapshot.key) {
+                        self.chatList.remove(chat);
+                        if (self.currentChat() && self.currentChat().chatID() == chat.chatID()) {
+                            self.currentChat(null);
+                        }
+                        alert("Your chat with " + chat.name() + " has been deleted");
+                    }
+                });
+            }
+        });
     };
     ko.applyBindings(new myViewModel);
 
@@ -140,7 +137,7 @@ function app() {
     document.getElementById("search").onkeypress = function (e) {
         //if enter is pressed
         var phone = document.getElementById("search").value;
-        findUserByName(phone);
+        findUserByPhone(phone);
     };
 
     document.getElementById("card").onclick = (function () {
@@ -164,7 +161,7 @@ function app() {
     // -----------------------------------------------------
 
     // ------------------{Search for user}-------------------
-    function findUserByName(phone) {
+    function findUserByPhone(phone) {
         //check if name exists
         firebase.database().ref("users/customers").orderByChild("phone").limitToFirst(1).equalTo(phone).once("value", function (users) {
             if (users.val()) {
@@ -183,10 +180,10 @@ function app() {
         });
     }
 
-    function createChat(chatList, senderID, chat) {
+    function createChat(chatList, customerID, chat) {
         //get the other member"s name
-        firebase.database().ref("users/customers/" + senderID).once("value", function (user) {
-            chatList.push(new Chat(user.val().name, senderID, chat.val().lastMessage, chat.key));
+        firebase.database().ref("users/customers/" + customerID).once("value", function (user) {
+            chatList.push(new Chat(user.val().name, customerID, chat.val().lastMessage, chat.key));
             if (chatList().length == 1) {
                 removeLoader();
             }
@@ -215,8 +212,8 @@ function app() {
         //get chats from firebase
         firebase.database().ref("chats/Active/").orderByChild("admin_id").equalTo(currentUser.uid).on("child_added", function (chat) {
             //get the other members" id 
-            var senderID = chat.val().customer_id;
-            createChat(chatList, senderID, chat);
+            var customerID = chat.val().customer_id;
+            createChat(chatList, customerID, chat);
 
             firebase.database().ref("chats/Active/" + chat.key).on("child_changed", function (message) {
                 updateChat(chatList, message.val(), chat.key);
@@ -230,7 +227,7 @@ function app() {
 
         //get chats from firebase
         firebase.database().ref("chatMessages/" + currentChat().chatID()).on("child_added", function (chatMessage) {
-            currentChat().messageList.push(new Message(chatMessage.val().content, chatMessage.val().sender, chatMessage.val().timestamp, chatMessage.key));
+            currentChat().messageList.push(new Message(chatMessage.val().content, chatMessage.val().sender, chatMessage.key));
             var elem = document.getElementById('messages');
             elem.scrollTop = elem.scrollHeight;
         });

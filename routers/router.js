@@ -22,9 +22,6 @@ router.get('/', (req, res) => {
 router.get("/home", verify, getType /*use veify, getType middlewares*/, function (req, res) {
     // render to the home page according the user type
     var type = req.userType;
-    if (type == "driver") {
-        //Check state 
-    }
     res.render(type + "Pages/homepage.html");
 });
 
@@ -34,7 +31,7 @@ router.get("/profile", verify, getType /*use veify, getType middlewares*/, funct
     if (type == 'customer' || type == 'driver') {
         res.render(type + "Pages/profile.html");
     } else {
-        res.redirect('/home');
+        res.sendStatus(403);
     }
 });
 
@@ -43,7 +40,7 @@ router.get("/history", verify, getType /*use veify, getType middlewares*/, funct
     if (req.userType == 'customer' || req.userType == 'driver') {
         res.render(req.userType + "Pages/history.html");
     } else {
-        res.redirect('/home');
+        res.sendStatus(403);
     }
 });
 
@@ -52,7 +49,7 @@ router.get("/details", verify, getType /*use veify, getType middlewares*/, funct
     if (req.userType == 'customer' || req.userType == 'driver') {
         res.render(req.userType + "Pages/details.html");
     } else {
-        res.redirect('/home');
+        res.sendStatus(403);
     }
 });
 // -------------------------------------------------------------------

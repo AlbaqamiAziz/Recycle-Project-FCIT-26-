@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "dev": "nodemon index"
-  }, "dependencies": {
+    "dev": "nodemon index",
+    "test": "mocha" 
+  },
+  "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "csurf": "^1.11.0",
@@ -15,5 +17,8 @@
     "firebase-admin": "^9.5.0",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.7"
+  },
+  "devDependencies": {
+    "mocha": "^8.3.2"
   }
 }

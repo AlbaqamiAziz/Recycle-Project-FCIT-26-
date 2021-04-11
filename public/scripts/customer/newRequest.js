@@ -1,28 +1,5 @@
 // -----------------{Event listeners}---------------- 
 var currentUser, savedLocation, newLocation, newCity, savedCity;
-firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-        currentUser = user;
-        checkLocation();
-        initDatePicker();
-    }
-});
-
-document.getElementById('form').onsubmit = function (e) {
-    e.preventDefault();
-    validateForm();
-}
-
-document.getElementById('location').onchange = function () {
-    var option = document.getElementById("location").value;
-    if (option == "change") {
-        document.getElementById('map').style.display = 'block';
-        document.getElementById('city').style.display = 'block';
-    } else {
-        document.getElementById('city').style.display = 'none';
-        document.getElementById('map').style.display = 'none';
-    }
-}
 
 var cites = {
     Jeddah: {
@@ -36,6 +13,26 @@ var cites = {
     }
 }
 
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        currentUser = user;
+        checkLocation();
+        initDatePicker();
+    }
+});
+
+
+document.getElementById('location').onchange = function () {
+    var option = document.getElementById("location").value;
+    if (option == "change") {
+        document.getElementById('map').style.display = 'block';
+        document.getElementById('city').style.display = 'block';
+    } else {
+        document.getElementById('city').style.display = 'none';
+        document.getElementById('map').style.display = 'none';
+    }
+}
+
 var cityiInput = document.getElementById('city');
 cityiInput.onchange = function () {
     map.setCenter(cites[cityiInput.value]);
@@ -45,6 +42,29 @@ cityiInput.onchange = function () {
 
 document.getElementById('backBtn').onclick = function () {
     window.location.assign("/home");
+}
+
+function checkLocation() {
+    firebase.database().ref('users/customers/' + currentUser.uid).once('value').then(function (snapshot) {
+        // if customer has registered location
+        if (snapshot.val().location) {
+            savedLocation = snapshot.val().location;
+            savedCity = snapshot.val().city;
+            document.getElementById('map').style.display = 'none';
+            document.getElementById('city').style.display = 'none';
+            document.getElementById(snapshot.val().city).selected = true;
+        } else {
+            document.getElementById('location').style.display = 'none';
+        }
+        // remove the loader
+        removeElement(document.getElementById('loader'));
+        document.getElementById('form').style.display = 'flex';
+    });
+}
+
+document.getElementById('form').onsubmit = function (e) {
+    e.preventDefault();
+    validateForm();
 }
 // --------------------------------------------------
 
@@ -86,27 +106,12 @@ function isCitySelected(cityInput) {
     return isValid;
 }
 
-function checkLocation() {
-    firebase.database().ref('users/customers/' + currentUser.uid).once('value').then(function (snapshot) {
-        // if customer has registered location
-        if (snapshot.val().location) {
-            savedLocation = snapshot.val().location;
-            savedCity = snapshot.val().city;
-            document.getElementById('map').style.display = 'none';
-            document.getElementById('city').style.display = 'none';
-            document.getElementById(snapshot.val().city).selected = true;
-        } else {
-            document.getElementById('location').style.display = 'none';
-        }
-        // remove the loader
-        removeElement(document.getElementById('loader'));
-        document.getElementById('form').style.display = 'flex';
-    });
-}
-
 function getSelectedLocation(option) {
     var selectedLocation;
+    // if he has a saved location in the database
     if (savedLocation) {
+        // if he selected CHANGE location use the new location
+        // else use the saved location
         selectedLocation = option == 'change' ? newLocation : savedLocation;
     } else {
         selectedLocation = newLocation;
@@ -150,7 +155,6 @@ function updateCount(newId, newRequest, selectedLocation, selectedCity) {
     }, function (error) {
         if (error) {
             var errorMessage = error.message;
-            // TODO: Add a an error message container
             alert(errorMessage);
         } else {
             // write the new request to the database
@@ -165,8 +169,7 @@ function writeRequestData(newRequest, selectedLocation, selectedCity) {
     newRequestRef.set(newRequest, function (error) {
         if (error) {
             var errorMessage = error.message;
-            // TODO: Add a an error message container
-            alert(error.message);
+            alert(errorMessage);
         } else {
             updateUserLocation(selectedLocation, selectedCity);
         }
@@ -180,7 +183,6 @@ function updateUserLocation(selectedLocation, selectedCity) {
     }, function (error) {
         if (error) {
             var errorMessage = error.message;
-            // TODO: Add a an error message container
             alert(errorMessage);
         } else {
             window.location.assign("/home");

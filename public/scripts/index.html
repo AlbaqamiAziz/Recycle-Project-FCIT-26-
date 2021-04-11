@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet" />
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+
+  <!-- Authentication SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+
+  <!-- Server cookie -->
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+</head>
+
+<body>
+  <div id="mocha"></div>
+  <script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
+  <script src="https://cdn.rawgit.com/chaijs/chai/3.5.0/chai.js"></script>
+  <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+
+  <script src="registeration.js"></script>
+  <script src="../scripts/firbaseConfig.js"></script>
+
+  <script>
+    const mocha = window.mocha;
+    mocha.setup('bdd');
+  </script>
+  <script src="tests.js"></script>
+  <script>
+    mocha.checkLeaks();
+    mocha.run();
+  </script>
+</body>
+
+</html>

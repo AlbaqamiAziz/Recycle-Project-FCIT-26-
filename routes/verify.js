@@ -18,7 +18,7 @@ module.exports = {
             next();
         }).catch((error) => {
             // if not verified user 
-            res.redirect("/");
+            res.sendStatus(401);
         });
     },
     getType: (req, res, next) => {

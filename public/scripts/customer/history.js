@@ -76,6 +76,7 @@ function app() {
     };
     ko.applyBindings(new myViewModel);
 
+    
     function getCategory(categoryList) {
         categories.forEach(category => {
             categoryList.push(new Category(category));
