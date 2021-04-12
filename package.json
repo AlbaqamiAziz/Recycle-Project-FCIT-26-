@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index",
     "dev": "nodemon index",
-    "test": "mocha" 
+    "test": "mocha"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
